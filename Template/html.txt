@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Форум</title>
+
+<link type="text/css" rel="StyleSheet" href="/css/style1.css">
+<link type="text/css" rel="StyleSheet" href="/css/style.css">
+
+<link type="text/css" rel="StyleSheet" href="http://s31.ucoz.net/src/layer6.css" />
+<script type="text/javascript" src="http://s31.ucoz.net/src/jquery-1.3.2.js"></script><script type="text/javascript" src="http://s31.ucoz.net/src/uwnd.js?2"></script><style type="text/css">.UhideBlock {display:none}</style>
+</head><body>
+<table id="container" cellpadding="0" cellspacing="0"><tbody><tr><td id="main">
+
+
+<div id="topbancon"><div id="topbanleft"><div id="topbanright">
+
+</div></div></div>
+
+ <div id="wrap"><div id="topnavleft"><div id="topnavright"><div id="topnavcon">
+<div id="nav"><ul><li>
+<a href="/">Главная</a></li>
+<li><a href="/forum/0-0-1-34">Новые сообщения</a></li>
+<li><a href="/forum/0-0-1-35">Участники</a></li>
+ <li><a href="/forum/0-0-0-36">Правила</a></li>
+ <li><a style="cursor: pointer;" href="/forum/0-0-0-6" id="ipb-tl-search">Поиск</a></li>
+</ul>
+</div>
+ </div></div></div></div>
+ <!-- / End board header -->
+ 
+
+
+<div id="control">
+
+
+<div class="midnav"><div id="cont"><div class="nav_top"><div class="nav_right"><div class="nav_bottom"><div class="nav_left"><div class="nav_top_right"><div class="nav_bottom_right"><div class="nav_bottom_left"><div class="nav_top_left"><div class="navmaintext">
+<div id="ipbwrapper">
+
+<div id="userlinks">
+<p class="home">Здравствуйте, <a href=""><b>Гость</b></a>!</p>
+ 
+<p>
+ <a href="/index/3">Регистрация</a>
+
+
+ <a href="javascript://" rel="nofollow" onclick="new _uWnd('LF',' ',-250,-110,{autosize:0,closeonesc:1,resize:1},{url:'/index/40'});return false;">Вход</a>
+ <a href="/forum/0-0-0-37">RSS</a></b></p></div>
+ <Center><a href="http://pc-load.my1.ru/"><img src="http://www.pc-load.ru/banners/212861d37c70.gif" border="0" title="PC-LOAD.RU- Начни жизнь с нами"></a></Center>
+ <div class="gDivLeft"><div class="gDivRight"><table border="0" width="100%" bgcolor="#FFFFFF" cellspacing="1" cellpadding="0" class="gTable"><tr></tr>
+
+$BODY$</div><br />
+
+$GLOBAL_BFOOTER$
+
+</body>
+
+</html>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+ <Center><!-- <copy> --><a href="http://Pc-LoaD.Ru">Начни жить вместе с нами.</a>&copy; $YEAR$<!-- </copy> --></Center>
+ <tr><Center>$POWERED_BY$</center></tr>
+</table>
+<!-- <popup> --><!-- </popup> -->
