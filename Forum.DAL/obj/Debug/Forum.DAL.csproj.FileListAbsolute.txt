@@ -1,0 +1,16 @@
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\obj\Debug\Forum.DAL.csprojResolveAssemblyReference.cache
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\Forum.DAL.dll.config
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\Forum.DAL.dll
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\Forum.DAL.pdb
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\EntityFramework.dll
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\EntityFramework.xml
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\obj\Debug\Forum.DAL.dll
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\obj\Debug\Forum.DAL.pdb
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\App_Data\MyDB.mdf
+C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.DAL\bin\Debug\App_Data\MyDB_log.ldf
