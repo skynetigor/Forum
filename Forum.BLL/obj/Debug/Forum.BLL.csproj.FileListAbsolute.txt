@@ -16,3 +16,21 @@ C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum
 C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.BLL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.BLL\bin\Debug\App_Data\MyDB.mdf
 C:\Users\panasiuk_ihor\Documents\Visual Studio 2015\Projects\ASP.NET\Forum\Forum.BLL\bin\Debug\App_Data\MyDB_log.ldf
+D:\Forum\Forum.BLL\bin\Debug\App_Data\MyDB.mdf
+D:\Forum\Forum.BLL\bin\Debug\App_Data\MyDB_log.ldf
+D:\Forum\Forum.BLL\bin\Debug\Forum.BLL.dll.config
+D:\Forum\Forum.BLL\bin\Debug\Forum.BLL.dll
+D:\Forum\Forum.BLL\bin\Debug\Forum.BLL.pdb
+D:\Forum\Forum.BLL\bin\Debug\EntityFramework.dll
+D:\Forum\Forum.BLL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Forum\Forum.BLL\bin\Debug\Forum.DAL.dll
+D:\Forum\Forum.BLL\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\Forum\Forum.BLL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Forum\Forum.BLL\bin\Debug\Forum.DAL.pdb
+D:\Forum\Forum.BLL\bin\Debug\EntityFramework.xml
+D:\Forum\Forum.BLL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Forum\Forum.BLL\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\Forum\Forum.BLL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Forum\Forum.BLL\obj\Debug\Forum.BLL.csprojResolveAssemblyReference.cache
+D:\Forum\Forum.BLL\obj\Debug\Forum.BLL.dll
+D:\Forum\Forum.BLL\obj\Debug\Forum.BLL.pdb
