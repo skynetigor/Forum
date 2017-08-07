@@ -154,3 +154,4 @@ D:\Forum\Forum.WEB\obj\Debug\Forum.WEB.dll
 D:\Forum\Forum.WEB\obj\Debug\Forum.WEB.pdb
 D:\Forum\Forum.WEB\bin\App_Data\MyDB.mdf
 D:\Forum\Forum.WEB\bin\App_Data\MyDB_log.ldf
+E:\IT\PROJECTS\Forum\Forum.WEB\obj\Debug\Forum.WEB.csprojResolveAssemblyReference.cache
