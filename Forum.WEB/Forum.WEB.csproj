@@ -209,6 +209,7 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attributes\UnAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -217,8 +218,6 @@
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\CastleControllerFactory.cs" />
-    <Compile Include="Util\ApplicationCastleInstaller.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -244,6 +243,10 @@
     <ProjectReference Include="..\Forum.BLL\Forum.BLL.csproj">
       <Project>{d6ef1ee9-a08d-448b-93bc-e8904f42b21f}</Project>
       <Name>Forum.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Forum.IoC\Forum.IoC.csproj">
+      <Project>{c1b2b7c9-fd9f-4d89-9bf3-83ec1972c134}</Project>
+      <Name>Forum.IoC</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

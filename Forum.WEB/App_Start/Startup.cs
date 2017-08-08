@@ -1,14 +1,11 @@
-﻿using Castle.Windsor;
-using Forum.BLL.Interfaces;
-using Forum.WEB.Util;
+﻿using Forum.BLL.Interfaces;
+using Forum.IoC.Interfaces;
+using Forum.IoC.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Reflection;
 
 [assembly: OwinStartup(typeof(Forum.WEB.App_Start.Startup))]
 
@@ -16,14 +13,6 @@ namespace Forum.WEB.App_Start
 {
     public class Startup
     {
-        public Startup()
-        {
-            // создаем контейнер
-            container = new WindsorContainer();
-            // регистрируем компоненты с помощью объекта ApplicationCastleInstaller
-            container.Install(new ApplicationCastleInstaller());
-        }
-        WindsorContainer container;
         public void Configuration(IAppBuilder app)
         {
             app.CreatePerOwinContext(CreateUserService);
@@ -36,8 +25,8 @@ namespace Forum.WEB.App_Start
 
         private IUserService CreateUserService()
         {
-            IUserService service = container.Resolve<IUserService>();
-            return service;
+            IDependencyInstaller dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
+            return dependencyInstaller.Resolve<IUserService>();
         }
     }
 }

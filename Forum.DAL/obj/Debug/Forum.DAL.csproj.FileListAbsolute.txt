@@ -30,3 +30,4 @@ D:\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\Forum\Forum.DAL\obj\Debug\Forum.DAL.dll
 D:\Forum\Forum.DAL\obj\Debug\Forum.DAL.pdb
 E:\IT\PROJECTS\Forum\Forum.DAL\obj\Debug\Forum.DAL.csprojResolveAssemblyReference.cache
+D:\Forum\Forum.DAL\obj\Debug\Forum.DAL.csprojResolveAssemblyReference.cache

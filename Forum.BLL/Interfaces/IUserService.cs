@@ -11,7 +11,8 @@ namespace Forum.BLL.Interfaces
 {
     public interface IUserService : IDisposable
     {
-        OperationDetails Create(UserDTO userDto);
+        OperationDetails Create(UserDTO userDto, string url);
         ClaimsIdentity Authenticate(UserDTO userDto);
+        ClaimsIdentity ConfirmEmail(string token, string email);
     }
 }

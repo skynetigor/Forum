@@ -1,17 +1,17 @@
 ﻿using Forum.BLL.DTO;
 using Forum.BLL.Infrastructure;
 using Forum.BLL.Interfaces;
+using Forum.WEB.Attributes;
 using Forum.WEB.Models;
 using Microsoft.Owin.Security;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Forum.WEB.Controllers
 {
+    [UnAuthorize]
     public class AccountController : Controller
     {
         IUserService service;
@@ -28,26 +28,35 @@ namespace Forum.WEB.Controllers
             }
         }
 
-        // GET: Account
-
+        [Authorize]
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            AuthenticationManager.SignOut();
+            return RedirectToAction("Login");
+        }
         public ActionResult Login(string returnUrl)
         {
-            string s = User.Identity.Name;
-            ClaimsIdentity c = service.Authenticate(new UserDTO
-            {
-                Name = "Igor Panasiuk",
-                Email = "skynet_95@mail.ru",
-                Password = "123456"
-            });
-            AuthenticationManager.SignOut();
-            AuthenticationManager.SignIn(c);
             return View();
         }
 
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            
+            try
+            {
+                ClaimsIdentity claim = service.Authenticate(new UserDTO
+                {
+                    Name = model.UserName,
+                    Email = model.UserName,
+                    Password = model.Password
+                });
+                AuthenticationManager.SignIn(claim);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(string.Empty, e.Message);
+            }
             return View();
         }
 
@@ -55,6 +64,13 @@ namespace Forum.WEB.Controllers
         {
             string s = User.Identity.Name;
             return View();
+        }
+
+        public ActionResult ConfirmeEmail(string token, string email)
+        {
+            ClaimsIdentity claim = service.ConfirmEmail(token, email);
+            AuthenticationManager.SignIn(claim);
+            return RedirectToAction("Login");
         }
 
         [HttpPost]
@@ -67,10 +83,18 @@ namespace Forum.WEB.Controllers
                 Password = model.Password,
                 Role = "User"
             };
-            OperationDetails opdet = service.Create(user);
-            if(!opdet.Succedeed)
+            try
             {
-                ModelState.AddModelError("", opdet.Message);
+                string url = Url.Action("ConfirmeEmail", "Account", null, Request.Url.Scheme) + "?token={0}&email={1}";
+                OperationDetails opdet = service.Create(user, url);
+                if (!opdet.Succedeed)
+                {
+                    ModelState.AddModelError(string.Empty, opdet.Message);
+                }
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(string.Empty, e.Message);
             }
             return View();
         }

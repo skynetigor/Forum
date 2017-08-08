@@ -1,4 +1,6 @@
 ﻿using Forum.DAL.Entities;
+using Forum.DAL.Entities.Categories;
+using Forum.DAL.Entities.Topics;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -14,5 +16,8 @@ namespace Forum.DAL.EF
         public ApplicationContext(string conectionString) : base(conectionString) { }
 
         public DbSet<ClientProfile> ClientProfiles { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<TopicDTO> Topics { get; set; }
     }
 }

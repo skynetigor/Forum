@@ -1,9 +1,6 @@
-﻿using Castle.Windsor;
-using Forum.WEB.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Forum.IoC.Interfaces;
+using Forum.IoC.Service;
+using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -13,17 +10,8 @@ namespace Forum.WEB
     {
         protected void Application_Start()
         {
-            // создаем контейнер
-            var container = new WindsorContainer();
-            // регистрируем компоненты с помощью объекта ApplicationCastleInstaller
-            container.Install(new ApplicationCastleInstaller());
-
-            // Вызываем свою фабрику контроллеров
-            var castleControllerFactory = new CastleControllerFactory(container);
-
-            // Добавляем фабрику контроллеров для обработки запросов
-            ControllerBuilder.Current.SetControllerFactory(castleControllerFactory);
-
+            IDependencyInstaller dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
+            ControllerBuilder.Current.SetControllerFactory(dependencyInstaller.GetControllerFactory());
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }

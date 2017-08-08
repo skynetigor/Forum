@@ -2,6 +2,7 @@
 using Forum.DAL.Entities;
 using Forum.DAL.Identity;
 using Forum.DAL.Interfaces;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;

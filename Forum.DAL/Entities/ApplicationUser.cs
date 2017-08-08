@@ -9,6 +9,7 @@ namespace Forum.DAL.Entities
 {
     public class ApplicationUser : IdentityUser
     {
+        public bool IsBlocked { get; set; }
         public virtual ClientProfile ClientProfile { get; set; }
     }
 }
