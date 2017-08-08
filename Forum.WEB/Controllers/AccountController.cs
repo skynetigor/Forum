@@ -60,13 +60,19 @@ namespace Forum.WEB.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult GetModel()
+        {
+            return View();
+        }
+
         public ActionResult Registration()
         {
             string s = User.Identity.Name;
             return View();
         }
 
-        public ActionResult ConfirmeEmail(string token, string email)
+        public ActionResult ConfirmeEmail(int token, string email)
         {
             ClaimsIdentity claim = service.ConfirmEmail(token, email);
             AuthenticationManager.SignIn(claim);

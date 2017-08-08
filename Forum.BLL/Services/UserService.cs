@@ -57,6 +57,7 @@ namespace Forum.BLL.Services
                 ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
                 database.ClientManager.Create(clientProfile);
                 database.Save();
+                database.RoleManager.Roles.First();
                 //user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
                 if (!string.IsNullOrEmpty(confirmeUrl))
                     emailSender.SendConfirmationMessage(GenerateMessage(user, confirmeUrl), PASSWORD);
@@ -68,7 +69,7 @@ namespace Forum.BLL.Services
             }
         }
 
-        private MailMessage GenerateMessage(IdentityUser user, string url)
+        private MailMessage GenerateMessage(ApplicationUser user, string url)
         {
             MailAddress from = new MailAddress(SENDER_EMAIL, DISPLAY_NAME_MAIL);
             MailAddress to = new MailAddress(user.Email);
@@ -80,7 +81,7 @@ namespace Forum.BLL.Services
             return message;
         }
 
-        public ClaimsIdentity ConfirmEmail(string token, string email)
+        public ClaimsIdentity ConfirmEmail(int token, string email)
         {
             ClaimsIdentity claim = null;
             ApplicationUser user = database.UserManager.FindById(token);

@@ -13,6 +13,6 @@ namespace Forum.BLL.Interfaces
     {
         OperationDetails Create(UserDTO userDto, string url);
         ClaimsIdentity Authenticate(UserDTO userDto);
-        ClaimsIdentity ConfirmEmail(string token, string email);
+        ClaimsIdentity ConfirmEmail(int token, string email);
     }
 }

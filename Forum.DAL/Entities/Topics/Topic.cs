@@ -12,6 +12,7 @@ namespace Forum.DAL.Entities.Topics
         public string Title { get; set; }
         public string Message { get; set; }
         public bool IsBlocked { get; set; }
-        public SubCategory SubCategory { get; set; }
+        public virtual SubCategory SubCategory { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

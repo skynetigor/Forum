@@ -183,6 +183,7 @@
     <Content Include="Content\img\content-bg.png" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\nav-bg.jpg" />
+    <Content Include="Content\popup.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -195,6 +196,9 @@
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <None Include="scripts\forum\jquery-1.10.2.intellisense.js" />
+    <Content Include="scripts\forum\jquery-1.10.2.js" />
+    <Content Include="scripts\forum\popup.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
     <None Include="scripts\jquery.validate-vsdoc.js" />
@@ -203,6 +207,7 @@
     <Content Include="scripts\jquery.validate.unobtrusive.js" />
     <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
+    <None Include="scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
@@ -211,7 +216,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\UnAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TopicController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,6 +236,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Registration.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Account\GetModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -237,7 +245,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Category\" />
     <Folder Include="Views\Home\" />
+    <Folder Include="Views\Topics\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Forum.BLL\Forum.BLL.csproj">

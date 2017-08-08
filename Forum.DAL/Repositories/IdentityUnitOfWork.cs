@@ -1,5 +1,6 @@
 ﻿using Forum.DAL.EF;
 using Forum.DAL.Entities;
+using Forum.DAL.Entities.Identity.IntPk;
 using Forum.DAL.Identity;
 using Forum.DAL.Interfaces;
 using Microsoft.AspNet.Identity;
@@ -23,8 +24,8 @@ namespace Forum.DAL.Repositories
         public IdentityUnitOfWork(string connectionString)
         {
             db = new ApplicationContext(connectionString);
-            userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
-            roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(db));
+            userManager = new ApplicationUserManager(new UserStoreIntPk(db));
+            roleManager = new ApplicationRoleManager(new RoleStoreIntPk(db));
             clientManager = new ClientManager(db);
         }
 

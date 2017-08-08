@@ -1,4 +1,5 @@
 ﻿using Forum.DAL.Entities;
+using Forum.DAL.Entities.Identity.IntPk;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -9,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Forum.DAL.Identity
 {
-    public class ApplicationRoleManager : RoleManager<ApplicationRole>
+    public class ApplicationRoleManager : RoleManager<ApplicationRole, int>
     {
-        public ApplicationRoleManager(RoleStore<ApplicationRole> store)
+        public ApplicationRoleManager(RoleStoreIntPk store)
                     : base(store)
         {
             this.Create(new ApplicationRole
