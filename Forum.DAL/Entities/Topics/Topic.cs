@@ -14,5 +14,6 @@ namespace Forum.DAL.Entities.Topics
         public bool IsBlocked { get; set; }
         public virtual SubCategory SubCategory { get; set; }
         public virtual ApplicationUser User { get; set; }
+        public virtual IEnumerable<Comment> Comments { get; set; }
     }
 }

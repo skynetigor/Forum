@@ -8,7 +8,8 @@
             <h3 class="panel-title">@category.Name</h3>
         </div>
         <div class="panel-body panel-forum">
-            <table class="table table-bordered table-striped stretch table-forum">
+            @if (category.SubCategories.Count() > 0)
+            {<table class="table table-bordered table-striped stretch table-forum">
                 <thead>
                     <tr>
                         <td>Форум</td>
@@ -18,7 +19,7 @@
                 </thead>
                 <tbody>
                     @foreach (SubCategoryDTO sub in category.SubCategories)
-                {
+                    {
                         <tr>
                             <td>@sub.Name</td>
                             <td class="thems">551</td>
@@ -27,6 +28,11 @@
                     }
                 </tbody>
             </table>
+            }
+            else
+            {
+                <p class="empty-message">Пусто.</p>
+            }
         </div>
     </div>
 }

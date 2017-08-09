@@ -34,7 +34,7 @@ namespace Forum.BLL.Services
             FirstInitialize();
         }
         
-        public OperationDetails Create(UserDTO userDto, string confirmeUrl)
+        public OperationDetails Create(UserDTO userDto, string password, string confirmeUrl)
         {
             ApplicationUser user = null;
             
@@ -43,7 +43,7 @@ namespace Forum.BLL.Services
             if (user == null)
             {
                 user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
-                var result = database.UserManager.Create(user, userDto.Password);
+                var result = database.UserManager.Create(user, password);
                 if (result.Errors.Count() > 0)
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), string.Empty);
                 // добавляем роль
@@ -93,14 +93,10 @@ namespace Forum.BLL.Services
             return claim;
         }
 
-        public ClaimsIdentity Authenticate(UserDTO userDto)
+        public ClaimsIdentity Authenticate(string login, string password)
         {
-            //if(userDto.Email == "admin" && userDto.Password == "111111")
-            //{
-            //    FirstInitialize();
-            //}
             ClaimsIdentity claim = null;
-            ApplicationUser user = database.UserManager.Find(userDto.Email, userDto.Password);
+            ApplicationUser user = database.UserManager.Find(login, password);
             if (user != null)
             {
                 if(!user.EmailConfirmed)
@@ -133,10 +129,9 @@ namespace Forum.BLL.Services
                     Email = "admin",
                     Role = "admin",
                     UserName = "Administrator",
-                    Password = "111111"
                 };
-                OperationDetails op =  Create(user, null);
-                ApplicationUser u = database.UserManager.Find(user.Email, user.Password);
+                OperationDetails op =  Create(user, "111111", null);
+                ApplicationUser u = database.UserManager.Find(user.Email, "111111");
                 u.EmailConfirmed = true;
                 database.UserManager.Update(u);
             }

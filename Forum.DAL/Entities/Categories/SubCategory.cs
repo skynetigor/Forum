@@ -9,11 +9,7 @@ namespace Forum.DAL.Entities.Categories
 {
     public class SubCategory:AbstractCategory
     {
-        public SubCategory()
-        {
-            Topics = new List<TopicDTO>();
-        }
         public virtual Category Category { get; set; }
-        public virtual ICollection<TopicDTO> Topics { get; set; }
+        public virtual IEnumerable<TopicDTO> Topics { get; set; }
     }
 }

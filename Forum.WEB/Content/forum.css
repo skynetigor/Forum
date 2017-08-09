@@ -2,7 +2,9 @@
     background-image: url('img/body-bg.gif');
 }
 
-
+.main {
+    margin-bottom:100px;
+}
 
 .navbar-logo {
     background-image: url('img/logo.png');
@@ -116,6 +118,13 @@
 
 .admin-panel .btn-group {
     margin:7px 0px 0px 30px;
+}
+
+.empty-message {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
 }
 
 

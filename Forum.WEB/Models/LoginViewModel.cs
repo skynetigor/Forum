@@ -10,7 +10,7 @@ namespace Forum.WEB.Models
     {
         [Display(Name = "Имя пользователя")]
         [Required]
-        public string UserName { get; set; }
+        public string Login { get; set; }
         [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
         [Required]

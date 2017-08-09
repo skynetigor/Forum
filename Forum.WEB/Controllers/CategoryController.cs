@@ -13,16 +13,16 @@ namespace Forum.WEB.Controllers
 {
     public class CategoryController : Controller
     {
-        private ICategoryService categoryService;
+        private IContentService<CategoryDTO> categoryService;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(IContentService<CategoryDTO> categoryService)
         {
             this.categoryService = categoryService;
         }
         
         public ActionResult Index()
         {
-            return View(categoryService.GetCategories());
+            return View(categoryService.Get());
         }
 
         public ActionResult UpdateCategory(int? categoryId)
@@ -30,7 +30,7 @@ namespace Forum.WEB.Controllers
             ViewBag.Resourse = Url.Action("UpdateCategory");
             if(categoryId != null)
             {
-                var category = categoryService.FindCategoryById((int)categoryId);
+                var category = categoryService.FindById((int)categoryId);
                 var categoryViewModel = new CategoryViewModel
                 {
                     Id = category.Id,
@@ -58,11 +58,11 @@ namespace Forum.WEB.Controllers
             };
             if (cat.Id == 0)
             {
-                categoryService.CreateCategory(user, cat);
+                categoryService.Create(user, cat);
             }
             else
             {
-                categoryService.UpdateCategory(user, cat);
+                categoryService.Update(user, cat);
             }
             return RedirectToAction("Index");
         }

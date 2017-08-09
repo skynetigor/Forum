@@ -19,5 +19,6 @@ namespace Forum.DAL.EF
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<TopicDTO> Topics { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

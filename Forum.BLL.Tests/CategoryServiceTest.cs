@@ -7,7 +7,7 @@ using Forum.DAL.Entities.Identity.IntPk;
 using Forum.DAL.Identity;
 using Forum.DAL.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+//using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;

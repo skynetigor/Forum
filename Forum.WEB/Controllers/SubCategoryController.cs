@@ -13,35 +13,37 @@ namespace Forum.WEB.Controllers
 {
     public class SubCategoryController : Controller
     {
-        private ICategoryService categoryService;
+        private IContentService<SubCategoryDTO> subCategoryService;
+        private IContentService<CategoryDTO> categoryService;
 
-        public SubCategoryController(ICategoryService categoryService)
+        public SubCategoryController(IContentService<SubCategoryDTO> subCategoryService, IContentService<CategoryDTO> categoryService)
         {
+            this.subCategoryService = subCategoryService;
             this.categoryService = categoryService;
         }
 
         public ActionResult Index()
         {
-            return View(categoryService.GetCategories());
+            return View(subCategoryService.Get());
         }
 
         public ActionResult UpdateSubCategory(int? subcategoryId)
         {
             if (subcategoryId != null)
             {
-                SubCategoryDTO subcategory = categoryService.FindSubCategoryById((int)subcategoryId);
+                SubCategoryDTO subcategory = subCategoryService.FindById((int)subcategoryId);
                 var categoryViewModel = new SubCategoryViewModel
                 {
                     Id = subcategory.Id,
                     Name = subcategory.Name,
                     Title = subcategory.Title,
-                    Categories = new SelectList(categoryService.GetCategories(), "Id", "Name")
+                    Categories = new SelectList(categoryService.Get(), "Id", "Name")
                 };
                 return PartialView(categoryViewModel);
             }
             var catViewModel = new SubCategoryViewModel
             {
-                Categories = new SelectList(categoryService.GetCategories(), "Id", "Name")
+                Categories = new SelectList(categoryService.Get(), "Id", "Name")
             };
             return PartialView(catViewModel);
         }
@@ -54,7 +56,9 @@ namespace Forum.WEB.Controllers
                 Id = User.Identity.GetUserId<int>(),
                 Name = User.Identity.Name
             };
-            var category = categoryService.FindCategoryById(categoryvm.CategoryId);
+            var category = new CategoryDTO {
+                Id = categoryvm.CategoryId
+            };
             var subCategory = new SubCategoryDTO
             {
                 Name = categoryvm.Name,
@@ -64,11 +68,11 @@ namespace Forum.WEB.Controllers
             };
             if (subCategory.Id == 0)
             {
-                categoryService.CreateSubCategory(user, category, subCategory);
+                subCategoryService.Create(user, subCategory);
             }
             else
             {
-                categoryService.UpdateSubCategory(user, subCategory);
+                subCategoryService.Update(user, subCategory);
             }
             return RedirectToAction("Index", "Category");
         }

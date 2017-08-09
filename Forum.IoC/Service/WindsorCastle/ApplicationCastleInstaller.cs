@@ -1,8 +1,10 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Forum.BLL.DTO.Content.Category;
 using Forum.BLL.Interfaces;
 using Forum.BLL.Services;
+using Forum.BLL.Services.CategoriesService;
 using Forum.DAL.EF;
 using Forum.DAL.Entities.Categories;
 using Forum.DAL.Interfaces;
@@ -26,13 +28,14 @@ namespace Forum.IoC.Service
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(Component.For<IUserService>().ImplementedBy<UserService>().LifestylePerWebRequest());
-            container.Register(Component.For<ICategoryService>().ImplementedBy<CategoryService>().LifestylePerWebRequest());
+            //container.Register(Component.For<ICategoryService>().ImplementedBy<CategoryService>().LifestylePerWebRequest());
+            container.Register(Component.For<IContentService<CategoryDTO>>().ImplementedBy<MainCategoriesService>().LifestylePerWebRequest());
+            container.Register(Component.For<IContentService<SubCategoryDTO>>().ImplementedBy<SubCategoryService>().LifestylePerWebRequest());
             container.Register(Component.For<IGenericRepository<Category>>().ImplementedBy<Repository<Category>>().LifestylePerWebRequest());
             container.Register(Component.For<IGenericRepository<SubCategory>>().ImplementedBy<Repository<SubCategory>>().LifestylePerWebRequest());
             container.Register(Component.For<IUnitOfWork>().ImplementedBy<IdentityUnitOfWork>().LifestylePerWebRequest());
             container.Register(Component.For<ApplicationContext>().ImplementedBy<ApplicationContext>().LifestylePerWebRequest());
             container.Register(Component.For<IConfirmedEmailSender>().ImplementedBy<ConfirmedEmailService>().LifestylePerWebRequest());
-            //container.Register(Component.For<ApplicationContext>().Instance(new ApplicationContext()).LifestylePerWebRequest());
 
             var controllers = assembly.GetTypes().Where(x => x.BaseType == typeof(Controller)).ToList();
             foreach (var controller in controllers)

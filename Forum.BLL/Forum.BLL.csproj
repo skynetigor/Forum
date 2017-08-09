@@ -66,11 +66,15 @@
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Interfaces\IConfirmedEmailSender.cs" />
+    <Compile Include="Interfaces\IContentService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\AbstractContentService.cs" />
+    <Compile Include="Services\CategoriesService\MainCategoriesService.cs" />
+    <Compile Include="Services\CategoriesService\SubCategoryService.cs" />
     <Compile Include="Services\ConfirmedEmailService.cs" />
-    <Compile Include="Interfaces\ICategoryService.cs" />
+    <Compile Include="Services\CategoriesService\AbstractCategoryService.cs" />
+    <Compile Include="Services\TopicService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

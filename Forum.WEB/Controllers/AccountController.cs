@@ -33,7 +33,7 @@ namespace Forum.WEB.Controllers
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Login");
+            return RedirectToAction("login");
         }
 
         [UnAuthorize]
@@ -48,19 +48,14 @@ namespace Forum.WEB.Controllers
         {
             try
             {
-                ClaimsIdentity claim = service.Authenticate(new UserDTO
-                {
-                    Name = model.UserName,
-                    Email = model.UserName,
-                    Password = model.Password
-                });
+                ClaimsIdentity claim = service.Authenticate(model.Login, model.Password);
                 AuthenticationManager.SignIn(claim);
             }
             catch (Exception e)
             {
                 ModelState.AddModelError(string.Empty, e.Message);
             }
-            return View();
+            return RedirectToAction("index", "category");
         }
 
         [UnAuthorize]
@@ -82,7 +77,7 @@ namespace Forum.WEB.Controllers
         {
             ClaimsIdentity claim = service.ConfirmEmail(token, email);
             AuthenticationManager.SignIn(claim);
-            return RedirectToAction("Login");
+            return RedirectToAction("login");
         }
 
         [UnAuthorize]
@@ -93,13 +88,12 @@ namespace Forum.WEB.Controllers
             {
                 Name = model.UserName,
                 Email = model.Email,
-                Password = model.Password,
-                Role = "User"
+                Role = "user"
             };
             try
             {
                 string url = Url.Action("ConfirmeEmail", "Account", null, Request.Url.Scheme) + "?token={0}&email={1}";
-                OperationDetails opdet = service.Create(user, url);
+                OperationDetails opdet = service.Create(user, model.Password, url);
                 if (!opdet.Succedeed)
                 {
                     ModelState.AddModelError(string.Empty, opdet.Message);
