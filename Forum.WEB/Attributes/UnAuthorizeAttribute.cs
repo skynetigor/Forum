@@ -14,12 +14,12 @@ namespace Forum.WEB.Attributes
         }
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            return httpContext.User.Identity.IsAuthenticated;
+            return !httpContext.User.Identity.IsAuthenticated;
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            //filterContext.Result = new RedirectResult("/Home/index");
+            filterContext.Result = new RedirectResult("/Category/index");
         }
     }
 }

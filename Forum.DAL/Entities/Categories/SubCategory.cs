@@ -13,8 +13,7 @@ namespace Forum.DAL.Entities.Categories
         {
             Topics = new List<TopicDTO>();
         }
-        public Category Category { get; set; }
-        public ICollection<TopicDTO> Topics { get; set; }
-        public ICollection<ApplicationUser> Moderators { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual ICollection<TopicDTO> Topics { get; set; }
     }
 }

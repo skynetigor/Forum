@@ -1,10 +1,8 @@
-﻿using Forum.BLL.DTO;
+﻿using System.Collections.Generic;
+using Forum.BLL.DTO;
 using Forum.BLL.DTO.Content.Category;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Forum.BLL.Infrastructure;
+using Forum.DAL.Entities.Categories;
 
 namespace Forum.BLL.Interfaces
 {
@@ -12,9 +10,22 @@ namespace Forum.BLL.Interfaces
     {
         IEnumerable<CategoryDTO> GetCategories();
 
-        void CreateCategory(UserDTO currentUser, int subCategoryId);
-        void RemoveCategory(UserDTO currentUser, int subCategoryId);
-        void UpdateCategory(UserDTO currentUser, int subCategoryId);
-        void BlockCategory(UserDTO currentUser, int subCategoryId);
+        CategoryDTO FindCategoryById(int id);
+
+        IEnumerable<SubCategoryDTO> GetSubCategories();
+
+        SubCategoryDTO FindSubCategoryById(int id);
+
+        OperationDetails CreateCategory(UserDTO user, CategoryDTO category);
+
+        OperationDetails CreateSubCategory(UserDTO user, CategoryDTO category, SubCategoryDTO subCategory);
+
+        OperationDetails DeleteCategory(UserDTO user, CategoryDTO category);
+
+        OperationDetails DeleteSubCategory(UserDTO user, SubCategoryDTO subCategory);
+
+        OperationDetails UpdateCategory(UserDTO user, CategoryDTO category);
+
+        OperationDetails UpdateSubCategory(UserDTO user, SubCategoryDTO subCategory);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Forum.BLL.DTO.Content.Category
 {
-    public class AbstractCategoryDTO
+    public class AbstractCategoryDTO:BaseEntityDTO
     {
         public string Name { get; set; }
         public string Title { get; set; }

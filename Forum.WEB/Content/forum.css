@@ -1,114 +1,121 @@
 ﻿body {
-    background-image:url('img/body-bg.gif')
+    background-image: url('img/body-bg.gif');
 }
 
 
 
-.navbar-logo{
-    
-    background-image:url('img/logo.png');
-    background-repeat:no-repeat;
-    background-size:cover;
-    display:inline-block;
-    margin:10px 0px 5px 20px;
-    width:300px;
-    height:160px;
+.navbar-logo {
+    background-image: url('img/logo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    margin: 10px 0px 5px 20px;
+    width: 300px;
+    height: 160px;
 }
 
-.navbar-cont{
-    background-image:url('img/nav-bg.jpg');
-    background-repeat:repeat;
-    margin:0px 15px 0px 15px;
-    border:double 4px #808080;
-    padding:0px 0px 0px 0px;
+.navbar-cont {
+    background-image: url('img/nav-bg.jpg');
+    background-repeat: repeat;
+    margin: 0px 15px 0px 15px;
+    border: double 4px #808080;
+    padding: 0px 0px 0px 0px;
     /*padding-bottom:10px;*/
-    border-radius:0px 0px 10px 10px;
-    border-top:0px;
-    overflow:hidden;
-    
+    border-radius: 0px 0px 10px 10px;
+    border-top: 0px;
+    overflow: hidden;
 }
 
-.block{
-    background-image:url('img/content-bg.png');
-    border-style:solid;
-    border:double 4px #808080;
-    border-radius:15px 15px 15px 15px;
-    margin:10px 0px 10px 0px;
-    min-width:650px;
-    padding:0px;
+.block {
+    background-image: url('img/content-bg.png');
+    border-style: solid;
+    border: double 4px #808080;
+    border-radius: 15px 15px 15px 15px;
+    margin: 10px 0px 10px 0px;
+    min-width: 650px;
+    padding: 0px;
 }
 
-.content{
-    min-height:400px;
+.content {
+    min-height: 400px;
 }
 
-.nav-forum{
-    border-top:0px;
-    border-radius:0px 0px 15px 15px;
-    margin-top:0px;
+.nav-forum {
+    border-top: 0px;
+    border-radius: 0px 0px 15px 15px;
+    margin-top: 0px;
 }
 
-.nav-menu{
-    margin:10px 0px 10px 0px;
+.nav-menu {
+    margin: 10px 0px 10px 0px;
 }
 
-.category{
-    border:double 3px #808080;
-    margin:15px 10px 5px 10px;
-    border-radius:8px;
-    overflow:hidden;
+.category {
+    border: double 3px #808080;
+    margin: 15px 10px 5px 10px;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.category .panel-heading
-{
-    background-image:url('img/nav-bg.jpg');
-    background-repeat:repeat;
-    border:double #808080;
-    border-top:4px;
-    border-left:4px;
-    border-right:4px;
-    color:#ffffff;
+    .category .panel-heading {
+        background-image: url('img/nav-bg.jpg');
+        background-repeat: repeat;
+        border: double #808080;
+        border-top: 4px;
+        border-left: 4px;
+        border-right: 4px;
+        color: #ffffff;
+    }
+
+.stretch {
+    margin: 0px;
+    width: 100%;
 }
 
-.stretch{
-    margin:0px;
-    width:100%;
+.panel-forum {
+    padding: 0px;
 }
 
-.panel-forum{
-    padding:0px;
+.thems, .reply {
+    width: 75px;
+    text-align: center;
 }
 
-.thems, .reply{
-    width:75px;
-    text-align:center;  
+.authorize-form {
+    padding: 0px 50px 0px 50px;
 }
 
-.authorize-form{
-    padding:0px 50px 0px 50px;
+.user-info {
+    float: right;
+    margin: 20px 20px 0px 0px;
+    color: white;
+    font-size: 1.1em;
 }
 
-.user-info{
-    float:right;
-    margin:20px 20px 0px 0px;
-    color:white;
-    font-size:1.1em;
+    .user-info ul {
+        list-style: none;
+    }
+
+    .user-info a {
+        text-decoration: none;
+        color: white;
+    }
+
+        .user-info a:hover {
+            text-decoration: none;
+            color: #cfbfbf;
+        }
+
+    .user-info i {
+        margin: 0px 5px 0px 5px;
+    }
+
+.admin-panel{
+    position:relative
+}  
+
+.admin-panel .btn-group {
+    margin:7px 0px 0px 30px;
 }
 
-.user-info ul{
-    list-style:none;
-}
 
-.user-info a{
-    text-decoration:none;
-    color:white;
-}
-
-.user-info a:hover{
-    text-decoration:none;
-    color:#cfbfbf;
-}
-
-.user-info i{
-margin:0px 5px 0px 5px;
-}

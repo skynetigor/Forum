@@ -1,0 +1,32 @@
+﻿@using Forum.BLL.DTO.Content.Category
+@model IEnumerable<CategoryDTO>
+
+@foreach (CategoryDTO category in Model)
+{
+    <div class="panel panel-default category">
+        <div class="panel-heading">
+            <h3 class="panel-title">@category.Name</h3>
+        </div>
+        <div class="panel-body panel-forum">
+            <table class="table table-bordered table-striped stretch table-forum">
+                <thead>
+                    <tr>
+                        <td>Форум</td>
+                        <td class="thems">Темы</td>
+                        <td class="reply">Ответы</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SubCategoryDTO sub in category.SubCategories)
+                {
+                        <tr>
+                            <td>@sub.Name</td>
+                            <td class="thems">551</td>
+                            <td class="reply">1223</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

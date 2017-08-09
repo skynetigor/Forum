@@ -1,4 +1,6 @@
-﻿using Forum.DAL.Identity;
+﻿using Forum.DAL.Entities;
+using Forum.DAL.Identity;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,9 @@ namespace Forum.DAL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        ApplicationUserManager UserManager { get; }
+        UserManager<ApplicationUser, int> UserManager { get; }
         IClientManager ClientManager { get; }
-        ApplicationRoleManager RoleManager { get; }
+        RoleManager<ApplicationRole, int> RoleManager { get; }
         void Save();
     }
 }

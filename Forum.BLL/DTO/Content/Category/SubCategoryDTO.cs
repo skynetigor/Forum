@@ -13,7 +13,6 @@ namespace Forum.BLL.DTO.Content.Category
             Topics = new List<TopicDTO>();
         }
         public CategoryDTO Category { get; set; }
-        public ICollection<TopicDTO> Topics { get; set; }
-        public ICollection<UserDTO> Moderators { get; set; }
+        public IEnumerable<TopicDTO> Topics { get; set; }
     }
 }

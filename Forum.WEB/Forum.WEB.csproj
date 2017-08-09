@@ -196,9 +196,7 @@
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
-    <None Include="scripts\forum\jquery-1.10.2.intellisense.js" />
-    <Content Include="scripts\forum\jquery-1.10.2.js" />
-    <Content Include="scripts\forum\popup.js" />
+    <Content Include="scripts\popup.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
     <None Include="scripts\jquery.validate-vsdoc.js" />
@@ -208,7 +206,9 @@
     <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <None Include="scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -217,11 +217,13 @@
     <Compile Include="Attributes\UnAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\TopicController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Category\CategoryViewModel.cs" />
+    <Compile Include="Models\Category\SubCategoryViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -237,6 +239,11 @@
     <Content Include="Views\Account\Registration.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\GetModel.cshtml" />
+    <Content Include="Views\Category\UpdateCategory.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\CategoriesPartial.cshtml" />
+    <Content Include="Views\SubCategory\UpdateSubCategory.cshtml" />
+    <Content Include="Views\Shared\FixedBottomAdminPanel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -245,8 +252,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Category\" />
-    <Folder Include="Views\Home\" />
     <Folder Include="Views\Topics\" />
   </ItemGroup>
   <ItemGroup>

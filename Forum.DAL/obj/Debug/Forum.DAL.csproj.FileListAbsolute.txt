@@ -29,7 +29,6 @@ D:\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 D:\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\Forum\Forum.DAL\obj\Debug\Forum.DAL.dll
 D:\Forum\Forum.DAL\obj\Debug\Forum.DAL.pdb
-D:\Forum\Forum.DAL\obj\Debug\Forum.DAL.csprojResolveAssemblyReference.cache
 E:\IT\PROJECTS\Forum\Forum.DAL\bin\Debug\App_Data\MyDB.mdf
 E:\IT\PROJECTS\Forum\Forum.DAL\bin\Debug\App_Data\MyDB_log.ldf
 E:\IT\PROJECTS\Forum\Forum.DAL\bin\Debug\Forum.DAL.dll.config
@@ -45,3 +44,4 @@ E:\IT\PROJECTS\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 E:\IT\PROJECTS\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 E:\IT\PROJECTS\Forum\Forum.DAL\obj\Debug\Forum.DAL.dll
 E:\IT\PROJECTS\Forum\Forum.DAL\obj\Debug\Forum.DAL.pdb
+D:\Forum\Forum.DAL\obj\Debug\Forum.DAL.csprojResolveAssemblyReference.cache

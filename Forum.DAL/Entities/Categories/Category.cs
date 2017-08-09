@@ -12,6 +12,7 @@ namespace Forum.DAL.Entities.Categories
         {
             SubCategories = new List<SubCategory>();
         }
-        ICollection<SubCategory> SubCategories { get; set; }
+        public virtual ICollection<SubCategory> SubCategories { get; set; }
+        public virtual ApplicationUser Moderator { get; set; }
     }
 }

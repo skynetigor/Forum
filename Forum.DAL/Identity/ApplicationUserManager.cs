@@ -15,7 +15,17 @@ namespace Forum.DAL.Identity
     {
         public ApplicationUserManager(UserStoreIntPk store) : base(store)
         {
-
+            //if (this.Users.Count() == 0)
+            //{
+            //    ApplicationUser user = new ApplicationUser
+            //    {
+            //        Email = "admin",
+            //        UserName = "admin",
+            //        EmailConfirmed = true
+            //    };
+            //    this.Create(user, "111111");
+            //    this.AddToRole(user.Id, "admin");
+            //}
         }
     }
 }

@@ -4,6 +4,6 @@ namespace Forum.DAL.Entities
 {
     public class ApplicationRole : IdentityRole<int, UserRoleIntPk>
     {
-        
+       
     }
 }

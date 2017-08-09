@@ -30,8 +30,6 @@ D:\Forum\Forum.IoC\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 D:\Forum\Forum.IoC\bin\Debug\EntityFramework.xml
 D:\Forum\Forum.IoC\obj\Debug\Forum.IoC.dll
 D:\Forum\Forum.IoC\obj\Debug\Forum.IoC.pdb
-D:\Forum\Forum.IoC\bin\Debug\App_Data\MyDB.mdf
-D:\Forum\Forum.IoC\bin\Debug\App_Data\MyDB_log.ldf
 E:\IT\PROJECTS\Forum\Forum.IoC\bin\Debug\App_Data\MyDB.mdf
 E:\IT\PROJECTS\Forum\Forum.IoC\bin\Debug\App_Data\MyDB_log.ldf
 E:\IT\PROJECTS\Forum\Forum.IoC\bin\Debug\Forum.IoC.dll
@@ -66,3 +64,5 @@ E:\IT\PROJECTS\Forum\Forum.IoC\bin\Debug\EntityFramework.xml
 E:\IT\PROJECTS\Forum\Forum.IoC\obj\Debug\Forum.IoC.csprojResolveAssemblyReference.cache
 E:\IT\PROJECTS\Forum\Forum.IoC\obj\Debug\Forum.IoC.dll
 E:\IT\PROJECTS\Forum\Forum.IoC\obj\Debug\Forum.IoC.pdb
+D:\Forum\Forum.IoC\bin\Debug\App_Data\MyDB.mdf
+D:\Forum\Forum.IoC\bin\Debug\App_Data\MyDB_log.ldf

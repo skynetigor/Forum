@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link type="text/css" href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link type="text/css" href="~/Content/forum.css" rel="stylesheet" />
     <link type="text/css" href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link type="text/css" href="~/Content/forum.css" rel="stylesheet" />
     <link type="text/css" href="~/Content/popup.css" rel="stylesheet" />
 </head>
 <body>
+    @Html.Partial("FixedBottomAdminPanel")
     <div class="container">
         <nav>
             <div class="container-fluid block nav-forum">
@@ -28,16 +29,16 @@
                                     <p><i class="glyphicon glyphicon-bell"></i>Оповещения</p>
                                 </li>
                                 <li>
-                                    <a href=@Url.Action("Logout")><i class="glyphicon glyphicon-log-out"></i>Выйти</a>
+                                    <a href=@Url.Action("Logout", "Account")><i class="glyphicon glyphicon-log-out"></i>Выйти</a>
                                 </li>
                             }
                             else
                             {
                                 <li>
-                                    <a href=@Url.Action("Login")><i class="glyphicon glyphicon-log-in"></i>Войти</a>
+                                    <a href=@Url.Action("Login", "Account")><i class="glyphicon glyphicon-log-in"></i>Войти</a>
                                 </li>
                                 <li>
-                                    <a href=@Url.Action("Registration")><i class="glyphicon glyphicon-registration-mark"></i>Зарегистрироваться</a>
+                                    <a href=@Url.Action("Registration", "Account")><i class="glyphicon glyphicon-registration-mark"></i>Зарегистрироваться</a>
                                 </li>
                             }
                             </ul>
@@ -62,10 +63,11 @@
             </div>
         </content>
     </div>
-    <script src="~/scripts/jquery-1.10.2.js"></script>
+    @*<script src="~/scripts/jquery-1.10.2.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="~/scripts/bootstrap.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-    <script src="~/Scripts/forum/popup.js"></script>
+    <script src="~/scripts/jquery.validate.js"></script>
+    <script src="~/scripts/jquery.validate.unobtrusive.js"></script>
+
 </body>
 </html>

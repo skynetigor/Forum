@@ -15,21 +15,21 @@ namespace Forum.DAL.Repositories
 {
     public class IdentityUnitOfWork : IUnitOfWork
     {
-        private ApplicationContext db;
+        private ApplicationContext context;
 
         private ApplicationUserManager userManager;
         private ApplicationRoleManager roleManager;
         private IClientManager clientManager;
 
-        public IdentityUnitOfWork(string connectionString)
+        public IdentityUnitOfWork(ApplicationContext context)
         {
-            db = new ApplicationContext(connectionString);
-            userManager = new ApplicationUserManager(new UserStoreIntPk(db));
-            roleManager = new ApplicationRoleManager(new RoleStoreIntPk(db));
-            clientManager = new ClientManager(db);
+            this.context = context;
+            userManager = new ApplicationUserManager(new UserStoreIntPk(context));
+            roleManager = new ApplicationRoleManager(new RoleStoreIntPk(context));
+            clientManager = new ClientManager(context);
         }
 
-        public ApplicationUserManager UserManager
+        public UserManager<ApplicationUser, int> UserManager
         {
             get { return userManager; }
         }
@@ -39,14 +39,14 @@ namespace Forum.DAL.Repositories
             get { return clientManager; }
         }
 
-        public ApplicationRoleManager RoleManager
+        public RoleManager<ApplicationRole, int> RoleManager
         {
             get { return roleManager; }
         }
 
         public void Save()
         {
-            db.SaveChanges();
+            context.SaveChanges();
         }
 
         public void Dispose()

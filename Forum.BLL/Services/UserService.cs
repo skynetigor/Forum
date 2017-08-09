@@ -27,22 +27,17 @@ namespace Forum.BLL.Services
         private IUnitOfWork database;
         private IConfirmedEmailSender emailSender =new ConfirmedEmailService();
 
-        public UserService()
-        {
-            database = new IdentityUnitOfWork("ApplicationContext");
-            emailSender = new ConfirmedEmailService();
-            FirstInitialize();
-        }
         public UserService(IUnitOfWork database, IConfirmedEmailSender emailSender)
         {
             this.emailSender = emailSender;
             this.database = database;
+            FirstInitialize();
         }
         
         public OperationDetails Create(UserDTO userDto, string confirmeUrl)
         {
             ApplicationUser user = null;
-
+            
             user = database.UserManager.FindByEmail(userDto.Email);
 
             if (user == null)
@@ -52,12 +47,13 @@ namespace Forum.BLL.Services
                 if (result.Errors.Count() > 0)
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), string.Empty);
                 // добавляем роль
+                if (userDto.Role != "admin")
+                    userDto.Role = "user";
                 database.UserManager.AddToRole(user.Id, userDto.Role);
                 // создаем профиль клиента
                 ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
                 database.ClientManager.Create(clientProfile);
                 database.Save();
-                database.RoleManager.Roles.First();
                 //user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
                 if (!string.IsNullOrEmpty(confirmeUrl))
                     emailSender.SendConfirmationMessage(GenerateMessage(user, confirmeUrl), PASSWORD);
@@ -99,6 +95,10 @@ namespace Forum.BLL.Services
 
         public ClaimsIdentity Authenticate(UserDTO userDto)
         {
+            //if(userDto.Email == "admin" && userDto.Password == "111111")
+            //{
+            //    FirstInitialize();
+            //}
             ClaimsIdentity claim = null;
             ApplicationUser user = database.UserManager.Find(userDto.Email, userDto.Password);
             if (user != null)
@@ -117,11 +117,12 @@ namespace Forum.BLL.Services
         {
             int i = database.UserManager.Users.Count();
             int b = database.RoleManager.Roles.Count();
-            if (i == 0 && b == 1)
+            if (i == 0 && b == 0)
             {
                 ApplicationRole[] roles = {
                     new ApplicationRole {Name = "admin" },
-                    new ApplicationRole {Name = "moderator" }
+                    new ApplicationRole {Name = "moderator" },
+                    new ApplicationRole {Name = "user" }
                 };
                 foreach (ApplicationRole role in roles)
                 {

@@ -12,6 +12,6 @@ namespace Forum.BLL.DTO.Content.Category
         {
             SubCategories = new List<SubCategoryDTO>();
         }
-        ICollection<SubCategoryDTO> SubCategories { get; set; }
+        public IEnumerable<SubCategoryDTO> SubCategories { get; set; }
     }
 }

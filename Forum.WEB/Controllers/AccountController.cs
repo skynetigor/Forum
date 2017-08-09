@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Forum.WEB.Controllers
 {
-    [UnAuthorize]
+    
     public class AccountController : Controller
     {
         IUserService service;
@@ -35,11 +35,14 @@ namespace Forum.WEB.Controllers
             AuthenticationManager.SignOut();
             return RedirectToAction("Login");
         }
+
+        [UnAuthorize]
         public ActionResult Login(string returnUrl)
         {
             return View();
         }
 
+        [UnAuthorize]
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
@@ -60,18 +63,21 @@ namespace Forum.WEB.Controllers
             return View();
         }
 
+        [UnAuthorize]
         [HttpGet]
         public ActionResult GetModel()
         {
             return View();
         }
 
+        [UnAuthorize]
         public ActionResult Registration()
         {
             string s = User.Identity.Name;
             return View();
         }
 
+        [UnAuthorize]
         public ActionResult ConfirmeEmail(int token, string email)
         {
             ClaimsIdentity claim = service.ConfirmEmail(token, email);
@@ -79,6 +85,7 @@ namespace Forum.WEB.Controllers
             return RedirectToAction("Login");
         }
 
+        [UnAuthorize]
         [HttpPost]
         public ActionResult Registration(RegistrationViewModel model)
         {
