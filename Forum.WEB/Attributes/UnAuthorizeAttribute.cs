@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Forum.BLL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,6 @@ namespace Forum.WEB.Attributes
 {
     public class UnAuthorizeAttribute : AuthorizeAttribute
     {
-        public UnAuthorizeAttribute()
-        {
-
-        }
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             return !httpContext.User.Identity.IsAuthenticated;

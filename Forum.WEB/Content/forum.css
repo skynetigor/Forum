@@ -127,4 +127,21 @@
     font-weight: bold;
 }
 
+.table-comment {
+    min-height:200px;
+}
+
+.table-comment thead tr{
+    height:50px;
+    color:#381bae;
+    font-weight:bold;
+    font-size:1.5em;
+    text-align:center;
+    background-color:antiquewhite;
+}
+
+.user-name{
+    width:220px;
+}
+
 

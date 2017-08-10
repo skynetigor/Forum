@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Forum.WEB.Models.Category
+namespace Forum.WEB.Models.ContentViewModels
 {
-    public class CategoryViewModel
+    public class CategoryViewModel:AbstractViewModel
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string Name { get; set; }
     }

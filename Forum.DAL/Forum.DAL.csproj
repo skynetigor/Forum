@@ -80,8 +80,8 @@
     <Compile Include="Entities\Categories\Category.cs" />
     <Compile Include="Entities\Categories\AbstractCategory.cs" />
     <Compile Include="Entities\Categories\SubCategory.cs" />
-    <Compile Include="Entities\Identity\ClientProfile.cs" />
     <Compile Include="Entities\Identity\IntPk\IntPK.cs" />
+    <Compile Include="Entities\Notification.cs" />
     <Compile Include="Entities\Topics\Topic.cs" />
     <Compile Include="FirstInitializer\Initializer.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />

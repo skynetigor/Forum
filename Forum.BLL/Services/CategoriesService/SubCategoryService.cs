@@ -1,10 +1,5 @@
 ﻿using Forum.BLL.DTO.Content.Category;
-using Forum.BLL.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Forum.BLL.DTO;
 using Forum.BLL.Infrastructure;
 using Forum.DAL.Entities.Categories;
@@ -15,7 +10,6 @@ namespace Forum.BLL.Services.CategoriesService
 {
     public class SubCategoryService : AbstractCategoryService<SubCategoryDTO>
     {
-        const string ACCESS_ERROR = "У вас нет прав на данное действие!";
         const string SUBCATEGORY_CREATE_SUCCESS = "Подкатегория '{0}' в категории {1} успешно создана!";
         const string SUBCATEGORY_UPDATE_SUCCESS = "Подкатегория '{0}' в категории {1} успешно изменена!";
         const string SUBCATEGORY_DELETE_SUCCESS = "Подкатегория '{0}' в категории {1} успешно удалена!";
@@ -78,9 +72,9 @@ namespace Forum.BLL.Services.CategoriesService
                 {
                     Name = category.Name,
                     Title = category.Title,
-                    Category = cat
                 };
-                subCategoryRepository.Create(subCat);
+                cat.SubCategories.Add(subCat);
+                categoryRepository.Update(cat);
                 return new OperationDetails(false, string.Format(SUBCATEGORY_CREATE_SUCCESS, subCat.Name, cat.Name), string.Empty);
             }
             return new OperationDetails(false, ACCESS_ERROR, string.Empty);

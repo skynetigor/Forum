@@ -19,24 +19,17 @@ namespace Forum.DAL.Repositories
 
         private ApplicationUserManager userManager;
         private ApplicationRoleManager roleManager;
-        private IClientManager clientManager;
 
         public IdentityUnitOfWork(ApplicationContext context)
         {
             this.context = context;
             userManager = new ApplicationUserManager(new UserStoreIntPk(context));
             roleManager = new ApplicationRoleManager(new RoleStoreIntPk(context));
-            clientManager = new ClientManager(context);
         }
 
         public UserManager<ApplicationUser, int> UserManager
         {
             get { return userManager; }
-        }
-
-        public IClientManager ClientManager
-        {
-            get { return clientManager; }
         }
 
         public RoleManager<ApplicationRole, int> RoleManager
@@ -64,7 +57,6 @@ namespace Forum.DAL.Repositories
                 {
                     userManager.Dispose();
                     roleManager.Dispose();
-                    clientManager.Dispose();
                 }
                 this.disposed = true;
             }

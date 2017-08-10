@@ -62,5 +62,3 @@ E:\IT\PROJECTS\Forum\Forum.IoC\bin\Debug\EntityFramework.xml
 E:\IT\PROJECTS\Forum\Forum.IoC\obj\Debug\Forum.IoC.csprojResolveAssemblyReference.cache
 E:\IT\PROJECTS\Forum\Forum.IoC\obj\Debug\Forum.IoC.dll
 E:\IT\PROJECTS\Forum\Forum.IoC\obj\Debug\Forum.IoC.pdb
-D:\Forum\Forum.IoC\bin\Debug\App_Data\MyDB.mdf
-D:\Forum\Forum.IoC\bin\Debug\App_Data\MyDB_log.ldf

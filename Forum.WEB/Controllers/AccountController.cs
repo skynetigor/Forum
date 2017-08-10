@@ -3,6 +3,7 @@ using Forum.BLL.Infrastructure;
 using Forum.BLL.Interfaces;
 using Forum.WEB.Attributes;
 using Forum.WEB.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
 using System.Security.Claims;
@@ -14,7 +15,7 @@ namespace Forum.WEB.Controllers
     
     public class AccountController : Controller
     {
-        IUserService service;
+        private IUserService service;
         public AccountController(IUserService service)
         {
             this.service = service;
@@ -48,7 +49,7 @@ namespace Forum.WEB.Controllers
         {
             try
             {
-                ClaimsIdentity claim = service.Authenticate(model.Login, model.Password);
+                var claim = service.Authenticate(model.Login, model.Password);
                 AuthenticationManager.SignIn(claim);
             }
             catch (Exception e)
@@ -68,14 +69,14 @@ namespace Forum.WEB.Controllers
         [UnAuthorize]
         public ActionResult Registration()
         {
-            string s = User.Identity.Name;
+            var s = User.Identity.Name;
             return View();
         }
 
         [UnAuthorize]
         public ActionResult ConfirmeEmail(int token, string email)
         {
-            ClaimsIdentity claim = service.ConfirmEmail(token, email);
+            var claim = service.ConfirmEmail(token, email);
             AuthenticationManager.SignIn(claim);
             return RedirectToAction("login");
         }
@@ -84,16 +85,15 @@ namespace Forum.WEB.Controllers
         [HttpPost]
         public ActionResult Registration(RegistrationViewModel model)
         {
-            UserDTO user = new UserDTO
-            {
-                Name = model.UserName,
-                Email = model.Email,
-                Role = "user"
-            };
             try
             {
-                string url = Url.Action("ConfirmeEmail", "Account", null, Request.Url.Scheme) + "?token={0}&email={1}";
-                OperationDetails opdet = service.Create(user, model.Password, url);
+                var url = Url.Action("ConfirmeEmail", "Account", null, Request.Url.Scheme) + "?token={0}&email={1}";
+                var user = new UserDTO
+                {
+                    Email = User.Identity.Name,
+                    Id = User.Identity.GetUserId<int>()
+                };
+                var opdet = service.Create(user, model.Password, url);
                 if (!opdet.Succedeed)
                 {
                     ModelState.AddModelError(string.Empty, opdet.Message);

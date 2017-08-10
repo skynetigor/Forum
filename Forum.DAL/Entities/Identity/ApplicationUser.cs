@@ -13,8 +13,13 @@ namespace Forum.DAL.Entities
 {
     public class ApplicationUser : IdentityUser<int, UserLoginIntPk, UserRoleIntPk, UserClaimIntPk>
     {
+        public ApplicationUser():base()
+        {
+            Notifications = new List<Notification>();
+        }
         public bool IsBlocked { get; set; }
-        public virtual ClientProfile ClientProfile { get; set; }
+
+        public virtual ICollection<Notification> Notifications { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)
         {

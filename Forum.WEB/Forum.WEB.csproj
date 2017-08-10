@@ -214,19 +214,28 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attributes\MyAuthorizeAttribute.cs" />
     <Compile Include="Attributes\UnAuthorizeAttribute.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BlockedUserController.cs" />
+    <Compile Include="Controllers\IContentController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\TopicController.cs" />
-    <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Category\CategoryViewModel.cs" />
-    <Compile Include="Models\Category\SubCategoryViewModel.cs" />
+    <Compile Include="Models\ContentViewModels\AbstractViewModel.cs" />
+    <Compile Include="Models\ContentViewModels\CategoryViewModel.cs" />
+    <Compile Include="Models\ContentViewModels\SubCategoryViewModel.cs" />
+    <Compile Include="Models\ContentViewModels\UserViewModel.cs" />
+    <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
+    <Compile Include="Models\ContentViewModels\TopicViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -240,11 +249,16 @@
     <Content Include="Views\Account\Registration.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\GetModel.cshtml" />
-    <Content Include="Views\Category\UpdateCategory.cshtml" />
+    <Content Include="Views\Category\Update.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\CategoriesPartial.cshtml" />
-    <Content Include="Views\SubCategory\UpdateSubCategory.cshtml" />
+    <Content Include="Views\SubCategory\Update.cshtml" />
     <Content Include="Views\Shared\FixedBottomAdminPanel.cshtml" />
+    <Content Include="Views\Topic\Update.cshtml" />
+    <Content Include="Views\Topic\Index.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\Comment\Update.cshtml" />
+    <Content Include="Views\Admin\UserList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -253,7 +267,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Topics\" />
+    <Folder Include="Views\BlockedUser\" />
+    <Folder Include="Views\Notification\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Forum.BLL\Forum.BLL.csproj">

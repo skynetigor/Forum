@@ -14,7 +14,6 @@ namespace Forum.BLL.Services.CategoriesService
 {
     public class MainCategoriesService : AbstractCategoryService<CategoryDTO>
     {
-        const string ACCESS_ERROR = "У вас нет прав на данное действие!";
         const string CATEGORY_CREATE_SUCCESS = "Категория '{0}' успешно создана!";
         const string CATEGORY_UPDATE_SUCCESS = "Категория '{0}' успешно изменена!";
         const string CATEGORY_DELETE_SUCCESS = "Категория '{0}' успешно удалена!";

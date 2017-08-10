@@ -8,7 +8,11 @@ namespace Forum.DAL.Entities.Categories
 {
     public class Category : AbstractCategory
     {
-        public virtual IEnumerable<SubCategory> SubCategories { get; set; }
+        public Category()
+        {
+            SubCategories = new List<SubCategory>();
+        }
+        public virtual ICollection<SubCategory> SubCategories { get; set; }
         public virtual ApplicationUser Moderator { get; set; }
     }
 }

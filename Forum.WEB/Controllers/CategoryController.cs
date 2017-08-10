@@ -1,17 +1,14 @@
 ﻿using Forum.BLL.DTO;
 using Forum.BLL.DTO.Content.Category;
 using Forum.BLL.Interfaces;
-using Forum.WEB.Models.Category;
+using Forum.WEB.Attributes;
+using Forum.WEB.Models.ContentViewModels;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Forum.WEB.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : Controller, IContentController<CategoryViewModel>
     {
         private IContentService<CategoryDTO> categoryService;
 
@@ -20,17 +17,18 @@ namespace Forum.WEB.Controllers
             this.categoryService = categoryService;
         }
         
+        [MyAuthorize]
         public ActionResult Index()
         {
             return View(categoryService.Get());
         }
 
-        public ActionResult UpdateCategory(int? categoryId)
+        public ActionResult Update(int? Id)
         {
             ViewBag.Resourse = Url.Action("UpdateCategory");
-            if(categoryId != null)
+            if(Id != null)
             {
-                var category = categoryService.FindById((int)categoryId);
+                var category = this.categoryService.FindById((int)Id);
                 var categoryViewModel = new CategoryViewModel
                 {
                     Id = category.Id,
@@ -43,18 +41,18 @@ namespace Forum.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateCategory(CategoryViewModel category)
+        public ActionResult Update(CategoryViewModel viewModel)
         {
             var user = new UserDTO
             {
-                 Id = User.Identity.GetUserId<int>(),
-                 Name = User.Identity.Name
+                Email = User.Identity.Name,
+                Id = User.Identity.GetUserId<int>()
             };
             var cat = new CategoryDTO
             {
-                Id = category.Id,
-                Name = category.Name,
-                Title = category.Title
+                Id = viewModel.Id,
+                Name = viewModel.Name,
+                Title = viewModel.Title
             };
             if (cat.Id == 0)
             {

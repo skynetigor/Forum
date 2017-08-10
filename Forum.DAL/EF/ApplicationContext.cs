@@ -14,11 +14,10 @@ namespace Forum.DAL.EF
         {
 
         }
-
-        public DbSet<ClientProfile> ClientProfiles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
-        public DbSet<TopicDTO> Topics { get; set; }
+        public DbSet<Topic> Topics { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Notification> Notification { get; set; }
     }
 }

@@ -21,7 +21,7 @@
                     @foreach (SubCategoryDTO sub in category.SubCategories)
                     {
                         <tr>
-                            <td>@sub.Name</td>
+                            <td><a href="@Url.Action("index","topic", new { subCategoryId = sub.Id })">@sub.Name</a></td>
                             <td class="thems">551</td>
                             <td class="reply">1223</td>
                         </tr>

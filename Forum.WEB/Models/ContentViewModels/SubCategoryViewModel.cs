@@ -6,11 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages.Html;
 
-namespace Forum.WEB.Models.Category
+namespace Forum.WEB.Models.ContentViewModels
 {
     public class SubCategoryViewModel:CategoryViewModel
     {
         public int CategoryId { get; set; }
         public SelectList Categories { get; set; }
+        public TopicViewModel Topic { get; set; }
     }
 }

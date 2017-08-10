@@ -12,7 +12,6 @@ namespace Forum.DAL.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         UserManager<ApplicationUser, int> UserManager { get; }
-        IClientManager ClientManager { get; }
         RoleManager<ApplicationRole, int> RoleManager { get; }
         void Save();
     }

@@ -1,5 +1,3 @@
-D:\Forum\Forum.BLL.Tests\bin\Debug\App_Data\MyDB.mdf
-D:\Forum\Forum.BLL.Tests\bin\Debug\App_Data\MyDB_log.ldf
 D:\Forum\Forum.BLL.Tests\bin\Debug\Forum.BLL.Tests.dll
 D:\Forum\Forum.BLL.Tests\bin\Debug\Forum.BLL.Tests.pdb
 D:\Forum\Forum.BLL.Tests\bin\Debug\Castle.Core.dll

@@ -1,7 +1,7 @@
 ﻿using Forum.BLL.DTO;
 using Forum.BLL.DTO.Content.Category;
 using Forum.BLL.Interfaces;
-using Forum.WEB.Models.Category;
+using Forum.WEB.Models.ContentViewModels;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Forum.WEB.Controllers
 {
-    public class SubCategoryController : Controller
+    public class SubCategoryController : Controller, IContentController<SubCategoryViewModel>
     {
         private IContentService<SubCategoryDTO> subCategoryService;
         private IContentService<CategoryDTO> categoryService;
@@ -22,16 +22,11 @@ namespace Forum.WEB.Controllers
             this.categoryService = categoryService;
         }
 
-        public ActionResult Index()
+        public ActionResult Update(int? Id)
         {
-            return View(subCategoryService.Get());
-        }
-
-        public ActionResult UpdateSubCategory(int? subcategoryId)
-        {
-            if (subcategoryId != null)
+            if (Id != null)
             {
-                SubCategoryDTO subcategory = subCategoryService.FindById((int)subcategoryId);
+                var subcategory = subCategoryService.FindById((int)Id);
                 var categoryViewModel = new SubCategoryViewModel
                 {
                     Id = subcategory.Id,
@@ -49,21 +44,21 @@ namespace Forum.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateSubCategory(SubCategoryViewModel categoryvm)
+        public ActionResult Update(SubCategoryViewModel viewModel)
         {
-            UserDTO user = new UserDTO
+            var user = new UserDTO
             {
                 Id = User.Identity.GetUserId<int>(),
-                Name = User.Identity.Name
+                Email = User.Identity.Name
             };
             var category = new CategoryDTO {
-                Id = categoryvm.CategoryId
+                Id = viewModel.CategoryId
             };
             var subCategory = new SubCategoryDTO
             {
-                Name = categoryvm.Name,
-                Title = categoryvm.Title,
-                Id = categoryvm.Id,
+                Name = viewModel.Name,
+                Title = viewModel.Title,
+                Id = viewModel.Id,
                 Category = category
             };
             if (subCategory.Id == 0)

@@ -9,6 +9,7 @@ namespace Forum.BLL.Services
 {
     public abstract class AbstractContentService<TContent> : IContentService<TContent> where TContent : BaseEntityDTO
     {
+        protected const string ACCESS_ERROR = "У вас нет прав на данное действие!";
         public abstract TContent FindById(int id);
 
         public abstract IEnumerable<TContent> Get();
