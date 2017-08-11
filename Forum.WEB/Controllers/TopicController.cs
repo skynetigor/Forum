@@ -26,11 +26,11 @@ namespace Forum.WEB.Controllers
 
         public ActionResult Index(int? subCategoryId)
         {
-            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            if (block.IsAccess)
-            {
-                return View("Error", (object)block.Message);
-            }
+            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            //if (block.IsAccess)
+            //{
+            //    return View("Error", (object)block.Message);
+            //}
             if (subCategoryId != null)
             {
                 var topics = topicService.GetTopicsBySubCategoryId((int)subCategoryId);
@@ -42,11 +42,11 @@ namespace Forum.WEB.Controllers
 
         public ActionResult Update(int? id, int? currentId)
         {
-            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            if (block.IsTopic || block.IsAccess)
-            {
-                return View("Error", (object)block.Message);
-            }
+            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            //if (block.IsTopic || block.IsAccess)
+            //{
+            //    return View("Error", (object)block.Message);
+            //}
             if (id != null)
             {
                 var topic = topicService.FindById((int)id);

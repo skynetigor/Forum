@@ -1,5 +1,6 @@
 ﻿using Forum.BLL.DTO;
 using Forum.BLL.DTO.Content.Category;
+using Forum.BLL.Infrastructure;
 using Forum.BLL.Interfaces;
 using Forum.WEB.Attributes;
 using Forum.WEB.Models.ContentViewModels;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Forum.WEB.Controllers
 {
+    //[MyAuthorize(Permissions = new BlockType[] { BlockType.Access })]
     public class CategoryController : Controller, IContentController<CategoryViewModel>
     {
         private IContentService<CategoryDTO> categoryService;
@@ -18,14 +20,14 @@ namespace Forum.WEB.Controllers
             this.blockService = blockService;
         }
         
-        [MyAuthorize]
+        [UnAuthorize]
         public ActionResult Index()
         {
-            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            if (block.IsAccess)
-            {
-                return View("Error", (object)block.Message);
-            }
+            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            //if (block.IsAccess)
+            //{
+            //    return View("Error", (object)block.Message);
+            //}
             return View(categoryService.Get());
         }
 

@@ -1,6 +1,8 @@
 ﻿using Forum.BLL.DTO;
 using Forum.BLL.DTO.Content;
+using Forum.BLL.Infrastructure;
 using Forum.BLL.Interfaces;
+using Forum.WEB.Attributes;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Web.Mvc;
@@ -21,23 +23,24 @@ namespace Forum.WEB.Controllers
 
         public ActionResult Index(int? currentTopic)
         {
-            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            if (block.IsAccess)
-            {
-                return View("Error", (object)block.Message);
-            }
+            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            //if (block.IsAccess)
+            //{
+            //    return View("Error", (object)block.Message);
+            //}
             var comments = commentService.GetCommentsByTopicId((int)currentTopic);
             ViewBag.TopicId = currentTopic;
             return View(comments);
         }
 
+        [MyAuthorize(Permissions = new BlockType[] { BlockType.Comment })]
         public ActionResult Update(int? id, int? currentId)
         {
-            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            if (block.IsComment || block.IsAccess)
-            {
-                return View("Error", (object)block.Message);
-            }
+            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            //if (block.IsComment || block.IsAccess)
+            //{
+            //    return View("Error", (object)block.Message);
+            //}
             if (id !=null)
             {
                 var comment = commentService.FindById((int)id);

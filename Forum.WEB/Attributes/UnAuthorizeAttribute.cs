@@ -1,17 +1,18 @@
-﻿using Forum.BLL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 
 namespace Forum.WEB.Attributes
 {
-    public class UnAuthorizeAttribute : AuthorizeAttribute
+    public class UnAuthorizeAttribute : MyAuthorizeAttribute
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            return !httpContext.User.Identity.IsAuthenticated;
+            if (!httpContext.User.Identity.IsAuthenticated)
+                return true;
+            else
+            {
+                return base.AuthorizeCore(httpContext);
+            }
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

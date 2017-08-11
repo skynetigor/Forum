@@ -8,15 +8,15 @@ namespace Forum.BLL.Infrastructure
 {
     public class BlockResult
     {
-        private BlockType blocktype;
+        private IEnumerable<BlockType> blocktype;
         private string message;
-        public BlockResult(BlockType blockType, string message)
+        public BlockResult(IEnumerable<BlockType> blockTypes, string message)
         {
-            this.blocktype = blockType;
+            this.blocktype = blockTypes;
             this.message = message;
         }
 
-        public BlockType BlockType
+        public IEnumerable<BlockType> BlockType
         {
             get
             {

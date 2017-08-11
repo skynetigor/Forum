@@ -36,7 +36,7 @@ namespace Forum.IoC.Service
             container.Register(Component.For<IGenericRepository<Category>>().ImplementedBy<Repository<Category>>().LifestylePerWebRequest());
             container.Register(Component.For<IGenericRepository<SubCategory>>().ImplementedBy<Repository<SubCategory>>().LifestylePerWebRequest());
             container.Register(Component.For<IUnitOfWork>().ImplementedBy<IdentityUnitOfWork>().LifestylePerWebRequest());
-            container.Register(Component.For<ApplicationContext>().ImplementedBy<ApplicationContext>().LifestylePerWebRequest());
+            container.Register(Component.For<ApplicationContext>().ImplementedBy<ApplicationContext>()/*.LifestylePerWebRequest()*/);
             container.Register(Component.For<IConfirmedEmailSender>().ImplementedBy<ConfirmedEmailService>().LifestylePerWebRequest());
             container.Register(Component.For<ITopicService>().ImplementedBy<TopicsService>().LifestylePerWebRequest());
             container.Register(Component.For<IGenericRepository<Topic>>().ImplementedBy<Repository<Topic>>().LifestylePerWebRequest());

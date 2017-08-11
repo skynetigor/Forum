@@ -55,6 +55,7 @@ namespace Forum.WEB.Controllers
             catch (Exception e)
             {
                 ModelState.AddModelError(string.Empty, e.Message);
+                return View();
             }
             return RedirectToAction("index", "category");
         }

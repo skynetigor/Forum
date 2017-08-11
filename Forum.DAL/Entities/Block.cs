@@ -17,7 +17,7 @@ namespace Forum.DAL.Entities
         public string Message { get; set; }
         public string Reason { get; set; }
         public bool IsCommentBlock { get; set; }
-        public bool IsAccesBlock { get; set; }
+        public bool IsAccess { get; set; }
         public bool IsTopicBlock { get; set; }
     }
 }

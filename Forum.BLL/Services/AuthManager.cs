@@ -27,10 +27,12 @@ namespace Forum.BLL.Services
         private IUnitOfWork database;
         private IConfirmedEmailSender emailSender = new ConfirmedEmailService();
 
-        public AuthManager(IUnitOfWork database, IConfirmedEmailSender emailSender)
+        IBlockService blockService;
+        public AuthManager(IUnitOfWork database, IConfirmedEmailSender emailSender, IBlockService blockService)
         {
             this.emailSender = emailSender;
             this.database = database;
+            this.blockService = blockService;
             FirstInitialize();
         }
 
@@ -91,6 +93,14 @@ namespace Forum.BLL.Services
         public ClaimsIdentity Authenticate(string login, string password)
         {
             var user = database.UserManager.Find(login, password);
+            var block = blockService.GetUserStatusByUserId(user.Id);
+            if(block != null)
+            {
+                if(block.BlockType.Contains(BlockType.Access))
+                {
+                    throw new Exception(block.Message);
+                }
+            }
             if (user != null)
             {
                 if (!user.EmailConfirmed)

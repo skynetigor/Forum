@@ -14,11 +14,6 @@ namespace Forum.BLL.Services
 {
     public class BlockService : IBlockService
     {
-        const string COMMENT_ACCES_BLOCK = "Администратор ограничил для вас возможность комментирования. Причина: ";
-        const string RESOURCE_ACCES_BLOCK = "Администратор ограничил для вас доступ к ресурсу. Причина: ";
-        const string COMMENT_AND_TOPIC_BLOCK = "Администратор ограничил для вас возможность комментирования и создания новых тем. Причина: ";
-        const string TOPIC_BLOCK = "Администратор ограничил для вас возможность комментирования и создания новых тем. Причина: ";
-
         private IUnitOfWork identity;
         public BlockService(IUnitOfWork identity)
         {
@@ -41,7 +36,7 @@ namespace Forum.BLL.Services
             {
                 UserName = appuser.UserName,
                 Message = appblock.Message,
-                IsAccess = appblock.IsAccesBlock,
+                IsAccess = appblock.IsAccess,
                 IsComment = appblock.IsCommentBlock,
                 IsTopic = appblock.IsTopicBlock,
                 Reason = appblock.Reason,
@@ -49,7 +44,7 @@ namespace Forum.BLL.Services
             };
         }
 
-        public BlockDTO GetUserStatusByUserId(int id)
+        public BlockResult GetUserStatusByUserId(int id)
         {
             var appuser = identity.UserManager.FindById(id);
             if(!identity.UserManager.IsInRole(appuser.Id, "admin"))
@@ -57,19 +52,27 @@ namespace Forum.BLL.Services
                 var block = appuser.Block;
                 if(block != null)
                 {
-                    return new BlockDTO
-                    {
-                        IsTopic = block.IsTopicBlock,
-                        IsComment = block.IsCommentBlock,
-                        IsAccess = block.IsAccesBlock,
-                        UserId = appuser.Id,
-                        Message = block.Message,
-                        Reason = block.Message,
-                        UserName = appuser.UserName
-                    };
+                    var list = new List<BlockType>();
+                    if (block.IsAccess)
+                        list.Add(BlockType.Access);
+                    if (block.IsCommentBlock)
+                        list.Add(BlockType.Comment);
+                    if (block.IsTopicBlock)
+                        list.Add(BlockType.Topic);
+                    return new BlockResult(list, block.Message);
+                    //return new BlockDTO
+                    //{
+                    //    IsTopic = block.IsTopicBlock,
+                    //    IsComment = block.IsCommentBlock,
+                    //    IsAccess = block.IsAccesBlock,
+                    //    UserId = appuser.Id,
+                    //    Message = block.Message,
+                    //    Reason = block.Message,
+                    //    UserName = appuser.UserName
+                    //};
                 }
             }
-            return new BlockDTO();
+            return null;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Forum.WEB.App_Start
     {
         public void Configuration(IAppBuilder app)
         {
-            app.CreatePerOwinContext(CreateUserService);
+            app.CreatePerOwinContext<IAuthManager>(CreateUserService);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,

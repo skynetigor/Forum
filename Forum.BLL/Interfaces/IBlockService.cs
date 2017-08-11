@@ -6,6 +6,6 @@ namespace Forum.BLL.Interfaces
     public interface IBlockService
     {
         BlockDTO GetUserBlockByUserId(int id);
-        BlockDTO GetUserStatusByUserId(int id);
+        BlockResult GetUserStatusByUserId(int id);
     }
 }

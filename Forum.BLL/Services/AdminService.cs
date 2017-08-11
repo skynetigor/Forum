@@ -14,8 +14,8 @@ namespace Forum.BLL.Services
     {
         const string ADMIN_ROLE = "admin";
         const string REASON = "Причина: ";
-        const string BLOCK = "Администратор ограничил для вас доступ к {0}. ";
-        const string UNBLOCK = "Администратор разблокировал для вас доступ к {0}. ";
+        const string BLOCK = "У вас ограниченен доступ к {0}. За информацией Обратитесь к администратору форума. ";
+        const string UNBLOCK = "Для вас разблокирован доступ к {0}. ";
         const string COMMENT = "комментированию";
         const string TOPIC = "созданию топиков";
         const string RESOURCE = "ресурсу";
@@ -73,7 +73,7 @@ namespace Forum.BLL.Services
         private string GetUnBlockMessage(BlockDTO newblock, Block oldBlock)
         {
             string result = string.Empty;
-            if (!newblock.IsAccess && oldBlock.IsAccesBlock)
+            if (!newblock.IsAccess && oldBlock.IsAccess)
             {
                 result += RESOURCE;
             }
@@ -97,7 +97,6 @@ namespace Forum.BLL.Services
             {
                 var appuser = identity.UserManager.Users.First(t => t.Id == blockinfo.UserId);
                 var block = appuser.Block;
-
                 if (block != null && !blockinfo.IsTopic && !blockinfo.IsComment && !blockinfo.IsAccess)
                 {
 
@@ -110,9 +109,9 @@ namespace Forum.BLL.Services
                     {
                         block = new Block();
                     }
-                    block.Message = GetBlockMessage(blockinfo) + REASON + blockinfo.Reason;
+                    block.Message = GetBlockMessage(blockinfo);
                     block.Reason = blockinfo.Reason;
-                    block.IsAccesBlock = blockinfo.IsAccess;
+                    block.IsAccess = blockinfo.IsAccess;
                     block.IsCommentBlock = blockinfo.IsComment;
                     block.IsTopicBlock = blockinfo.IsTopic;
                     block.User = appuser;
