@@ -15,8 +15,8 @@ namespace Forum.WEB.Controllers
     
     public class AccountController : Controller
     {
-        private IUserService service;
-        public AccountController(IUserService service)
+        private IAuthManager service;
+        public AccountController(IAuthManager service)
         {
             this.service = service;
         }
@@ -90,8 +90,7 @@ namespace Forum.WEB.Controllers
                 var url = Url.Action("ConfirmeEmail", "Account", null, Request.Url.Scheme) + "?token={0}&email={1}";
                 var user = new UserDTO
                 {
-                    Email = User.Identity.Name,
-                    Id = User.Identity.GetUserId<int>()
+                    Email = model.Email,
                 };
                 var opdet = service.Create(user, model.Password, url);
                 if (!opdet.Succedeed)

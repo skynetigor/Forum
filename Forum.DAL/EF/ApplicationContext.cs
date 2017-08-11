@@ -19,5 +19,6 @@ namespace Forum.DAL.EF
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notification { get; set; }
+        public DbSet<Block> Block { get; set; }
     }
 }

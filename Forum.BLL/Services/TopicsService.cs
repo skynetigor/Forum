@@ -65,9 +65,9 @@ namespace Forum.BLL.Services
                 apptopic.Comments.Add(comment);
                 subcat.Topics.Add(apptopic);
                 subCategoryRepository.Update(subcat);
-                return new OperationDetails(true, string.Empty, string.Empty);
+                return new OperationDetails(true, string.Empty);
             }
-            return new OperationDetails(false, ACCESS_ERROR, string.Empty);
+            return new OperationDetails(false, ACCESS_ERROR);
         }
 
         protected override OperationDetails UpdateContent(UserDTO user, TopicDTO topic)
@@ -79,9 +79,9 @@ namespace Forum.BLL.Services
                 apptopic.Message = topic.Message;
                 apptopic.Title = topic.Message;
                 topicRepository.Update(apptopic);
-                return new OperationDetails(true, string.Empty, string.Empty);
+                return new OperationDetails(true, string.Empty);
             }
-            return new OperationDetails(false, ACCESS_ERROR, string.Empty);
+            return new OperationDetails(false, ACCESS_ERROR);
         }
 
         protected override OperationDetails DeleteContent(UserDTO user, TopicDTO topic)
@@ -91,9 +91,9 @@ namespace Forum.BLL.Services
             {
                 var apptopic = topicRepository.FindById(topic.Id);
                 topicRepository.Remove(apptopic);
-                return new OperationDetails(true, string.Empty, string.Empty);
+                return new OperationDetails(true, string.Empty);
             }
-            return new OperationDetails(false, ACCESS_ERROR, string.Empty);
+            return new OperationDetails(false, ACCESS_ERROR);
         }
 
         private TopicDTO Extract(Topic topic)

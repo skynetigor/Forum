@@ -10,6 +10,7 @@ namespace Forum.BLL.Services
     public abstract class AbstractContentService<TContent> : IContentService<TContent> where TContent : BaseEntityDTO
     {
         protected const string ACCESS_ERROR = "У вас нет прав на данное действие!";
+        protected const string ADMIN_ROLE = "admin";
         public abstract TContent FindById(int id);
 
         public abstract IEnumerable<TContent> Get();
@@ -28,7 +29,7 @@ namespace Forum.BLL.Services
             }
             catch (Exception e)
             {
-                return new OperationDetails(false, e.Message, "");
+                return new OperationDetails(false, e.Message);
             }
         }
 
@@ -40,7 +41,7 @@ namespace Forum.BLL.Services
             }
             catch (Exception e)
             {
-                return new OperationDetails(false, e.Message, "");
+                return new OperationDetails(false, e.Message);
             }
         }
 
@@ -52,7 +53,7 @@ namespace Forum.BLL.Services
             }
             catch (Exception e)
             {
-                return new OperationDetails(false, e.Message, "");
+                return new OperationDetails(false, e.Message);
             }
         }
     }

@@ -7,5 +7,8 @@ using System.Threading.Tasks;
 
 namespace Forum.DAL.Interfaces
 {
-    
+    public interface IClientManager : IDisposable
+    {
+        void Create(ClientProfile item);
+    }
 }

@@ -13,49 +13,30 @@ namespace Forum.WEB.Controllers
     public class AdminController : Controller
     {
         private IAdminService adminService;
-        private IUserService userService;
-        public AdminController(IAdminService adminService, IUserService userService)
+        private IBlockService blockService;
+        public AdminController(IAdminService adminService, IBlockService blockService)
         {
             this.adminService = adminService;
-            this.userService = userService;
+            this.blockService = blockService;
         }
-
+        [Authorize(Roles = "admin")]
         public ActionResult UserList()
         {
-            var users = userService.GetUsers();
+            var users = adminService.GetUsers();
             return View(users);
         }
 
-        [MyAuthorize(Roles = "admin")]
-        [HttpPost]
-        public ActionResult BlockUser(int userid, string message)
+        public ActionResult Block(int? userid)
         {
-            var admin = new UserDTO
-            {
-                Id = User.Identity.GetUserId<int>()
-            };
-            var user = new UserDTO
-            {
-                Id = userid
-            };
-            adminService.BlockUser(admin, user, message);
-            return View();
+            var block = blockService.GetUserBlockByUserId((int)userid);
+            return View(block);
         }
 
         [HttpPost]
-        [MyAuthorize(Roles = "admin")]
-        public ActionResult UnBlockUser(int userid, string message)
+        public ActionResult Block(BlockDTO block)
         {
-            var admin = new UserDTO
-            {
-                Id = User.Identity.GetUserId<int>()
-            };
-            var user = new UserDTO
-            {
-                Id = userid
-            };
-            adminService.UnBlockUser(admin, user, message);
-            return View();
+            adminService.Block(block);
+            return RedirectToAction("userlist");
         }
     }
 }

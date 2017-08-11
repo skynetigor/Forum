@@ -25,51 +25,39 @@ namespace Forum.BLL.Services
         const string MAIL_BODY = "Для завершения регистрации перейдите по ссылке:<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>";
         const string EMAIL_NOT_CONFIRM_ERROR = "Ваш эмейл не подтвежден! Зайдите на свою почту и подтвердите.";
         private IUnitOfWork database;
-        private IConfirmedEmailSender emailSender = new ConfirmedEmailService();
+        private IConfirmedEmailSender emailSender =new ConfirmedEmailService();
 
+        public UserService()
+        {
+            database = new IdentityUnitOfWork("ApplicationContext");
+            emailSender = new ConfirmedEmailService();
+            FirstInitialize();
+        }
         public UserService(IUnitOfWork database, IConfirmedEmailSender emailSender)
         {
             this.emailSender = emailSender;
             this.database = database;
-            FirstInitialize();
         }
-
-        public IEnumerable<UserDTO> GetUsers()
+        
+        public OperationDetails Create(UserDTO userDto, string confirmeUrl)
         {
-            var userList = new List<UserDTO>();
-            foreach(var appuser in database.UserManager.Users)
-            {
-                if (!database.UserManager.IsInRole(appuser.Id, "admin"))
-                {
-                    var user = new UserDTO
-                    {
-                        Id = appuser.Id,
-                        Name = appuser.UserName,
-                        Email = appuser.Email,
-                        IsBlocked = appuser.IsBlocked
-                    };
-                    userList.Add(user);
-                }
-            }
-            return userList;
-        }
+            ApplicationUser user = null;
 
-        public OperationDetails Create(UserDTO userDto, string password, string confirmeUrl)
-        {
-            var user = database.UserManager.FindByEmail(userDto.Email);
+            user = database.UserManager.FindByEmail(userDto.Email);
 
             if (user == null)
             {
                 user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
-                var result = database.UserManager.Create(user, password);
+                var result = database.UserManager.Create(user, userDto.Password);
                 if (result.Errors.Count() > 0)
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), string.Empty);
                 // добавляем роль
-                if (userDto.Role != "admin")
-                    userDto.Role = "user";
                 database.UserManager.AddToRole(user.Id, userDto.Role);
                 // создаем профиль клиента
+                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
+                database.ClientManager.Create(clientProfile);
                 database.Save();
+                database.RoleManager.Roles.First();
                 //user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
                 if (!string.IsNullOrEmpty(confirmeUrl))
                     emailSender.SendConfirmationMessage(GenerateMessage(user, confirmeUrl), PASSWORD);
@@ -83,11 +71,11 @@ namespace Forum.BLL.Services
 
         private MailMessage GenerateMessage(ApplicationUser user, string url)
         {
-            var from = new MailAddress(SENDER_EMAIL, DISPLAY_NAME_MAIL);
-            var to = new MailAddress(user.Email);
-            var message = new MailMessage(from, to);
+            MailAddress from = new MailAddress(SENDER_EMAIL, DISPLAY_NAME_MAIL);
+            MailAddress to = new MailAddress(user.Email);
+            MailMessage message = new MailMessage(from, to);
             message.Subject = MAIL_SUBJECT;
-            var paramUrl = string.Format(url, user.Id, user.Email);
+            string paramUrl = string.Format(url, user.Id, user.Email);
             message.Body = string.Format(MAIL_BODY, paramUrl);
             message.IsBodyHtml = true;
             return message;
@@ -95,31 +83,33 @@ namespace Forum.BLL.Services
 
         public ClaimsIdentity ConfirmEmail(int token, string email)
         {
-            var user = database.UserManager.FindById(token);
+            ClaimsIdentity claim = null;
+            ApplicationUser user = database.UserManager.FindById(token);
             if (user != null)
             {
                 if (user.Email == email)
                 {
                     user.EmailConfirmed = true;
                     database.UserManager.Update(user);
-                    return database.UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                    claim = database.UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                 }
             }
-            return null;
+            return claim;
         }
 
-        public ClaimsIdentity Authenticate(string login, string password)
+        public ClaimsIdentity Authenticate(UserDTO userDto)
         {
-            var user = database.UserManager.Find(login, password);
+            ClaimsIdentity claim = null;
+            ApplicationUser user = database.UserManager.Find(userDto.Email, userDto.Password);
             if (user != null)
             {
-                if (!user.EmailConfirmed)
+                if(!user.EmailConfirmed)
                 {
                     throw new Exception(EMAIL_NOT_CONFIRM_ERROR);
                 }
-                return database.UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                claim = database.UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
             }
-            return null;
+                return claim;
         }
 
 
@@ -127,26 +117,25 @@ namespace Forum.BLL.Services
         {
             int i = database.UserManager.Users.Count();
             int b = database.RoleManager.Roles.Count();
-            if (i == 0 && b == 0)
+            if (i == 0 && b == 1)
             {
                 ApplicationRole[] roles = {
                     new ApplicationRole {Name = "admin" },
-                    new ApplicationRole {Name = "moderator" },
-                    new ApplicationRole {Name = "user" },
-                    new ApplicationRole {Name = "blocked" }
+                    new ApplicationRole {Name = "moderator" }
                 };
                 foreach (ApplicationRole role in roles)
                 {
                     database.RoleManager.Create(role);
                 }
-                var user = new UserDTO
+                UserDTO user = new UserDTO
                 {
                     Email = "admin",
                     Role = "admin",
                     UserName = "Administrator",
+                    Password = "111111"
                 };
-                var op = Create(user, "111111", null);
-                var u = database.UserManager.Find(user.Email, "111111");
+                OperationDetails op =  Create(user, null);
+                ApplicationUser u = database.UserManager.Find(user.Email, user.Password);
                 u.EmailConfirmed = true;
                 database.UserManager.Update(u);
             }

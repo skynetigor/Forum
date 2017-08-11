@@ -5,6 +5,10 @@ namespace Forum.WEB.Attributes
 {
     public class MyAuthorizeAttribute:AuthorizeAttribute
     {
+        public MyAuthorizeAttribute():base()
+        {
+
+        }
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             if(httpContext.User.Identity.IsAuthenticated)
@@ -12,7 +16,7 @@ namespace Forum.WEB.Attributes
                 bool s = !httpContext.User.IsInRole("blocked");
                 return s;
             }
-            return false;
+            return base.AuthorizeCore(httpContext);
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
@@ -23,6 +27,7 @@ namespace Forum.WEB.Attributes
                 return;
             }
             filterContext.Result = new RedirectResult("/Account/login");
+            //filterContext.re
         }
     }
 }

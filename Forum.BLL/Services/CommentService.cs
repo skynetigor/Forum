@@ -79,7 +79,7 @@ namespace Forum.BLL.Services
                 topic.Comments.Add(comment);
                 topicRepository.Update(topic);
             }
-            return new OperationDetails(false, ACCESS_ERROR, string.Empty);
+            return new OperationDetails(false, ACCESS_ERROR);
         }
 
         protected override OperationDetails UpdateContent(UserDTO user, CommentDTO content)
@@ -94,7 +94,7 @@ namespace Forum.BLL.Services
                 comment.Topic = topic;
                 commentRepository.Update(comment);
             }
-            return new OperationDetails(false, ACCESS_ERROR, string.Empty);
+            return new OperationDetails(false, ACCESS_ERROR);
         }
 
         protected override OperationDetails DeleteContent(UserDTO user, CommentDTO content)
@@ -105,7 +105,7 @@ namespace Forum.BLL.Services
             {
 
             }
-            return new OperationDetails(false, ACCESS_ERROR, string.Empty);
+            return new OperationDetails(false, ACCESS_ERROR);
         }
     }
 }

@@ -75,9 +75,9 @@ namespace Forum.BLL.Services.CategoriesService
                 };
                 cat.SubCategories.Add(subCat);
                 categoryRepository.Update(cat);
-                return new OperationDetails(false, string.Format(SUBCATEGORY_CREATE_SUCCESS, subCat.Name, cat.Name), string.Empty);
+                return new OperationDetails(false, string.Format(SUBCATEGORY_CREATE_SUCCESS, subCat.Name, cat.Name));
             }
-            return new OperationDetails(false, ACCESS_ERROR, string.Empty);
+            return new OperationDetails(false, ACCESS_ERROR);
         }
 
         protected override OperationDetails UpdateContent(UserDTO user, SubCategoryDTO category)
@@ -91,9 +91,9 @@ namespace Forum.BLL.Services.CategoriesService
                 subCat.Title = category.Title;
                 subCat.Category = newCategory;
                 subCategoryRepository.Update(subCat);
-                return new OperationDetails(false, string.Format(SUBCATEGORY_CREATE_SUCCESS, subCat.Name, subCat.Category.Name), string.Empty);
+                return new OperationDetails(false, string.Format(SUBCATEGORY_CREATE_SUCCESS, subCat.Name, subCat.Category.Name));
             }
-            return new OperationDetails(false, ACCESS_ERROR, string.Empty);
+            return new OperationDetails(false, ACCESS_ERROR);
         }
 
         protected override OperationDetails DeleteContent(UserDTO user, SubCategoryDTO category)
@@ -103,9 +103,9 @@ namespace Forum.BLL.Services.CategoriesService
             if (identity.UserManager.IsInRole(user.Id, "admin") || cat.Category.Moderator.Id == user.Id)
             {
                 subCategoryRepository.Remove(cat);
-                return new OperationDetails(true, string.Format(SUBCATEGORY_DELETE_SUCCESS, cat.Name), string.Empty);
+                return new OperationDetails(true, string.Format(SUBCATEGORY_DELETE_SUCCESS, cat.Name));
             }
-            return new OperationDetails(false, ACCESS_ERROR, "");
+            return new OperationDetails(false, ACCESS_ERROR);
         }
     }
 }

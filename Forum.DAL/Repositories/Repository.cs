@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Forum.DAL.Repositories
 {
-    public class Repository<TEntity> : IGenericRepository<TEntity> where TEntity :BaseEntity
+    public class Repository<TEntity> : IGenericRepository<TEntity> where TEntity :class
     {
         private ApplicationContext context;
         private DbSet<TEntity> dbset;

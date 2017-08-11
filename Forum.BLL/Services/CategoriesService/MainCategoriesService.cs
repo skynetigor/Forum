@@ -24,10 +24,10 @@ namespace Forum.BLL.Services.CategoriesService
 
         public override IEnumerable<CategoryDTO> Get()
         {
-            List<CategoryDTO> catList = new List<CategoryDTO>();
-            foreach (Category category in categoryRepository.Get())
+            var catList = new List<CategoryDTO>();
+            foreach (var category in categoryRepository.Get())
             {
-                CategoryDTO dto = new CategoryDTO
+                var dto = new CategoryDTO
                 {
                     Id = category.Id,
                     Name = category.Name,
@@ -41,7 +41,7 @@ namespace Forum.BLL.Services.CategoriesService
 
         public override CategoryDTO FindById(int id)
         {
-            Category category = categoryRepository.FindById(id);
+            var category = categoryRepository.FindById(id);
             if (category != null)
             {
                 return new CategoryDTO
@@ -57,42 +57,42 @@ namespace Forum.BLL.Services.CategoriesService
 
         protected override OperationDetails CreateContent(UserDTO user, CategoryDTO category)
         {
-            if (identity.UserManager.IsInRole(user.Id, "admin"))
+            if (identity.UserManager.IsInRole(user.Id, ADMIN_ROLE))
             {
-                Category cat = new Category
+                var cat = new Category
                 {
                     Id = category.Id,
                     Name = category.Name,
                     Title = category.Title
                 };
                 categoryRepository.Create(cat);
-                return new OperationDetails(true, string.Format(CATEGORY_CREATE_SUCCESS, cat.Name), string.Empty);
+                return new OperationDetails(true, string.Format(CATEGORY_CREATE_SUCCESS, cat.Name));
             }
-            return new OperationDetails(false, ACCESS_ERROR, "");
+            return new OperationDetails(false, ACCESS_ERROR);
         }
 
         protected override OperationDetails UpdateContent(UserDTO user, CategoryDTO category)
         {
-            if (identity.UserManager.IsInRole(user.Id, "admin"))
+            if (identity.UserManager.IsInRole(user.Id, ADMIN_ROLE))
             {
-                Category cat = categoryRepository.FindById(category.Id);
+                var cat = categoryRepository.FindById(category.Id);
                 cat.Name = category.Name;
                 cat.Title = category.Title;
                 categoryRepository.Update(cat);
-                return new OperationDetails(true, string.Format(CATEGORY_UPDATE_SUCCESS, cat.Name), string.Empty);
+                return new OperationDetails(true, string.Format(CATEGORY_UPDATE_SUCCESS, cat.Name));
             }
-            return new OperationDetails(false, ACCESS_ERROR, "");
+            return new OperationDetails(false, ACCESS_ERROR);
         }
 
         protected override OperationDetails DeleteContent(UserDTO user, CategoryDTO category)
         {
-            if (identity.UserManager.IsInRole(user.Id, "admin"))
+            if (identity.UserManager.IsInRole(user.Id, ADMIN_ROLE))
             {
-                Category cat = categoryRepository.FindById(category.Id);
+                var cat = categoryRepository.FindById(category.Id);
                 categoryRepository.Remove(cat);
-                return new OperationDetails(true, string.Format(CATEGORY_DELETE_SUCCESS, cat.Name), string.Empty);
+                return new OperationDetails(true, string.Format(CATEGORY_DELETE_SUCCESS, cat.Name));
             }
-            return new OperationDetails(false, ACCESS_ERROR, "");
+            return new OperationDetails(false, ACCESS_ERROR);
         }
     }
 }

@@ -11,15 +11,21 @@ namespace Forum.WEB.Controllers
     public class CategoryController : Controller, IContentController<CategoryViewModel>
     {
         private IContentService<CategoryDTO> categoryService;
-
-        public CategoryController(IContentService<CategoryDTO> categoryService)
+        private IBlockService blockService;
+        public CategoryController(IContentService<CategoryDTO> categoryService, IBlockService blockService)
         {
             this.categoryService = categoryService;
+            this.blockService = blockService;
         }
         
         [MyAuthorize]
         public ActionResult Index()
         {
+            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            if (block.IsAccess)
+            {
+                return View("Error", (object)block.Message);
+            }
             return View(categoryService.Get());
         }
 

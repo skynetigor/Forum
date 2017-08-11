@@ -23,10 +23,10 @@ namespace Forum.WEB.App_Start
             });
         }
 
-        private IUserService CreateUserService()
+        private IAuthManager CreateUserService()
         {
             IDependencyInstaller dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
-            return dependencyInstaller.Resolve<IUserService>();
+            return dependencyInstaller.Resolve<IAuthManager>();
         }
     }
 }

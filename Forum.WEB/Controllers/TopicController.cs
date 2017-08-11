@@ -16,14 +16,21 @@ namespace Forum.WEB.Controllers
     {
         private ITopicService topicService;
         private IContentService<SubCategoryDTO> subCategoryService;
-        public TopicController(ITopicService topicService, IContentService<SubCategoryDTO> subCategoryService)
+        private IBlockService blockService;
+        public TopicController(ITopicService topicService, IContentService<SubCategoryDTO> subCategoryService, IBlockService blockService)
         {
             this.topicService = topicService;
             this.subCategoryService = subCategoryService;
+            this.blockService = blockService;
         }
 
         public ActionResult Index(int? subCategoryId)
         {
+            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            if (block.IsAccess)
+            {
+                return View("Error", (object)block.Message);
+            }
             if (subCategoryId != null)
             {
                 var topics = topicService.GetTopicsBySubCategoryId((int)subCategoryId);
@@ -35,6 +42,11 @@ namespace Forum.WEB.Controllers
 
         public ActionResult Update(int? id, int? currentId)
         {
+            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            if (block.IsTopic || block.IsAccess)
+            {
+                return View("Error", (object)block.Message);
+            }
             if (id != null)
             {
                 var topic = topicService.FindById((int)id);

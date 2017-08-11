@@ -42,3 +42,17 @@ E:\IT\PROJECTS\Forum\Forum.DAL\obj\Debug\Forum.DAL.dll
 E:\IT\PROJECTS\Forum\Forum.DAL\obj\Debug\Forum.DAL.pdb
 E:\IT\PROJECTS\Forum\Forum.DAL\obj\Debug\Forum.DAL.csprojResolveAssemblyReference.cache
 D:\Forum\Forum.DAL\obj\Debug\Forum.DAL.csprojResolveAssemblyReference.cache
+D:\Education\Forum\Forum.DAL\bin\Debug\Forum.DAL.dll.config
+D:\Education\Forum\Forum.DAL\bin\Debug\Forum.DAL.dll
+D:\Education\Forum\Forum.DAL\bin\Debug\Forum.DAL.pdb
+D:\Education\Forum\Forum.DAL\bin\Debug\EntityFramework.dll
+D:\Education\Forum\Forum.DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Education\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\Education\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Education\Forum\Forum.DAL\bin\Debug\EntityFramework.xml
+D:\Education\Forum\Forum.DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Education\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\Education\Forum\Forum.DAL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Education\Forum\Forum.DAL\obj\Debug\Forum.DAL.csprojResolveAssemblyReference.cache
+D:\Education\Forum\Forum.DAL\obj\Debug\Forum.DAL.dll
+D:\Education\Forum\Forum.DAL\obj\Debug\Forum.DAL.pdb

@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Forum.DAL.Entities.Identity.IntPk;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Forum.DAL.Entities
 {
@@ -18,15 +19,13 @@ namespace Forum.DAL.Entities
             Notifications = new List<Notification>();
         }
         public bool IsBlocked { get; set; }
-
+        public virtual Block Block { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this,
                                DefaultAuthenticationTypes.ApplicationCookie);
-
-            // Add custom user claims here
             return userIdentity;
         }
     }

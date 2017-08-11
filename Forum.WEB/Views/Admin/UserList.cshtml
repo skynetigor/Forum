@@ -9,16 +9,9 @@
     @foreach (var user in Model)
     {
         <tr>
-            <td>@user.UserName</td>
+            <td>@user.Email</td>
             <td>
-                @if(user.IsBlocked)
-                {
-                    <a href=@Url.Action("BlockUser", "Admin", new { userid = user.Id })>Разблокировать</a>
-                }
-                else
-                {
-                    <a href=@Url.Action("UnBlockUser", "Admin", new { userid = user.Id })>Заблокировать</a>
-                }
+                <a href=@Url.Action("Block","Admin", new { userid = user.Id })>Блокировка</a>
             </td>
         </tr>
     }

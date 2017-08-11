@@ -1,12 +1,8 @@
 ﻿using Forum.BLL.DTO;
 using Forum.BLL.DTO.Content;
-using Forum.BLL.DTO.Content.Category;
 using Forum.BLL.Interfaces;
 using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Forum.WEB.Controllers
@@ -15,15 +11,21 @@ namespace Forum.WEB.Controllers
     {
         private ITopicService topicService;
         private ICommentService commentService;
-
-        public CommentController(ITopicService topicService, ICommentService commentService)
+        private IBlockService blockService;
+        public CommentController(ITopicService topicService, ICommentService commentService, IBlockService blockService)
         {
             this.topicService = topicService;
             this.commentService = commentService;
+            this.blockService = blockService;
         }
 
         public ActionResult Index(int? currentTopic)
         {
+            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            if (block.IsAccess)
+            {
+                return View("Error", (object)block.Message);
+            }
             var comments = commentService.GetCommentsByTopicId((int)currentTopic);
             ViewBag.TopicId = currentTopic;
             return View(comments);
@@ -31,7 +33,12 @@ namespace Forum.WEB.Controllers
 
         public ActionResult Update(int? id, int? currentId)
         {
-            if(id !=null)
+            var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
+            if (block.IsComment || block.IsAccess)
+            {
+                return View("Error", (object)block.Message);
+            }
+            if (id !=null)
             {
                 var comment = commentService.FindById((int)id);
                 return View(comment);

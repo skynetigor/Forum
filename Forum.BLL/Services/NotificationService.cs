@@ -23,30 +23,31 @@ namespace Forum.BLL.Services
 
         public IEnumerable<NotificationDTO> GetNotificationsByUserId(int userid)
         {
-            var appuser = identity.UserManager.FindById(userid);
-            var notifylist = new List<NotificationDTO>();
-            foreach(var n in appuser.Notifications)
-            {
-                var notify = new NotificationDTO
-                {
-                    Message = n.Message,
-                    UserId = n.User.Id
-                };
-                notifylist.Add(notify);
-            }
-            return notifylist;
+            //var appuser = identity.UserManager.FindById(userid);
+            //var notifylist = new List<NotificationDTO>();
+            //foreach(var n in appuser.Notifications)
+            //{
+            //    var notify = new NotificationDTO
+            //    {
+            //        Message = n.Message,
+            //        UserId = n.User.Id
+            //    };
+            //    notifylist.Add(notify);
+            //}
+            //return notifylist;
+            return null;
         }
 
         public void Notify(UserDTO user, string message)
         {
-            var appuser = identity.UserManager.Users.First(t=> t.Id == user.Id);
-            var notification = new Notification {
-                Message = message,
-                User = appuser
-            };
-            appuser.Notifications.Add(notification);
-            identity.UserManager.Update(appuser);
-            identity.Save();
+            //var appuser = identity.UserManager.Users.First(t=> t.Id == user.Id);
+            //var notification = new Notification {
+            //    Message = message,
+            //    User = appuser
+            //};
+            //appuser.Notifications.Add(notification);
+            //identity.UserManager.Update(appuser);
+            //identity.Save();
         }
     }
 }
