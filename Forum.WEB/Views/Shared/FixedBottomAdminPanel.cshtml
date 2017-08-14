@@ -1,10 +1,19 @@
-﻿@if (User.Identity.IsAuthenticated)
+﻿@{
+    bool isModerator = User.IsInRole("moderator");
+    bool isAdmin = User.IsInRole("admin");
+}
+
+@if (isModerator || isAdmin)
 {
     <div class="container-fluid admin-panel">
         <div class="navbar navbar-inverse navbar-fixed-bottom">
             <div>
                 <div class="btn-group">
-                    <a href=@Url.Action("Update","Category") class="btn btn-default">Добавить новую категорию</a>
+                    @if (isAdmin)
+                    {
+                        <a href=@Url.Action("userlist","admin") class="btn btn-default">Список пользователей</a>
+                        <a href=@Url.Action("Update", "Category") class="btn btn-default">Добавить новую категорию</a>
+                    }
                     <a href=@Url.Action("Update", "SubCategory") class="btn btn-default">Добавить новую подкатегорию</a>
                 </div>
             </div>

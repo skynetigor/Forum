@@ -13,34 +13,23 @@ namespace Forum.WEB.Controllers
     {
         private ITopicService topicService;
         private ICommentService commentService;
-        private IBlockService blockService;
-        public CommentController(ITopicService topicService, ICommentService commentService, IBlockService blockService)
+        public CommentController(ITopicService topicService, ICommentService commentService)
         {
             this.topicService = topicService;
             this.commentService = commentService;
-            this.blockService = blockService;
         }
 
+        [MyAllowAnonymous]
         public ActionResult Index(int? currentTopic)
         {
-            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            //if (block.IsAccess)
-            //{
-            //    return View("Error", (object)block.Message);
-            //}
             var comments = commentService.GetCommentsByTopicId((int)currentTopic);
             ViewBag.TopicId = currentTopic;
             return View(comments);
         }
 
-        [MyAuthorize(Permissions = new BlockType[] { BlockType.Comment })]
+        [MyAuthorize(Permission = BlockType.Comment)]
         public ActionResult Update(int? id, int? currentId)
         {
-            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            //if (block.IsComment || block.IsAccess)
-            //{
-            //    return View("Error", (object)block.Message);
-            //}
             if (id !=null)
             {
                 var comment = commentService.FindById((int)id);
@@ -53,6 +42,7 @@ namespace Forum.WEB.Controllers
             });
         }
 
+        [MyAuthorize(Permission = BlockType.Comment)]
         [HttpPost]
         public ActionResult Update(CommentDTO viewModel)
         {

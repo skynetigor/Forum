@@ -12,6 +12,9 @@ namespace Forum.BLL.DTO.Content.Category
         {
             SubCategories = new List<SubCategoryDTO>();
         }
+        public string ModeratorName { get; set; }
+        public int ModeratorId { get; set; }
+        public bool IsEdit { get; set; }
         public IEnumerable<SubCategoryDTO> SubCategories { get; set; }
     }
 }

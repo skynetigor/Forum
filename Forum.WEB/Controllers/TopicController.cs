@@ -1,7 +1,9 @@
 ﻿using Forum.BLL.DTO;
 using Forum.BLL.DTO.Content;
 using Forum.BLL.DTO.Content.Category;
+using Forum.BLL.Infrastructure;
 using Forum.BLL.Interfaces;
+using Forum.WEB.Attributes;
 using Forum.WEB.Models.ContentViewModels;
 using Microsoft.AspNet.Identity;
 using System;
@@ -16,21 +18,15 @@ namespace Forum.WEB.Controllers
     {
         private ITopicService topicService;
         private IContentService<SubCategoryDTO> subCategoryService;
-        private IBlockService blockService;
-        public TopicController(ITopicService topicService, IContentService<SubCategoryDTO> subCategoryService, IBlockService blockService)
+        public TopicController(ITopicService topicService, IContentService<SubCategoryDTO> subCategoryService)
         {
             this.topicService = topicService;
             this.subCategoryService = subCategoryService;
-            this.blockService = blockService;
         }
 
+        [MyAllowAnonymous]
         public ActionResult Index(int? subCategoryId)
         {
-            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            //if (block.IsAccess)
-            //{
-            //    return View("Error", (object)block.Message);
-            //}
             if (subCategoryId != null)
             {
                 var topics = topicService.GetTopicsBySubCategoryId((int)subCategoryId);
@@ -40,13 +36,9 @@ namespace Forum.WEB.Controllers
             return null;
         }
 
+        [MyAuthorize(Permission = BlockType.Topic)]
         public ActionResult Update(int? id, int? currentId)
         {
-            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            //if (block.IsTopic || block.IsAccess)
-            //{
-            //    return View("Error", (object)block.Message);
-            //}
             if (id != null)
             {
                 var topic = topicService.FindById((int)id);
@@ -57,6 +49,7 @@ namespace Forum.WEB.Controllers
             });
         }
 
+        [MyAuthorize(Permission = BlockType.Topic)]
         [HttpPost]
         public ActionResult Update(TopicDTO topic)
         {

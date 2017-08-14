@@ -24,34 +24,54 @@ namespace Forum.BLL.Services
         const string MAIL_SUBJECT = "Email confirmation";
         const string MAIL_BODY = "Для завершения регистрации перейдите по ссылке:<a href=\"{0}\" title=\"Подтвердить регистрацию\">{0}</a>";
         const string EMAIL_NOT_CONFIRM_ERROR = "Ваш эмейл не подтвежден! Зайдите на свою почту и подтвердите.";
-        private IUnitOfWork database;
+        private IUnitOfWork identity;
         private IConfirmedEmailSender emailSender = new ConfirmedEmailService();
 
         IBlockService blockService;
         public AuthManager(IUnitOfWork database, IConfirmedEmailSender emailSender, IBlockService blockService)
         {
             this.emailSender = emailSender;
-            this.database = database;
+            this.identity = database;
             this.blockService = blockService;
             FirstInitialize();
         }
 
+        public IEnumerable<UserDTO> GetUsers()
+        {
+            var userList = new List<UserDTO>();
+            foreach (var appuser in identity.UserManager.Users)
+            {
+                if (!identity.UserManager.IsInRole(appuser.Id, "admin"))
+                {
+                    var user = new UserDTO
+                    {
+                        Id = appuser.Id,
+                        Name = appuser.UserName,
+                        Email = appuser.Email,
+                        IsBlocked = appuser.IsBlocked
+                    };
+                    userList.Add(user);
+                }
+            }
+            return userList;
+        }
+
         public OperationDetails Create(UserDTO userDto, string password, string confirmeUrl)
         {
-            var user = database.UserManager.FindByEmail(userDto.Email);
+            var user = identity.UserManager.FindByEmail(userDto.Email);
 
             if (user == null)
             {
                 user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
-                var result = database.UserManager.Create(user, password);
+                var result = identity.UserManager.Create(user, password);
                 if (result.Errors.Count() > 0)
                     return new OperationDetails(false, result.Errors.FirstOrDefault());
                 // добавляем роль
                 if (userDto.Role != "admin")
                     userDto.Role = "user";
-                database.UserManager.AddToRole(user.Id, userDto.Role);
+                identity.UserManager.AddToRole(user.Id, userDto.Role);
                 // создаем профиль клиента
-                database.Save();
+                identity.Save();
                 //user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
                 if (!string.IsNullOrEmpty(confirmeUrl))
                     emailSender.SendConfirmationMessage(GenerateMessage(user, confirmeUrl), PASSWORD);
@@ -61,6 +81,33 @@ namespace Forum.BLL.Services
             {
                 return new OperationDetails(false, "Пользователь с таким логином уже существует");
             }
+        }
+
+        public ClaimsIdentity Authenticate(string login, string password)
+        {
+            var user = identity.UserManager.Find(login, password);
+            if (user != null)
+            {
+                var block = blockService.GetUserStatusByUserId(user.Id);
+                if (block != null)
+                {
+                    if (block.BlockType.Contains(BlockType.Access))
+                    {
+                        throw new Exception(block.Message);
+                    }
+                }
+                if (!user.EmailConfirmed)
+                {
+                    throw new Exception(EMAIL_NOT_CONFIRM_ERROR);
+                }
+                return identity.UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+            }
+            return null;
+        }
+
+        public IdentityResult ChangePassword(UserDTO user, string currentPassword, string newPassword)
+        {
+            return identity.UserManager.ChangePassword(user.Id, currentPassword, newPassword);
         }
 
         private MailMessage GenerateMessage(ApplicationUser user, string url)
@@ -77,46 +124,23 @@ namespace Forum.BLL.Services
 
         public ClaimsIdentity ConfirmEmail(int token, string email)
         {
-            var user = database.UserManager.FindById(token);
+            var user = identity.UserManager.FindById(token);
             if (user != null)
             {
                 if (user.Email == email)
                 {
                     user.EmailConfirmed = true;
-                    database.UserManager.Update(user);
-                    return database.UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                    identity.UserManager.Update(user);
+                    return identity.UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                 }
             }
             return null;
         }
-
-        public ClaimsIdentity Authenticate(string login, string password)
-        {
-            var user = database.UserManager.Find(login, password);
-            var block = blockService.GetUserStatusByUserId(user.Id);
-            if(block != null)
-            {
-                if(block.BlockType.Contains(BlockType.Access))
-                {
-                    throw new Exception(block.Message);
-                }
-            }
-            if (user != null)
-            {
-                if (!user.EmailConfirmed)
-                {
-                    throw new Exception(EMAIL_NOT_CONFIRM_ERROR);
-                }
-                return database.UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-            }
-            return null;
-        }
-
 
         private void FirstInitialize()
         {
-            int i = database.UserManager.Users.Count();
-            int b = database.RoleManager.Roles.Count();
+            int i = identity.UserManager.Users.Count();
+            int b = identity.RoleManager.Roles.Count();
             if (i == 0 && b == 0)
             {
                 ApplicationRole[] roles = {
@@ -127,7 +151,7 @@ namespace Forum.BLL.Services
                 };
                 foreach (ApplicationRole role in roles)
                 {
-                    database.RoleManager.Create(role);
+                    identity.RoleManager.Create(role);
                 }
                 var user = new UserDTO
                 {
@@ -136,15 +160,15 @@ namespace Forum.BLL.Services
                     UserName = "Administrator",
                 };
                 var op = Create(user, "111111", null);
-                var u = database.UserManager.Find(user.Email, "111111");
+                var u = identity.UserManager.Find(user.Email, "111111");
                 u.EmailConfirmed = true;
-                database.UserManager.Update(u);
+                identity.UserManager.Update(u);
             }
         }
 
         public void Dispose()
         {
-            database.Dispose();
+            identity.Dispose();
         }
     }
 }

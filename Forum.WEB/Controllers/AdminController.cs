@@ -2,6 +2,7 @@
 using Forum.BLL.Interfaces;
 using Forum.WEB.Attributes;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +15,30 @@ namespace Forum.WEB.Controllers
     {
         private IAdminService adminService;
         private IBlockService blockService;
+        private IAuthManager userService
+        {
+            get { return HttpContext.GetOwinContext().GetUserManager<IAuthManager>(); }
+        }
         public AdminController(IAdminService adminService, IBlockService blockService)
         {
             this.adminService = adminService;
             this.blockService = blockService;
         }
-        [Authorize(Roles = "admin")]
+        [MyAuthorize(Roles = "admin")]
         public ActionResult UserList()
         {
-            var users = adminService.GetUsers();
+            var users = userService.GetUsers();
             return View(users);
         }
 
+        [MyAuthorize(Roles = "admin")]
         public ActionResult Block(int? userid)
         {
             var block = blockService.GetUserBlockByUserId((int)userid);
             return View(block);
         }
 
+        [MyAuthorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Block(BlockDTO block)
         {

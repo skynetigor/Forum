@@ -3,7 +3,7 @@
 }
 
 .main {
-    margin-bottom:100px;
+    margin-bottom: 100px;
 }
 
 .navbar-logo {
@@ -25,7 +25,7 @@
     /*padding-bottom:10px;*/
     border-radius: 0px 0px 10px 10px;
     border-top: 0px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .block {
@@ -40,6 +40,7 @@
 
 .content {
     min-height: 400px;
+    padding: 15px;
 }
 
 .nav-forum {
@@ -50,11 +51,12 @@
 
 .nav-menu {
     margin: 10px 0px 10px 0px;
+    text-align: center;
 }
 
 .category {
     border: double 3px #808080;
-    margin: 15px 10px 5px 10px;
+    margin: 15px 0px 5px 0px;
     border-radius: 8px;
     overflow: hidden;
 }
@@ -69,19 +71,47 @@
         color: #ffffff;
     }
 
-.stretch {
-    margin: 0px;
-    width: 100%;
+.right {
+    float: right;
+    margin: auto 0px auto 0px;
+}
+
+.category h3{
+    float:left;
+    margin:auto 0px auto 0px;
 }
 
 .panel-forum {
     padding: 0px;
 }
 
-.thems, .reply {
-    width: 75px;
-    text-align: center;
+.panel-heading h3.panel-title {
+    display: inline-block;
 }
+
+.table-forum {
+    text-align: center;
+    margin: 0px;
+    width: 100%;
+}
+
+    .table-forum > tbody > tr > td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+.description-colum {
+    width: 85%;
+}
+
+    .description-colum h3, h4 {
+        margin: 0;
+    }
+
+    .description-colum div {
+        text-align: left;
+        margin: auto 0px auto 0px;
+    }
 
 .authorize-form {
     padding: 0px 50px 0px 50px;
@@ -112,13 +142,13 @@
         margin: 0px 5px 0px 5px;
     }
 
-.admin-panel{
-    position:relative
-}  
-
-.admin-panel .btn-group {
-    margin:7px 0px 0px 30px;
+.admin-panel {
+    position: relative;
 }
+
+    .admin-panel .btn-group {
+        margin: 7px 0px 0px 30px;
+    }
 
 .empty-message {
     margin-bottom: 20px;
@@ -127,21 +157,34 @@
     font-weight: bold;
 }
 
+
+
 .table-comment {
-    min-height:200px;
+    min-height: 200px;
 }
 
-.table-comment thead tr{
-    height:50px;
-    color:#381bae;
-    font-weight:bold;
-    font-size:1.5em;
-    text-align:center;
-    background-color:antiquewhite;
+    .table-comment thead tr {
+        height: 50px;
+        color: #381bae;
+        font-weight: bold;
+        font-size: 1.5em;
+        text-align: center;
+        background-color: antiquewhite;
+    }
+
+.user-name {
+    width: 220px;
 }
 
-.user-name{
-    width:220px;
+.user-item {
+    margin: 10px;
 }
 
-
+    .user-item p {
+        line-height: 32px;
+        padding: 0px 10px 0px 10px;
+        margin: 0px 0px 0px 0px;
+        height: 35px;
+        border: 1px solid #ccc;
+        border-radius: 4px 0px 0px 4px;
+    }

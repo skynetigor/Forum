@@ -1,53 +1,55 @@
 ﻿using Forum.BLL.DTO;
 using Forum.BLL.DTO.Content.Category;
-using Forum.BLL.Infrastructure;
 using Forum.BLL.Interfaces;
 using Forum.WEB.Attributes;
 using Forum.WEB.Models.ContentViewModels;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System.Web;
 using System.Web.Mvc;
-
 namespace Forum.WEB.Controllers
 {
-    //[MyAuthorize(Permissions = new BlockType[] { BlockType.Access })]
-    public class CategoryController : Controller, IContentController<CategoryViewModel>
+    public class CategoryController : Controller
     {
         private IContentService<CategoryDTO> categoryService;
         private IBlockService blockService;
+        private IAuthManager userService
+        {
+            get { return HttpContext.GetOwinContext().GetUserManager<IAuthManager>(); }
+        }
+
         public CategoryController(IContentService<CategoryDTO> categoryService, IBlockService blockService)
         {
             this.categoryService = categoryService;
             this.blockService = blockService;
         }
         
-        [UnAuthorize]
+        [MyAllowAnonymous]
         public ActionResult Index()
         {
-            //var block = blockService.GetUserStatusByUserId(User.Identity.GetUserId<int>());
-            //if (block.IsAccess)
-            //{
-            //    return View("Error", (object)block.Message);
-            //}
             return View(categoryService.Get());
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Update(int? Id)
         {
-            ViewBag.Resourse = Url.Action("UpdateCategory");
+            var categoryViewModel = new CategoryViewModel();
+            var users = userService.GetUsers();
+            categoryViewModel.Users = new SelectList(users, "Id", "Name" );
             if(Id != null)
             {
                 var category = this.categoryService.FindById((int)Id);
-                var categoryViewModel = new CategoryViewModel
-                {
-                    Id = category.Id,
-                    Name = category.Name,
-                    Title = category.Title
-                };
-                return PartialView(categoryViewModel);
+                categoryViewModel.Id = category.Id;
+                categoryViewModel.Name = category.Name;
+                categoryViewModel.Description = category.Title;
+                categoryViewModel.ModeratorId = category.ModeratorId;
+                categoryViewModel.ModeratorName = category.ModeratorName;
             }
-            return PartialView(new CategoryViewModel());
+            return View(categoryViewModel);
         }
 
+
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Update(CategoryViewModel viewModel)
         {
@@ -60,7 +62,8 @@ namespace Forum.WEB.Controllers
             {
                 Id = viewModel.Id,
                 Name = viewModel.Name,
-                Title = viewModel.Title
+                Title = viewModel.Description,
+                ModeratorId = viewModel.ModeratorId
             };
             if (cat.Id == 0)
             {

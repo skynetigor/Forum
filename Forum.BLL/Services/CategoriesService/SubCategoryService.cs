@@ -26,19 +26,7 @@ namespace Forum.BLL.Services.CategoriesService
             List<SubCategoryDTO> subCatList = new List<SubCategoryDTO>();
             foreach (SubCategory subcat in subCategoryRepository.Get())
             {
-                CategoryDTO category = new CategoryDTO
-                {
-                    Id = subcat.Id,
-                    Title = subcat.Title,
-                    SubCategories = ExtractSubCategories(subcat.Category)
-                };
-                SubCategoryDTO sub = new SubCategoryDTO
-                {
-                    Name = subcat.Name,
-                    Id = subcat.Id,
-                    Title = subcat.Title,
-                    Category = category,
-                };
+                SubCategoryDTO sub = this.GetSubCategory(subcat);
                 subCatList.Add(sub);
             }
             return subCatList;
@@ -47,65 +35,39 @@ namespace Forum.BLL.Services.CategoriesService
         public override SubCategoryDTO FindById(int id)
         {
             SubCategory subcat = subCategoryRepository.FindById(id);
-            CategoryDTO category = new CategoryDTO
-            {
-                Name = subcat.Name,
-                Title = subcat.Title,
-                SubCategories = ExtractSubCategories(subcat.Category)
-            };
-            SubCategoryDTO subcategory = new SubCategoryDTO
-            {
-                Id = subcat.Id,
-                Name = subcat.Name,
-                Category = category
-            };
+            SubCategoryDTO subcategory = this.GetSubCategory(subcat);
             return subcategory;
         }
 
         protected override OperationDetails CreateContent(UserDTO user, SubCategoryDTO category)
         {
-
-            Category cat = categoryRepository.FindById(category.Category.Id);
-            if (identity.UserManager.IsInRole(user.Id, "admin") || cat.Moderator.Id == user.Id)
+            Category cat = categoryRepository.FindById(category.CategoryId);
+            SubCategory subCat = new SubCategory
             {
-                SubCategory subCat = new SubCategory
-                {
-                    Name = category.Name,
-                    Title = category.Title,
-                };
-                cat.SubCategories.Add(subCat);
-                categoryRepository.Update(cat);
-                return new OperationDetails(false, string.Format(SUBCATEGORY_CREATE_SUCCESS, subCat.Name, cat.Name));
-            }
-            return new OperationDetails(false, ACCESS_ERROR);
+                Name = category.Name,
+                Title = category.Title,
+            };
+            cat.SubCategories.Add(subCat);
+            categoryRepository.Update(cat);
+            return new OperationDetails(false, string.Format(SUBCATEGORY_CREATE_SUCCESS, subCat.Name, cat.Name));
         }
 
         protected override OperationDetails UpdateContent(UserDTO user, SubCategoryDTO category)
         {
-
             SubCategory subCat = subCategoryRepository.FindById(category.Id);
-            if (identity.UserManager.IsInRole(user.Id, "admin") || subCat.Category.Moderator.Id == user.Id)
-            {
-                var newCategory = categoryRepository.FindById(category.Category.Id);
-                subCat.Name = category.Name;
-                subCat.Title = category.Title;
-                subCat.Category = newCategory;
-                subCategoryRepository.Update(subCat);
-                return new OperationDetails(false, string.Format(SUBCATEGORY_CREATE_SUCCESS, subCat.Name, subCat.Category.Name));
-            }
-            return new OperationDetails(false, ACCESS_ERROR);
+            var newCategory = categoryRepository.FindById(category.CategoryId);
+            subCat.Name = category.Name;
+            subCat.Title = category.Title;
+            subCat.Category = newCategory;
+            subCategoryRepository.Update(subCat);
+            return new OperationDetails(false, string.Format(SUBCATEGORY_CREATE_SUCCESS, subCat.Name, subCat.Category.Name));
         }
 
         protected override OperationDetails DeleteContent(UserDTO user, SubCategoryDTO category)
         {
-
             SubCategory cat = subCategoryRepository.FindById(category.Id);
-            if (identity.UserManager.IsInRole(user.Id, "admin") || cat.Category.Moderator.Id == user.Id)
-            {
-                subCategoryRepository.Remove(cat);
-                return new OperationDetails(true, string.Format(SUBCATEGORY_DELETE_SUCCESS, cat.Name));
-            }
-            return new OperationDetails(false, ACCESS_ERROR);
+            subCategoryRepository.Remove(cat);
+            return new OperationDetails(true, string.Format(SUBCATEGORY_DELETE_SUCCESS, cat.Name));
         }
     }
 }

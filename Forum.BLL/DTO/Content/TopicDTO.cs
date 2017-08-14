@@ -10,5 +10,6 @@ namespace Forum.BLL.DTO.Content
         public int SubCategoryId { get; set; }
         public string SubCategoryName { get; set; }
         public string UserName { get; set; }
+        public int AnswersCount { get; set; }
     }
 }

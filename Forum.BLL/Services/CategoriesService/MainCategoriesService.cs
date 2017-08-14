@@ -1,9 +1,5 @@
 ﻿using Forum.BLL.DTO.Content.Category;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Forum.DAL.Entities.Categories;
 using Forum.DAL.Interfaces;
 using Forum.BLL.DTO;
@@ -27,11 +23,20 @@ namespace Forum.BLL.Services.CategoriesService
             var catList = new List<CategoryDTO>();
             foreach (var category in categoryRepository.Get())
             {
+                var modId = 0;
+                var modName = "";
+                if (category.Moderator != null)
+                {
+                    modId = category.Moderator.Id;
+                    modName = category.Moderator.Email;
+                }
                 var dto = new CategoryDTO
                 {
                     Id = category.Id,
                     Name = category.Name,
-                    Title = category.Title
+                    Title = category.Title,
+                    ModeratorId = modId,
+                    ModeratorName = modName
                 };
                 dto.SubCategories = ExtractSubCategories(category);
                 catList.Add(dto);
@@ -44,12 +49,21 @@ namespace Forum.BLL.Services.CategoriesService
             var category = categoryRepository.FindById(id);
             if (category != null)
             {
+                var modId = 0;
+                var modName = "";
+                if(category.Moderator != null)
+                {
+                    modId = category.Moderator.Id;
+                    modName = category.Moderator.Email;
+                }
                 return new CategoryDTO
                 {
                     Id = category.Id,
                     Name = category.Name,
                     Title = category.Title,
-                    SubCategories = ExtractSubCategories(category)
+                    SubCategories = ExtractSubCategories(category),
+                    ModeratorId = modId,
+                    ModeratorName = modName
                 };
             }
             return null;
@@ -57,42 +71,48 @@ namespace Forum.BLL.Services.CategoriesService
 
         protected override OperationDetails CreateContent(UserDTO user, CategoryDTO category)
         {
-            if (identity.UserManager.IsInRole(user.Id, ADMIN_ROLE))
+            var appuser = identity.UserManager.FindById(category.ModeratorId);
+            if (appuser != null)
             {
-                var cat = new Category
-                {
-                    Id = category.Id,
-                    Name = category.Name,
-                    Title = category.Title
-                };
-                categoryRepository.Create(cat);
-                return new OperationDetails(true, string.Format(CATEGORY_CREATE_SUCCESS, cat.Name));
+                identity.UserManager.AddToRole(appuser.Id, "moderator");
             }
-            return new OperationDetails(false, ACCESS_ERROR);
+            var cat = new Category
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Title = category.Title,
+                Moderator = appuser
+            };
+            categoryRepository.Create(cat);
+            return new OperationDetails(true, string.Format(CATEGORY_CREATE_SUCCESS, cat.Name));
         }
 
         protected override OperationDetails UpdateContent(UserDTO user, CategoryDTO category)
         {
-            if (identity.UserManager.IsInRole(user.Id, ADMIN_ROLE))
+            var appuser = identity.UserManager.FindById(category.ModeratorId);
+            var cat = categoryRepository.FindById(category.Id);
+
+            var currModerator = cat.Moderator;
+            if (currModerator != null)
             {
-                var cat = categoryRepository.FindById(category.Id);
-                cat.Name = category.Name;
-                cat.Title = category.Title;
-                categoryRepository.Update(cat);
-                return new OperationDetails(true, string.Format(CATEGORY_UPDATE_SUCCESS, cat.Name));
+                identity.UserManager.RemoveFromRole(cat.Moderator.Id, "moderator");
             }
-            return new OperationDetails(false, ACCESS_ERROR);
+            if (appuser != null)
+            {
+                identity.UserManager.AddToRole(appuser.Id, "moderator");
+            }
+            cat.Name = category.Name;
+            cat.Title = category.Title;
+            cat.Moderator = appuser;
+            categoryRepository.Update(cat);
+            return new OperationDetails(true, string.Format(CATEGORY_UPDATE_SUCCESS, cat.Name));
         }
 
         protected override OperationDetails DeleteContent(UserDTO user, CategoryDTO category)
         {
-            if (identity.UserManager.IsInRole(user.Id, ADMIN_ROLE))
-            {
-                var cat = categoryRepository.FindById(category.Id);
-                categoryRepository.Remove(cat);
-                return new OperationDetails(true, string.Format(CATEGORY_DELETE_SUCCESS, cat.Name));
-            }
-            return new OperationDetails(false, ACCESS_ERROR);
+            var cat = categoryRepository.FindById(category.Id);
+            categoryRepository.Remove(cat);
+            return new OperationDetails(true, string.Format(CATEGORY_DELETE_SUCCESS, cat.Name));
         }
     }
 }

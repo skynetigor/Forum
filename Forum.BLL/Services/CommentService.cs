@@ -8,6 +8,7 @@ using Forum.DAL.Entities;
 using Forum.DAL.Interfaces;
 using Forum.DAL.Entities.Topics;
 using System;
+using Microsoft.AspNet.Identity;
 
 namespace Forum.BLL.Services
 {
@@ -66,7 +67,7 @@ namespace Forum.BLL.Services
 
         protected override OperationDetails CreateContent(UserDTO user, CommentDTO content)
         {
-            var appuser = identity.UserManager.Users.First();
+            var appuser = identity.UserManager.FindById(user.Id);
             var topic = topicRepository.FindById(content.TopicId);
             if(!appuser.IsBlocked  && !topic.IsBlocked)
             {

@@ -1,33 +1,61 @@
 ﻿@using Forum.BLL.DTO.Content.Category
+@using Microsoft.AspNet.Identity;
 @model IEnumerable<CategoryDTO>
+@{
+    var currentUserId = User.Identity.GetUserId<int>();
+    bool isAdmin = User.IsInRole("admin");
+}
 
 @foreach (CategoryDTO category in Model)
 {
+    bool isEditor = category.ModeratorId == currentUserId || isAdmin;
     <div class="panel panel-default category">
-        <div class="panel-heading">
+        <div class="panel-heading clearfix">
             <h3 class="panel-title">@category.Name</h3>
+            @if (isAdmin)
+            {
+                <a class="btn btn-default right" href=@Url.Action("Update","Category", new { Id = category.Id })>Редактировать</a>
+            }
         </div>
         <div class="panel-body panel-forum">
             @if (category.SubCategories.Count() > 0)
-            {<table class="table table-bordered table-striped stretch table-forum">
-                <thead>
-                    <tr>
-                        <td>Форум</td>
-                        <td class="thems">Темы</td>
-                        <td class="reply">Ответы</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (SubCategoryDTO sub in category.SubCategories)
-                    {
+            {
+                <table class="table table-bordered table-striped table-forum">
+                    <thead>
                         <tr>
-                            <td><a href="@Url.Action("index","topic", new { subCategoryId = sub.Id })">@sub.Name</a></td>
-                            <td class="thems">551</td>
-                            <td class="reply">1223</td>
+                            <td>Форум</td>
+                            <td class="thems">Темы</td>
+                            <td class="reply">Ответы</td>
+                            @if (isEditor)
+                            {
+                                <td>Редактирование</td>
+                            }
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (SubCategoryDTO sub in category.SubCategories)
+                    {
+                            <tr>
+                                <td class="description-colum">
+                                    <div>
+                                        <a href="@Url.Action("index","topic", new { subCategoryId = sub.Id })">
+                                            <h4>
+                                                @sub.Name
+                                            </h4>
+                                        </a>
+                                        <h5>@sub.Title</h5>
+                                </div>
+                            </td>
+                            <td class="thems">@sub.TopicsCount</td>
+                            <td class="reply">@sub.AnswersCount</td>
+                            @if (isEditor)
+                            {
+                                <td><a href=@Url.Action("Update","SubCategory", new { Id = sub.Id })>Редактировать</a></td>
+                            }
+                        </tr>
+                        }
+                    </tbody>
+                </table>
             }
             else
             {

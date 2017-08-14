@@ -98,17 +98,6 @@ namespace Forum.BLL.Services
 
         private TopicDTO Extract(Topic topic)
         {
-            var subcatDTO = new SubCategoryDTO
-            {
-                Name = topic.SubCategory.Name,
-                Id = topic.SubCategory.Id,
-                Title = topic.SubCategory.Title
-            };
-            var user = new UserDTO
-            {
-                Name = topic.User.UserName,
-                Email = topic.User.Email,
-            };
             var topicDTO = new TopicDTO
             {
                 Id = topic.Id,
@@ -116,7 +105,8 @@ namespace Forum.BLL.Services
                 Title = topic.Title,
                 SubCategoryName = topic.SubCategory.Name,
                 Message = topic.Message,
-                UserName = user.UserName
+                UserName = topic.User.UserName,
+                AnswersCount = topic.Comments.Count()
             };
             return topicDTO;
         }
@@ -127,19 +117,8 @@ namespace Forum.BLL.Services
             List<TopicDTO> tdoList = new List<TopicDTO>();
             foreach(var t in topics)
             {
-                var user = new UserDTO
-                {
-                    Id = t.User.Id,
-                    Email = t.User.Email
-                };
-                var topicTdo = new TopicDTO
-                {
-                    Id = t.Id,
-                    Message = t.Message,
-                    Title = t.Title,
-                    UserName = user.UserName
-                };
-                tdoList.Add(topicTdo);
+                var topicDTO = Extract(t);
+                tdoList.Add(topicDTO);
             }
             return tdoList;
         }

@@ -4,15 +4,20 @@
     ViewBag.Title = "UserList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<table>
+<div class="container-fluid">
     @foreach (var user in Model)
     {
-        <tr>
-            <td>@user.Email</td>
-            <td>
-                <a href=@Url.Action("Block","Admin", new { userid = user.Id })>Блокировка</a>
-            </td>
-        </tr>
+        <div class="input-group user-item">
+            @*<input type="text" class="form-control">*@
+            <p style="background-color:papayawhip;">@user.Name</p>
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Действие <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href=@Url.Action("Block", "Admin", new { userid = user.Id })>Заблокировать</a></li>
+                    <li><a href="#">Назначить модератором</a></li>
+                </ul>
+            </div>
+
+        </div>
     }
-</table>
+</div>

@@ -9,6 +9,7 @@ namespace Forum.WEB.Controllers
 {
     public class ErrorController : Controller
     {
+        [MyAuthorize]
         public ActionResult GetError(string message)
         {
             if(!string.IsNullOrEmpty(message))

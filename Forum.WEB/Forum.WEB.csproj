@@ -215,10 +215,9 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\MyAuthorizeAttribute.cs" />
-    <Compile Include="Attributes\UnAuthorizeAttribute.cs" />
+    <Compile Include="Attributes\MyAllowAnonymousAttribute.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\IContentController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
@@ -229,10 +228,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BlockViewModel.cs" />
+    <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\ContentViewModels\AbstractViewModel.cs" />
     <Compile Include="Models\ContentViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ContentViewModels\SubCategoryViewModel.cs" />
-    <Compile Include="Models\ContentViewModels\UserViewModel.cs" />
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
@@ -260,8 +259,11 @@
     <Content Include="Views\Comment\Index.cshtml" />
     <Content Include="Views\Comment\Update.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Admin\Block.cshtml" />
+    <Content Include="Views\Shared\View.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\RegistrationSuccess.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -270,7 +272,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Error\" />
     <Folder Include="Views\Notification\" />
   </ItemGroup>
   <ItemGroup>

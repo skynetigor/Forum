@@ -29,26 +29,6 @@ namespace Forum.BLL.Services
             this.blockRepository = blockRepository;
         }
 
-        public IEnumerable<UserDTO> GetUsers()
-        {
-            var userList = new List<UserDTO>();
-            foreach (var appuser in identity.UserManager.Users)
-            {
-                if (!identity.UserManager.IsInRole(appuser.Id, "admin"))
-                {
-                    var user = new UserDTO
-                    {
-                        Id = appuser.Id,
-                        Name = appuser.UserName,
-                        Email = appuser.Email,
-                        IsBlocked = appuser.IsBlocked
-                    };
-                    userList.Add(user);
-                }
-            }
-            return userList;
-        }
-
         private string GetBlockMessage(BlockDTO blockinfo)
         {
             string result = string.Empty;

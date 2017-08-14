@@ -18,35 +18,34 @@ namespace Forum.WEB.Attributes
     {
         private string message;
         protected bool accessError;
-        public BlockType[] Permissions { get; set; }
+        public BlockType Permission { get; set; }
 
+        protected bool CheckAccess(BlockType Permissions, HttpContextBase httpContext)
+        {
+            IDependencyInstaller dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
+            IBlockService service = dependencyInstaller.GetService<IBlockService>();
+            BlockResult blockresult = service.GetUserStatusByUserId(httpContext.User.Identity.GetUserId<int>());
+            if (blockresult != null)
+            {
+                if (blockresult.BlockType.Contains(BlockType.Access))
+                {
+                    httpContext.GetOwinContext().Authentication.SignOut();
+                }
+                if (blockresult.BlockType.Contains(Permissions))
+                {
+                    message = blockresult.Message;
+                    return false;
+                }
+            }
+            return true;
+        }
+        
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             IIdentity identity = httpContext.User.Identity;
             if (identity.IsAuthenticated)
             {
-                IDependencyInstaller dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
-                IBlockService service = dependencyInstaller.GetService<IBlockService>();
-                BlockResult blockresult = service.GetUserStatusByUserId(identity.GetUserId<int>());
-                if (blockresult != null)
-                {
-                    foreach (var blocktype in blockresult.BlockType)
-                    {
-                        if (blocktype == BlockType.Access)
-                        {
-                            httpContext.GetOwinContext().Authentication.SignOut();
-                        }
-                        if (Permissions != null)
-                        {
-                            if (Permissions.Contains(blocktype))
-                            {
-                                accessError = true;
-                                message = blockresult.Message;
-                                return false;
-                            }
-                        }
-                    }
-                }
+               return CheckAccess(Permission, httpContext);
             }
             return base.AuthorizeCore(httpContext);
         }

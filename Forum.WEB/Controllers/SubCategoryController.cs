@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Forum.WEB.Controllers
 {
-    public class SubCategoryController : Controller, IContentController<SubCategoryViewModel>
+    public class SubCategoryController : Controller
     {
         private IContentService<SubCategoryDTO> subCategoryService;
         private IContentService<CategoryDTO> categoryService;
@@ -22,6 +22,7 @@ namespace Forum.WEB.Controllers
             this.categoryService = categoryService;
         }
 
+        [Authorize(Roles = "admin,moderator")]
         public ActionResult Update(int? Id)
         {
             if (Id != null)
@@ -31,7 +32,7 @@ namespace Forum.WEB.Controllers
                 {
                     Id = subcategory.Id,
                     Name = subcategory.Name,
-                    Title = subcategory.Title,
+                    Description = subcategory.Title,
                     Categories = new SelectList(categoryService.Get(), "Id", "Name")
                 };
                 return PartialView(categoryViewModel);
@@ -43,6 +44,7 @@ namespace Forum.WEB.Controllers
             return PartialView(catViewModel);
         }
 
+        [Authorize(Roles = "admin,moderator")]
         [HttpPost]
         public ActionResult Update(SubCategoryViewModel viewModel)
         {
@@ -57,9 +59,10 @@ namespace Forum.WEB.Controllers
             var subCategory = new SubCategoryDTO
             {
                 Name = viewModel.Name,
-                Title = viewModel.Title,
+                Title = viewModel.Description,
                 Id = viewModel.Id,
-                Category = category
+                CategoryId = category.Id,
+                CategoryName = category.Name
             };
             if (subCategory.Id == 0)
             {

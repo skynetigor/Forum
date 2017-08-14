@@ -4,6 +4,7 @@ using Forum.DAL.Entities.Categories;
 using Forum.DAL.Interfaces;
 using Forum.BLL.DTO.Content;
 using Forum.BLL.DTO;
+using System.Linq;
 
 namespace Forum.BLL.Services.CategoriesService
 {
@@ -30,38 +31,26 @@ namespace Forum.BLL.Services.CategoriesService
             foreach (SubCategory subcat in category.SubCategories)
             {
                 var topics = new List<TopicDTO>();
-                foreach (var t in subcat.Topics)
-                {
-                    var user = new UserDTO
-                    {
-                        Id = t.User.Id,
-                        Name = t.User.UserName,
-                        Email = t.User.Email
-                    };
-                    var topic = new TopicDTO
-                    {
-                        Id = t.Id,
-                        Message = t.Message,
-                        Title = t.Title,
-                        UserName = user.UserName
-                    };
-                    topics.Add(topic);
-                }
-                
-                var sub = new SubCategoryDTO
-                {
-                    Name = subcat.Name,
-                    Id = subcat.Id,
-                    Title = subcat.Title,
-                    Category = dto,
-                    Topics = topics
-                };
-                
-
+                var sub = GetSubCategory(subcat);
                 subCatList.Add(sub);
             }
 
             return subCatList;
+        }
+
+        protected SubCategoryDTO GetSubCategory(SubCategory subcategory)
+        {
+            var sub = new SubCategoryDTO
+            {
+                Name = subcategory.Name,
+                Id = subcategory.Id,
+                Title = subcategory.Title,
+                CategoryId = subcategory.Category.Id,
+                CategoryName = subcategory.Category.Name,
+                TopicsCount = subcategory.Topics.Count,
+                AnswersCount = subcategory.Topics.Sum(t => t.Comments.Count)
+            };
+            return sub;
         }
     }
 }

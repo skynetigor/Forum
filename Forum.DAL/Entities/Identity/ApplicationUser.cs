@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Forum.DAL.Entities.Identity.IntPk;
 using System.ComponentModel.DataAnnotations.Schema;
+using Forum.DAL.Entities.Categories;
 
 namespace Forum.DAL.Entities
 {
