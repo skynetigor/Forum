@@ -1,18 +1,21 @@
-﻿@using Forum.BLL.DTO.Content
-@model IEnumerable<TopicDTO>
+﻿@using Forum.Core.DAL.Entities.Content.Categories
+@model SubCategory
 @{
     ViewBag.Title = "Go";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="panel panel-default category">
-    <div class="panel-heading">
-        <h3 class="panel-title">Категория@*@Model.FirstOrDefault().SubCategoryName*@</h3>
-        <a class="btn btn-default" href=@Url.Action("Update","Topic", new { currentId = ViewBag.subCategoryId })>Новая тема</a>
+    <div class="panel-heading container-fluid">
+        <div style="margin:auto">
+            <h3 class="panel-title">@Model.Name</h3>
+        </div>
+        <a class="btn btn-default right" href=@Url.Action("Update","Topic", new { currentId = Model.Id })>Новая тема</a>
     </div>
     <div class="panel-body panel-forum">
-        @if (Model.Count() > 0)
-            {<table class="table table-bordered table-striped stretch table-forum">
+        @if (Model.Topics.Count > 0)
+            {
+            <table class="table table-bordered table-striped stretch table-forum">
             <thead>
                 <tr>
                     <td>Пользователь</td>
@@ -21,12 +24,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var topic in Model)
+                @foreach (var topic in Model.Topics)
                 {
                     <tr>
-                        <td>@topic.UserName</td>
-                        <td><a href=@Url.Action("Index", "Comment", new { currentTopic = topic.Id})>@topic.Title</a></td>
-                        <td class="reply">123</td>
+                        <td>@topic.User.UserName</td>
+                        <td class="description-colum">
+                        <a href=@Url.Action("Index", "Comment", new { currentTopic = topic.Id})>@topic.Description</a>
+                        </td>
+                        <td class="reply">@topic.Comments.Count</td>
                     </tr>
                 }
             </tbody>

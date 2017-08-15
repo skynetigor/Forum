@@ -38,11 +38,28 @@
       <HintPath>..\packages\Castle.Windsor.4.0.0\lib\net45\Castle.Windsor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -85,16 +102,21 @@
     <Compile Include="Service\WindsorCastle\CastleInstaller.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Forum.BLL\Forum.BLL.csproj">
-      <Project>{D6EF1EE9-A08D-448B-93BC-E8904F42B21F}</Project>
-      <Name>Forum.BLL</Name>
+    <ProjectReference Include="..\Forum.Core.BLL\Forum.NewBLL.csproj">
+      <Project>{235b6405-b308-48d7-8c1f-82feba948d7a}</Project>
+      <Name>Forum.NewBLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Forum.DAL\Forum.DAL.csproj">
-      <Project>{46E247F0-C532-4589-B8C3-2A564D3FF2BB}</Project>
-      <Name>Forum.DAL</Name>
+    <ProjectReference Include="..\Forum.Core.DAL\Forum.NewDAL.csproj">
+      <Project>{3d99fb54-7853-48ba-8c52-0e949c9e2f11}</Project>
+      <Name>Forum.NewDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Forum.Core\Forum.Core.csproj">
+      <Project>{ea11dc04-b3f5-461a-b708-2e79894f4ca2}</Project>
+      <Name>Forum.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

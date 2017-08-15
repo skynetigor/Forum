@@ -1,28 +1,57 @@
-﻿using System.Web;
+﻿using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
+using System.Linq;
+using Forum.IoC.Interfaces;
+using Forum.IoC.Service;
+using System.Reflection;
+using Forum.WEB.Controllers;
+using Microsoft.AspNet.Identity;
+using Forum.Core.BLL.Infrastructure;
+using Forum.Core.BLL.Interfaces;
 
 namespace Forum.WEB.Attributes
 {
-    public class MyAuthorizeAttribute:AuthorizeAttribute
+    public class MyAuthorizeAttribute : AuthorizeAttribute
     {
+        private string message;
+        protected bool accessError;
+        public BlockType Permission { get; set; }
+
+        protected bool CheckAccess(BlockType Permissions, HttpContextBase httpContext)
+        {
+            IDependencyInstaller dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
+            IBlockService service = dependencyInstaller.GetService<IBlockService>();
+            BlockResult blockresult = service.GetUserStatusByUserId(httpContext.User.Identity.GetUserId<int>());
+            if (blockresult != null)
+            {
+                if (blockresult.BlockType.Contains(BlockType.Access))
+                {
+                    httpContext.GetOwinContext().Authentication.SignOut();
+                }
+                if (blockresult.BlockType.Contains(Permissions))
+                {
+                    message = blockresult.Message;
+                    return false;
+                }
+            }
+            return true;
+        }
+        
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            if(httpContext.User.Identity.IsAuthenticated)
+            IIdentity identity = httpContext.User.Identity;
+            if (identity.IsAuthenticated)
             {
-                bool s = !httpContext.User.IsInRole("blocked");
-                return s;
+               return CheckAccess(Permission, httpContext);
             }
-            return false;
+            return base.AuthorizeCore(httpContext);
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            if(filterContext.HttpContext.User.IsInRole("blocked"))
-            {
-                filterContext.Result = new RedirectResult("/BlockedUser/YouAreBlocked");
-                return;
-            }
-            filterContext.Result = new RedirectResult("/Account/login");
+            ErrorController controller = new ErrorController();
+            filterContext.Result = controller.GetError(message);
         }
     }
 }

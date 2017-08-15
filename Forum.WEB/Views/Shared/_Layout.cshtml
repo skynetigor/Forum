@@ -11,63 +11,58 @@
 </head>
 <body>
     @Html.Partial("FixedBottomAdminPanel")
-    <div class="container main">
+    <div class="container-fluid main">
         <nav>
             <div class="container-fluid block nav-forum">
                 <div class="container-fluid navbar-cont">
                     <div class="navbar-logo">
 
                     </div>
-                    
-                        <div class="user-info">
-                            <ul>@if (User.Identity.IsAuthenticated)
-                            {
+                    <a class="btn btn-default" href=@Url.Action("index", "category")>Главная</a>
+                    <div class="user-info">
+                        <ul>
+                            @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <p><i class="glyphicon glyphicon-user"></i>@User.Identity.Name</p>
+                            </li>
                                 <li>
-                                    <p><i class="glyphicon glyphicon-user"></i>@User.Identity.Name</p>
-                                </li>
-                                <li>
-                                    <p><i class="glyphicon glyphicon-bell"></i>Оповещения</p>
+                                    <p></p>
+                                    <a href=@Url.Action("ChangePassword", "Account")><i class="glyphicon glyphicon-bell"></i>Изменить пароль</a>
                                 </li>
                                 <li>
                                     <a href=@Url.Action("Logout", "Account")><i class="glyphicon glyphicon-log-out"></i>Выйти</a>
                                 </li>
-                            }
-                            else
-                            {
-                                <li>
-                                    <a href=@Url.Action("Login", "Account")><i class="glyphicon glyphicon-log-in"></i>Войти</a>
-                                </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href=@Url.Action("Login", "Account")><i class="glyphicon glyphicon-log-in"></i>Войти</a>
+                            </li>
                                 <li>
                                     <a href=@Url.Action("Registration", "Account")><i class="glyphicon glyphicon-registration-mark"></i>Зарегистрироваться</a>
                                 </li>
-                            }
-                            </ul>
-                        </div>
-                    
-                    
+                        }
+                    </ul>
                 </div>
-                <div class="container-fluid nav-menu">
-                    <div class="btn-group">
-                        <button class="btn btn-default">Главная</button>
-                        <button class="btn btn-default">Главная</button>
-                        <button class="btn btn-default">Главная</button>
-                        <button class="btn btn-default">Главная</button>
-                        <button class="btn btn-default">Главная</button>
-                    </div>
-                </div>
+
+
             </div>
-        </nav>
-        <content>
-            <div class="container-fluid block content">
-                @RenderBody()
+            <div class="container-fluid nav-menu">
+                <h2>АВТОМОБИЛЬНЫЙ ФОРУМ</h2>
             </div>
-        </content>
-    </div>
-    @*<script src="~/scripts/jquery-1.10.2.min.js"></script>*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="~/scripts/bootstrap.js"></script>
-    <script src="~/scripts/jquery.validate.js"></script>
-    <script src="~/scripts/jquery.validate.unobtrusive.js"></script>
+        </div>
+    </nav>
+    <content>
+        <div class="container-fluid block content">
+            @RenderBody()
+        </div>
+    </content>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="~/scripts/bootstrap.js"></script>
+<script src="~/scripts/jquery.validate.js"></script>
+<script src="~/scripts/jquery.validate.unobtrusive.js"></script>
 
 </body>
 </html>

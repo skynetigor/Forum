@@ -73,12 +73,12 @@ var Microsoft;
             function _InternalLogMessage(msgId, msg, properties) {
                 this.message = _InternalMessageId[msgId].toString();
                 this.messageId = msgId;
-                var diagnosticText = (msg ? " message:" + _InternalLogMessage.sanitizeDiagnosticText(msg) : string.Empty) +
-                    (properties ? " props:" + _InternalLogMessage.sanitizeDiagnosticText(JSON.stringify(properties)) : string.Empty);
+                var diagnosticText = (msg ? " message:" + _InternalLogMessage.sanitizeDiagnosticText(msg) : "") +
+                    (properties ? " props:" + _InternalLogMessage.sanitizeDiagnosticText(JSON.stringify(properties)) : "");
                 this.message += diagnosticText;
             }
             _InternalLogMessage.sanitizeDiagnosticText = function (text) {
-                return "\string.Empty + text.replace(/\"/g, string.Empty) + "\string.Empty;
+                return "\"" + text.replace(/\"/g, "") + "\"";
             };
             return _InternalLogMessage;
         })();
@@ -323,7 +323,7 @@ var Microsoft;
                 return false;
             };
             Util.setCookie = function (name, value, domain) {
-                var domainAttrib = string.Empty;
+                var domainAttrib = "";
                 if (domain) {
                     domainAttrib = ";domain=" + domain;
                 }
@@ -336,7 +336,7 @@ var Microsoft;
                 return str.toString().toLowerCase() === "true";
             };
             Util.getCookie = function (name) {
-                var value = string.Empty;
+                var value = "";
                 if (name && name.length) {
                     var cookieName = name + "=";
                     var cookies = Util.document.cookie.split(";");
@@ -357,11 +357,11 @@ var Microsoft;
             Util.trim = function (str) {
                 if (typeof str !== "string")
                     return str;
-                return str.replace(/^\s+|\s+$/g, string.Empty);
+                return str.replace(/^\s+|\s+$/g, "");
             };
             Util.newId = function () {
                 var base64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-                var result = string.Empty;
+                var result = "";
                 var random = Math.random() * 1073741824;
                 while (random > 0) {
                     var char = base64chars.charAt(random % 64);
@@ -412,10 +412,10 @@ var Microsoft;
                 if (isNaN(totalms) || totalms < 0) {
                     totalms = 0;
                 }
-                var ms = string.Empty + totalms % 1000;
-                var sec = string.Empty + Math.floor(totalms / 1000) % 60;
-                var min = string.Empty + Math.floor(totalms / (1000 * 60)) % 60;
-                var hour = string.Empty + Math.floor(totalms / (1000 * 60 * 60)) % 24;
+                var ms = "" + totalms % 1000;
+                var sec = "" + Math.floor(totalms / 1000) % 60;
+                var min = "" + Math.floor(totalms / (1000 * 60)) % 60;
+                var hour = "" + Math.floor(totalms / (1000 * 60 * 60)) % 24;
                 ms = ms.length === 1 ? "00" + ms : ms.length === 2 ? "0" + ms : ms;
                 sec = sec.length < 2 ? "0" + sec : sec;
                 min = min.length < 2 ? "0" + min : min;
@@ -438,7 +438,7 @@ var Microsoft;
                 if (objectTypeDump === "[object Error]") {
                     return object.name;
                 }
-                return string.Empty;
+                return "";
             };
             Util.addEventHandler = function (eventName, callback) {
                 if (!window || typeof eventName !== 'string' || typeof callback !== 'function') {
@@ -515,7 +515,7 @@ var Microsoft;
             stringUtils.GetLength = function (strObject) {
                 var res = 0;
                 if (!extensions.IsNullOrUndefined(strObject)) {
-                    var stringified = string.Empty;
+                    var stringified = "";
                     try {
                         stringified = strObject.toString();
                     }
@@ -711,7 +711,7 @@ var Microsoft;
                 this.attachToOnReadyStateChange(xhr);
             };
             AjaxMonitor.getFailedAjaxDiagnosticsMessage = function (xhr) {
-                var result = string.Empty;
+                var result = "";
                 try {
                     if (!ApplicationInsights.extensions.IsNullOrUndefined(xhr) &&
                         !ApplicationInsights.extensions.IsNullOrUndefined(xhr.ajaxData) &&
@@ -822,7 +822,7 @@ var Microsoft;
                 return score * 100;
             };
             HashCodeScoreGenerator.prototype.getHashCode = function (input) {
-                if (input == string.Empty) {
+                if (input == "") {
                     return 0;
                 }
                 while (input.length < HashCodeScoreGenerator.MIN_INPUT_LENGTH) {
@@ -1730,20 +1730,20 @@ var Microsoft;
                 xhr.open("POST", this._config.endpointUrl(), isAsync);
                 xhr.setRequestHeader("Content-type", "application/json");
                 xhr.onreadystatechange = function () { return Sender._xhrReadyStateChange(xhr, payload, countOfItemsInPayload); };
-                xhr.onerror = function (event) { return Sender._onError(payload, xhr.responseText || xhr.response || string.Empty, event); };
+                xhr.onerror = function (event) { return Sender._onError(payload, xhr.responseText || xhr.response || "", event); };
                 xhr.send(payload);
             };
             Sender.prototype._xdrSender = function (payload, isAsync) {
                 var xdr = new XDomainRequest();
                 xdr.onload = function () { return Sender._xdrOnLoad(xdr, payload); };
-                xdr.onerror = function (event) { return Sender._onError(payload, xdr.responseText || string.Empty, event); };
+                xdr.onerror = function (event) { return Sender._onError(payload, xdr.responseText || "", event); };
                 xdr.open('POST', this._config.endpointUrl());
                 xdr.send(payload);
             };
             Sender._xhrReadyStateChange = function (xhr, payload, countOfItemsInPayload) {
                 if (xhr.readyState === 4) {
                     if ((xhr.status < 200 || xhr.status >= 300) && xhr.status !== 0) {
-                        Sender._onError(payload, xhr.responseText || xhr.response || string.Empty);
+                        Sender._onError(payload, xhr.responseText || xhr.response || "");
                     }
                     else {
                         Sender._onSuccess(payload, countOfItemsInPayload);
@@ -1751,11 +1751,11 @@ var Microsoft;
                 }
             };
             Sender._xdrOnLoad = function (xdr, payload) {
-                if (xdr && (xdr.responseText + string.Empty === "200" || xdr.responseText === string.Empty)) {
+                if (xdr && (xdr.responseText + "" === "200" || xdr.responseText === "")) {
                     Sender._onSuccess(payload, 0);
                 }
                 else {
-                    Sender._onError(payload, xdr && xdr.responseText || string.Empty);
+                    Sender._onError(payload, xdr && xdr.responseText || "");
                 }
             };
             Sender._onError = function (payload, message, event) {
@@ -2578,7 +2578,7 @@ var Microsoft;
                 if (!doNotSendItem) {
                     if (envelope.name === ApplicationInsights.Telemetry.Metric.envelopeType ||
                         this.sample.isSampledIn(envelope)) {
-                        var iKeyNoDashes = this._config.instrumentationKey().replace(/-/g, string.Empty);
+                        var iKeyNoDashes = this._config.instrumentationKey().replace(/-/g, "");
                         envelope.name = envelope.name.replace("{0}", iKeyNoDashes);
                         this._sender.send(envelope);
                     }
@@ -2780,10 +2780,10 @@ var Microsoft;
                 PageViewManager.prototype.trackPageView = function (name, url, properties, measurements, duration) {
                     var _this = this;
                     if (typeof name !== "string") {
-                        name = window.document && window.document.title || string.Empty;
+                        name = window.document && window.document.title || "";
                     }
                     if (typeof url !== "string") {
-                        url = window.location && window.location.href || string.Empty;
+                        url = window.location && window.location.href || "";
                     }
                     var pageViewSent = false;
                     var customDuration = 0;
@@ -3012,7 +3012,7 @@ var Microsoft;
                     this.commandName = commandName;
                     this.value = value;
                     this.success = success;
-                    this.resultCode = resultCode + string.Empty;
+                    this.resultCode = resultCode + "";
                     this.dependencyKind = AI.DependencyKind.Http;
                     this.dependencyTypeName = "Ajax";
                 }
@@ -3109,7 +3109,7 @@ var Microsoft;
             AppInsights.prototype.startTrackPage = function (name) {
                 try {
                     if (typeof name !== "string") {
-                        name = window.document && window.document.title || string.Empty;
+                        name = window.document && window.document.title || "";
                     }
                     this._pageTracking.start(name);
                 }
@@ -3120,10 +3120,10 @@ var Microsoft;
             AppInsights.prototype.stopTrackPage = function (name, url, properties, measurements) {
                 try {
                     if (typeof name !== "string") {
-                        name = window.document && window.document.title || string.Empty;
+                        name = window.document && window.document.title || "";
                     }
                     if (typeof url !== "string") {
-                        url = window.location && window.location.href || string.Empty;
+                        url = window.location && window.location.href || "";
                     }
                     this._pageTracking.stop(name, url, properties, measurements);
                     if (this.config.autoTrackPageVisitTime) {

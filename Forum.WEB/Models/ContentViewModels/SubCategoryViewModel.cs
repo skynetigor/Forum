@@ -1,10 +1,4 @@
-﻿using Forum.BLL.DTO.Content.Category;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.WebPages.Html;
+﻿using System.Web.Mvc;
 
 namespace Forum.WEB.Models.ContentViewModels
 {
@@ -12,6 +6,5 @@ namespace Forum.WEB.Models.ContentViewModels
     {
         public int CategoryId { get; set; }
         public SelectList Categories { get; set; }
-        public TopicViewModel Topic { get; set; }
     }
 }

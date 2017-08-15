@@ -91,6 +91,10 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
       <Private>True</Private>
@@ -215,24 +219,23 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\MyAuthorizeAttribute.cs" />
-    <Compile Include="Attributes\UnAuthorizeAttribute.cs" />
+    <Compile Include="Attributes\MyAllowAnonymousAttribute.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\BlockedUserController.cs" />
-    <Compile Include="Controllers\IContentController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
-    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\TopicController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlockViewModel.cs" />
+    <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\ContentViewModels\AbstractViewModel.cs" />
     <Compile Include="Models\ContentViewModels\CategoryViewModel.cs" />
+    <Compile Include="Models\ContentViewModels\CommentViewModel.cs" />
     <Compile Include="Models\ContentViewModels\SubCategoryViewModel.cs" />
-    <Compile Include="Models\ContentViewModels\UserViewModel.cs" />
-    <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Models\ContentViewModels\TopicViewModel.cs" />
@@ -251,7 +254,6 @@
     <Content Include="Views\Account\GetModel.cshtml" />
     <Content Include="Views\Category\Update.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
-    <Content Include="Views\Category\CategoriesPartial.cshtml" />
     <Content Include="Views\SubCategory\Update.cshtml" />
     <Content Include="Views\Shared\FixedBottomAdminPanel.cshtml" />
     <Content Include="Views\Topic\Update.cshtml" />
@@ -259,6 +261,11 @@
     <Content Include="Views\Comment\Index.cshtml" />
     <Content Include="Views\Comment\Update.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\Shared\Message.cshtml" />
+    <Content Include="Views\Admin\Block.cshtml" />
+    <Content Include="Views\Shared\View.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\RegistrationSuccess.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -266,14 +273,11 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Views\BlockedUser\" />
-    <Folder Include="Views\Notification\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Forum.BLL\Forum.BLL.csproj">
-      <Project>{d6ef1ee9-a08d-448b-93bc-e8904f42b21f}</Project>
-      <Name>Forum.BLL</Name>
+    <ProjectReference Include="..\Forum.Core\Forum.Core.csproj">
+      <Project>{ea11dc04-b3f5-461a-b708-2e79894f4ca2}</Project>
+      <Name>Forum.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Forum.IoC\Forum.IoC.csproj">
       <Project>{c1b2b7c9-fd9f-4d89-9bf3-83ec1972c134}</Project>

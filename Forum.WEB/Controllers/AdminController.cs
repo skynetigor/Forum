@@ -1,10 +1,8 @@
-﻿using Forum.BLL.DTO;
-using Forum.BLL.Interfaces;
+﻿using Forum.Core.BLL.Interfaces;
+using Forum.Core.DAL.Entities.Content;
+using Forum.Core.DAL.Entities.Identity;
 using Forum.WEB.Attributes;
-using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNet.Identity.Owin;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,13 +11,17 @@ namespace Forum.WEB.Controllers
     public class AdminController : Controller
     {
         private IAdminService adminService;
-        private IUserService userService;
-        public AdminController(IAdminService adminService, IUserService userService)
+        private IBlockService blockService;
+        private IAuthManager userService
+        {
+            get { return HttpContext.GetOwinContext().GetUserManager<IAuthManager>(); }
+        }
+        public AdminController(IAdminService adminService, IBlockService blockService)
         {
             this.adminService = adminService;
-            this.userService = userService;
+            this.blockService = blockService;
         }
-
+        [MyAuthorize(Roles = "admin")]
         public ActionResult UserList()
         {
             var users = userService.GetUsers();
@@ -27,35 +29,18 @@ namespace Forum.WEB.Controllers
         }
 
         [MyAuthorize(Roles = "admin")]
-        [HttpPost]
-        public ActionResult BlockUser(int userid, string message)
+        public ActionResult Block(int? userid)
         {
-            var admin = new UserDTO
-            {
-                Id = User.Identity.GetUserId<int>()
-            };
-            var user = new UserDTO
-            {
-                Id = userid
-            };
-            adminService.BlockUser(admin, user, message);
-            return View();
+            var block = blockService.GetUserBlockByUserId((int)userid);
+            return View(block);
         }
 
-        [HttpPost]
         [MyAuthorize(Roles = "admin")]
-        public ActionResult UnBlockUser(int userid, string message)
+        [HttpPost]
+        public ActionResult Block(Block block)
         {
-            var admin = new UserDTO
-            {
-                Id = User.Identity.GetUserId<int>()
-            };
-            var user = new UserDTO
-            {
-                Id = userid
-            };
-            adminService.UnBlockUser(admin, user, message);
-            return View();
+            adminService.Block(block);
+            return RedirectToAction("userlist");
         }
     }
 }

@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Forum.WEB.Models.ContentViewModels
 {
     public class CategoryViewModel:AbstractViewModel
     {
-        public string Title { get; set; }
-        public string Name { get; set; }
+        public SelectList Users { get; set; }
+        public int ModeratorId { get; set; }
+        public string ModeratorName { get; set; }
+        [Required]
+        [Display(Name= "Описание")]
+        public string Description { get; set; }
     }
 }

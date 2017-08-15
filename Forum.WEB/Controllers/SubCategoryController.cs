@@ -1,27 +1,24 @@
-﻿using Forum.BLL.DTO;
-using Forum.BLL.DTO.Content.Category;
-using Forum.BLL.Interfaces;
+﻿using Forum.Core.BLL.Interfaces;
+using Forum.Core.DAL.Entities.Content.Categories;
+using Forum.Core.DAL.Entities.Identity;
 using Forum.WEB.Models.ContentViewModels;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Forum.WEB.Controllers
 {
-    public class SubCategoryController : Controller, IContentController<SubCategoryViewModel>
+    public class SubCategoryController : Controller
     {
-        private IContentService<SubCategoryDTO> subCategoryService;
-        private IContentService<CategoryDTO> categoryService;
+        private IContentService<SubCategory> subCategoryService;
+        private IContentService<Category> categoryService;
 
-        public SubCategoryController(IContentService<SubCategoryDTO> subCategoryService, IContentService<CategoryDTO> categoryService)
+        public SubCategoryController(IContentService<SubCategory> subCategoryService, IContentService<Category> categoryService)
         {
             this.subCategoryService = subCategoryService;
             this.categoryService = categoryService;
         }
 
+        [Authorize(Roles = "admin,moderator")]
         public ActionResult Update(int? Id)
         {
             if (Id != null)
@@ -31,7 +28,7 @@ namespace Forum.WEB.Controllers
                 {
                     Id = subcategory.Id,
                     Name = subcategory.Name,
-                    Title = subcategory.Title,
+                    Description = subcategory.Description,
                     Categories = new SelectList(categoryService.Get(), "Id", "Name")
                 };
                 return PartialView(categoryViewModel);
@@ -43,21 +40,22 @@ namespace Forum.WEB.Controllers
             return PartialView(catViewModel);
         }
 
+        [Authorize(Roles = "admin,moderator")]
         [HttpPost]
         public ActionResult Update(SubCategoryViewModel viewModel)
         {
-            var user = new UserDTO
+            var user = new AppUser
             {
                 Id = User.Identity.GetUserId<int>(),
                 Email = User.Identity.Name
             };
-            var category = new CategoryDTO {
+            var category = new Category {
                 Id = viewModel.CategoryId
             };
-            var subCategory = new SubCategoryDTO
+            var subCategory = new SubCategory
             {
                 Name = viewModel.Name,
-                Title = viewModel.Title,
+                Description = viewModel.Description,
                 Id = viewModel.Id,
                 Category = category
             };

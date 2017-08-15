@@ -1,25 +1,23 @@
-﻿@using Forum.BLL.DTO
-@model IEnumerable<UserDTO>
+﻿@using Forum.Core.DAL.Entities.Identity
+@model IEnumerable<AppUser>
 @{
     ViewBag.Title = "UserList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<table>
+<div class="container-fluid">
     @foreach (var user in Model)
     {
-        <tr>
-            <td>@user.UserName</td>
-            <td>
-                @if(user.IsBlocked)
-                {
-                    <a href=@Url.Action("BlockUser", "Admin", new { userid = user.Id })>Разблокировать</a>
-                }
-                else
-                {
-                    <a href=@Url.Action("UnBlockUser", "Admin", new { userid = user.Id })>Заблокировать</a>
-                }
-            </td>
-        </tr>
+        <div class="input-group user-item">
+            @*<input type="text" class="form-control">*@
+            <p style="background-color:papayawhip;">@user.UserName</p>
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Действие <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href=@Url.Action("Block", "Admin", new { userid = user.Id })>Заблокировать</a></li>
+                    <li><a href="#">Назначить модератором</a></li>
+                </ul>
+            </div>
+
+        </div>
     }
-</table>
+</div>
