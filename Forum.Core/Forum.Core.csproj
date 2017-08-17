@@ -65,7 +65,7 @@
     <Compile Include="BLL\Interfaces\IBlockService.cs" />
     <Compile Include="BLL\Interfaces\IConfirmedEmailSender.cs" />
     <Compile Include="BLL\Interfaces\IContentService.cs" />
-    <Compile Include="DAL\Entities\Content\Block.cs" />
+    <Compile Include="BLL\Model\RegistrationModel.cs" />
     <Compile Include="DAL\Entities\Content\Categories\AbstractCategory.cs" />
     <Compile Include="DAL\Entities\Content\Categories\Category.cs" />
     <Compile Include="DAL\Entities\Content\Categories\SubCategory.cs" />
@@ -76,6 +76,7 @@
     <Compile Include="DAL\Entities\Identity\IntPk\IntPK.cs" />
     <Compile Include="DAL\Entities\Content\Notification.cs" />
     <Compile Include="DAL\Entities\Content\Topic.cs" />
+    <Compile Include="DAL\Entities\Log.cs" />
     <Compile Include="DAL\Identity\ApplicationRoleManager.cs" />
     <Compile Include="DAL\Identity\ApplicationUserManager.cs" />
     <Compile Include="DAL\Identity\ForumIdentityProvider.cs" />

@@ -3,21 +3,44 @@
 @{
     ViewBag.Title = "UserList";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 <div class="container-fluid">
-    @foreach (var user in Model)
-    {
-        <div class="input-group user-item">
-            @*<input type="text" class="form-control">*@
-            <p style="background-color:papayawhip;">@user.UserName</p>
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Действие <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href=@Url.Action("Block", "Admin", new { userid = user.Id })>Заблокировать</a></li>
-                    <li><a href="#">Назначить модератором</a></li>
-                </ul>
-            </div>
 
-        </div>
-    }
+
+    <table class="tabel  user-list">
+        <thead>
+            <tr>
+                <th class="user-name" rowspan="2">Пользователь</th>
+                <th colspan="3">Блокировка</th>
+            </tr>
+            <tr>
+                <th>Комментирование</th>
+                <th>Создание топиков</th>
+                <th>Полный доступ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+    @*<input type="hidden" name="userId" value=@user.Id>*@
+
+                <tr>
+                    <td class="user-name">
+                        <h3>@user.UserName</h3>
+                    </td>
+                    <td>
+                        @Html.CheckBox("isComment", user.IsCommentBlocked, new { onchange = "BlockUser(this,"+ user.Id + ")" })
+                    </td>
+                    <td>
+                        @Html.CheckBox("isTopic", user.IsTopicBlocked, new { onchange = "BlockUser(this," + user.Id + ")" })
+                    </td>
+                    <td>
+                        @Html.CheckBox("isAccess", user.IsAccessBlocked, new { onchange = "FullBlockUser(this," + user.Id + ")" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>

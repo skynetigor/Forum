@@ -1,0 +1,55 @@
+﻿@using Forum.Core.DAL.Entities.Content.Categories
+
+
+@if (ViewBag.Categories != null)
+{
+    <div class="category tree-view left">
+
+        <div class="tree">
+            <div style="width:100%" class="btn-group">
+                <a style="width:100%" class="btn btn-default" href=@Url.Action("Index","Category")>Главная страница</a>
+            </div>
+            @*@foreach (Category category in ViewBag.Categories)
+                    {
+                    <ul>
+                        <li>
+                            <span><i class="icon-folder-open"></i>@category.Name</span>
+                            @if (category.SubCategories.Count() > 0)
+                            {
+                                <ul>
+                                    @foreach (SubCategory sub in category.SubCategories)
+                                    {
+                                        <li>
+                                            <span><a href=@Url.Action("Index","Topic", new { subCategoryId = sub.Id })>@sub.Name</a></span>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </li>
+                    </ul>
+                }*@
+            @foreach (Category category in ViewBag.Categories)
+            {
+                <ul class="fordtreeview list-group">
+                    <li class="list-group-item">
+                        <span class="hasSub"><i class="glyphicon glyphicon-folder-close"></i> @category.Name</span>
+                        @if (category.SubCategories.Count() > 0)
+                        {
+                            <ul class="list-group expanded" style="display:none">
+                                @foreach (SubCategory sub in category.SubCategories)
+                            {
+                                <li class="list-group-item">
+
+                                    <a href=@Url.Action("Index","Topic", new { subCategoryId = sub.Id }) class="hasSub"><i class="glyphicon glyphicon-file"></i>@sub.Name</a>
+
+                                </li>
+                            }
+                        </ul>
+                        }
+                    </li>
+                </ul>
+            }
+        </div>
+    </div>
+}
+

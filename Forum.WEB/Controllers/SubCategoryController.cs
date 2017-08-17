@@ -19,23 +19,27 @@ namespace Forum.WEB.Controllers
         }
 
         [Authorize(Roles = "admin,moderator")]
-        public ActionResult Update(int? Id)
+        public ActionResult Update(int categoryId = 0, int Id = 0)
         {
-            if (Id != null)
+            var selectList = new SelectList(categoryService.Get(), "Id", "Name");
+            if (Id != 0)
             {
-                var subcategory = subCategoryService.FindById((int)Id);
+                var subcategory = subCategoryService.FindById(Id);
                 var categoryViewModel = new SubCategoryViewModel
                 {
                     Id = subcategory.Id,
                     Name = subcategory.Name,
                     Description = subcategory.Description,
-                    Categories = new SelectList(categoryService.Get(), "Id", "Name")
+                    Categories = selectList,
+                    CategoryName = subcategory.Category.Name
                 };
                 return PartialView(categoryViewModel);
             }
             var catViewModel = new SubCategoryViewModel
             {
-                Categories = new SelectList(categoryService.Get(), "Id", "Name")
+                CategoryName = categoryService.FindById(categoryId).Name,
+                CategoryId = categoryId,
+                Categories = selectList
             };
             return PartialView(catViewModel);
         }

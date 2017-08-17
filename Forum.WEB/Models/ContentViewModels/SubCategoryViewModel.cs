@@ -5,6 +5,7 @@ namespace Forum.WEB.Models.ContentViewModels
     public class SubCategoryViewModel:CategoryViewModel
     {
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public SelectList Categories { get; set; }
     }
 }

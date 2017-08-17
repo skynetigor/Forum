@@ -1,10 +1,12 @@
 ﻿using Forum.Core.BLL.Interfaces;
+using Forum.Core.BLL.Model;
 using Forum.Core.DAL.Entities.Identity;
 using Forum.WEB.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -93,12 +95,13 @@ namespace Forum.WEB.Controllers
                 try
                 {
                     var url = Url.Action("ConfirmeEmail", "Account", null, Request.Url.Scheme) + "?token={0}&email={1}";
-                    var user = new AppUser
+                    var user = new RegistrationModel
                     {
                         UserName = model.UserName,
-                        Email = model.Email
+                        Email = model.Email,
+                        Password = model.Password
                     };
-                    var opdet = userService.Create(user, model.Password, url);
+                    var opdet = userService.CreateAccount(user, url);
                     if (!opdet.Succedeed)
                     {
                         ModelState.AddModelError(string.Empty, opdet.Message);
@@ -129,32 +132,40 @@ namespace Forum.WEB.Controllers
         }
 
         //[HttpPost]
-        public ActionResult ChangePassword()
+        public ActionResult Settings()
         {
-            return View(new ChangePasswordViewModel());
+            var user = userService.FindById(User.Identity.GetUserId<int>());
+            var account = new AccountSettingsViewModel
+            {
+                Email = user.Email,
+                UserName = user.UserName,
+            };
+            return View(account);
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordViewModel model)
+        public ActionResult Settings(AccountSettingsViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new AppUser
+                var account = new RegistrationModel
                 {
-                    Id = User.Identity.GetUserId<int>()
+                    Email = model.Email,
+                    Password = model.FirstPassword,
+                    UserName = model.UserName
                 };
-                var result = userService.ChangePassword(user, model.OldPassword, model.FirstPassword);
-                if(!result.Succeeded)
+                var result = userService.ChangeAccountSettings(User.Identity.GetUserId<int>(),model.OldPassword, account);
+                if (!result.Succedeed)
                 {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error);
-                    }
+                    ModelState.AddModelError(string.Empty, result.Message);
                 }
-                ViewBag.Message = PASS_CHANGED;
+                else
+                {
+                    ViewBag.Message = result.Message;
+                }
             }
-            return View(new ChangePasswordViewModel());
+            return View(new AccountSettingsViewModel());
         }
     }
 }

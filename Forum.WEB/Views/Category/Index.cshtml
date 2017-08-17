@@ -1,21 +1,31 @@
 ﻿@using Forum.Core.DAL.Entities.Content.Categories
 @using Microsoft.AspNet.Identity;
-@model IEnumerable<Category>
+@using Forum.WEB.Models
+@using Forum.WEB.Helpers
+@model PagingViewModel<Category>
 @{
     var currentUserId = User.Identity.GetUserId<int>();
     bool isAdmin = User.IsInRole("admin");
 }
-@foreach (Category category in Model)
+@foreach (Category category in Model.Items)
 {
 
     bool isEditor = category.Moderator != null && category.Moderator.Id == currentUserId || isAdmin;
     <div class="panel panel-default category">
         <div class="panel-heading clearfix">
             <h3 class="panel-title">@category.Name</h3>
-            @if (isAdmin)
-            {
-                <a class="btn btn-default right" href=@Url.Action("Update","Category", new { Id = category.Id })>Редактировать</a>
-            }
+
+            <div class="btn-group right clearfix">
+
+                @if (isAdmin)
+                {
+                    <a class="btn btn-default left" href=@Url.Action("Update","Category", new { Id = category.Id })>Редактировать</a>
+                }
+                @if (isAdmin || category.Moderator != null && category.Moderator.Id == User.Identity.GetUserId<int>())
+                {
+                    <a class="btn btn-default right" href=@Url.Action("Update", "SubCategory", new { categoryId = category.Id })>Добавить подкатегорию</a>
+                }
+            </div>
         </div>
         <div class="panel-body panel-forum">
             @if (category.SubCategories.Count() > 0)
@@ -64,3 +74,4 @@
         </div>
     </div>
 }
+@Html.PageLinks(Model.PageInfo, x => Url.Action("Index", "Category", new { page = x }))

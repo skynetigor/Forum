@@ -3,6 +3,7 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Forum.BLL.Services;
 using Forum.Core.BLL.Interfaces;
+using Forum.Core.DAL.Entities;
 using Forum.Core.DAL.Entities.Content;
 using Forum.Core.DAL.Entities.Content.Categories;
 using Forum.Core.DAL.Entities.Identity;
@@ -45,7 +46,7 @@ namespace Forum.IoC.Service
             container.Register(Component.For<IGenericRepository<Comment>>().ImplementedBy<ForumRepository<Comment>>().LifestylePerWebRequest());
             container.Register(Component.For<IGenericRepository<Category>>().ImplementedBy<ForumRepository<Category>>().LifestylePerWebRequest());
             container.Register(Component.For<IGenericRepository<SubCategory>>().ImplementedBy<ForumRepository<SubCategory>>().LifestylePerWebRequest());
-            container.Register(Component.For<IGenericRepository<Block>>().ImplementedBy<ForumRepository<Block>>().LifestylePerWebRequest());
+            container.Register(Component.For<IGenericRepository<Log>>().ImplementedBy<ForumRepository<Log>>().LifestylePerWebRequest());
 
             container.Register(Component.For<IContentService<Topic>>().ImplementedBy<TopicsService>().LifestylePerWebRequest());
             container.Register(Component.For<IContentService<Comment>>().ImplementedBy<CommentService>().LifestylePerWebRequest());

@@ -4,6 +4,13 @@
 
 .main {
     margin-bottom: 100px;
+    min-width: 650px;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .navbar-logo {
@@ -14,6 +21,11 @@
     margin: 10px 0px 5px 20px;
     width: 300px;
     height: 160px;
+    filter:brightness(80%);
+}
+
+.navbar-logo:hover{
+    filter:brightness(100);
 }
 
 .navbar-cont {
@@ -22,11 +34,11 @@
     margin: 0px 15px 0px 15px;
     border: double 4px #808080;
     padding: 0px 0px 0px 0px;
-    /*padding-bottom:10px;*/
     border-radius: 0px 0px 10px 10px;
     border-top: 0px;
-    /*overflow: hidden;*/
 }
+
+
 
 .block {
     background-image: url('img/content-bg.png');
@@ -34,13 +46,18 @@
     border: double 4px #808080;
     border-radius: 15px 15px 15px 15px;
     margin: 10px 0px 10px 0px;
-    min-width: 650px;
+    
     padding: 0px;
 }
 
 .content {
     min-height: 400px;
     padding: 15px;
+}
+
+.content-body{
+    width:75%;
+    min-height:400px;
 }
 
 .nav-forum {
@@ -76,9 +93,13 @@
     margin: auto 0px auto 0px;
 }
 
-.category h3{
-    float:left;
-    margin:auto 0px auto 0px;
+.left {
+    float: left;
+}
+
+.category h3 {
+    float: left;
+    margin: auto 0px auto 0px;
 }
 
 .panel-forum {
@@ -106,6 +127,7 @@
 
     .description-colum h3, h4 {
         margin: 0;
+        text-align:left;
     }
 
     .description-colum div {
@@ -118,7 +140,6 @@
 }
 
 .user-info {
-    float: right;
     margin: 20px 20px 0px 0px;
     color: white;
     font-size: 1.1em;
@@ -172,19 +193,29 @@
         background-color: antiquewhite;
     }
 
+.tree-view {
+    width: 23%;
+}
+
+.comment{
+    padding:10px;
+}
+
+.topics{
+    min-height:362px;
+}
+
+.user-list{
+    width:100%;
+    background-color:navajowhite;
+    text-align:center;
+    border: double 2px #000000;
+}
+.user-list th, .user-list td{
+    text-align:center;
+    border: double 2px #000000;
+    padding:2px;
+}
 .user-name {
-    width: 220px;
+    width:90%;
 }
-
-.user-item {
-    margin: 10px;
-}
-
-    .user-item p {
-        line-height: 32px;
-        padding: 0px 10px 0px 10px;
-        margin: 0px 0px 0px 0px;
-        height: 35px;
-        border: 1px solid #ccc;
-        border-radius: 4px 0px 0px 4px;
-    }

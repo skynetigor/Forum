@@ -6,6 +6,6 @@ namespace Forum.Core.BLL.Interfaces
 {
     public interface IAdminService
     {
-        OperationDetails Block(Block blockinfo);
+        OperationDetails Block(AppUser user);
     }
 }

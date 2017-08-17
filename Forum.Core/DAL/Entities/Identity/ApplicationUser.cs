@@ -15,8 +15,9 @@ namespace Forum.Core.DAL.Entities.Identity
         {
             Notifications = new List<Notification>();
         }
-        public bool IsBlocked { get; set; }
-        public virtual Block Block { get; set; }
+        public bool IsAccessBlocked { get; set; }
+        public bool IsCommentBlocked { get; set; }
+        public bool IsTopicBlocked { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)

@@ -1,0 +1,46 @@
+﻿@using Forum.Core.DAL.Entities
+@using Forum.WEB.Models
+@using Forum.WEB.Helpers
+@model PagingViewModel<Log>
+
+@{
+    ViewBag.Title = "Logs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="tabel user-list">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Тип</th>
+            <th>Сообщение</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model.Items)
+            {
+            <tr>
+                <td>
+                    <h3>@log.Time</h3>
+                </td>
+                <td>
+                    <h3>@log.Level</h3>
+                </td>
+                <td>
+                    <h3>@log.Message</h3>
+                </td>
+            </tr>
+        }
+        @if (Model.PageInfo.TotalPages > 1)
+        {
+            <tr>
+                <td colspan="3">
+                    @Html.PageLinks(Model.PageInfo, x => Url.Action("Logs", "Admin", new { page = x }))
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

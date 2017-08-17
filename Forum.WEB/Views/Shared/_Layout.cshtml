@@ -6,8 +6,10 @@
     <title>@ViewBag.Title</title>
     <link type="text/css" href="~/Content/bootstrap.css" rel="stylesheet" />
     <link type="text/css" href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link type="text/css" href="~/Content/bootstrap-combined.min.css" rel="stylesheet" />
+    <link type="text/css" href="~/Content/treeview.css" rel="stylesheet" />
     <link type="text/css" href="~/Content/forum.css" rel="stylesheet" />
-    <link type="text/css" href="~/Content/popup.css" rel="stylesheet" />
+
 </head>
 <body>
     @Html.Partial("FixedBottomAdminPanel")
@@ -15,54 +17,56 @@
         <nav>
             <div class="container-fluid block nav-forum">
                 <div class="container-fluid navbar-cont">
-                    <div class="navbar-logo">
+                    <a href=@Url.Action("Index","Category") title="Главная страница">
+                        <div class="navbar-logo">
 
-                    </div>
-                    <a class="btn btn-default" href=@Url.Action("index", "category")>Главная</a>
-                    <div class="user-info">
+                        </div>
+                    </a>
+                    <div class="user-info right clearfix">
                         <ul>
                             @if (User.Identity.IsAuthenticated)
-                        {
-                            <li>
-                                <p><i class="glyphicon glyphicon-user"></i>@User.Identity.Name</p>
-                            </li>
+                            {
+                                <li>
+                                    <p><i class="glyphicon glyphicon-user"></i>@User.Identity.Name</p>
+                                </li>
                                 <li>
                                     <p></p>
-                                    <a href=@Url.Action("ChangePassword", "Account")><i class="glyphicon glyphicon-bell"></i>Изменить пароль</a>
+                                    <a href=@Url.Action("Settings", "Account")><i class="glyphicon glyphicon-bell"></i>Настройки Аккаунта</a>
                                 </li>
                                 <li>
                                     <a href=@Url.Action("Logout", "Account")><i class="glyphicon glyphicon-log-out"></i>Выйти</a>
                                 </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href=@Url.Action("Login", "Account")><i class="glyphicon glyphicon-log-in"></i>Войти</a>
-                            </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href=@Url.Action("Login", "Account")><i class="glyphicon glyphicon-log-in"></i>Войти</a>
+                                </li>
                                 <li>
                                     <a href=@Url.Action("Registration", "Account")><i class="glyphicon glyphicon-registration-mark"></i>Зарегистрироваться</a>
                                 </li>
-                        }
-                    </ul>
+                            }
+                        </ul>
+                    </div>
                 </div>
-
-
+                <div class="container-fluid nav-menu">
+                </div>
             </div>
-            <div class="container-fluid nav-menu">
-                <h2>АВТОМОБИЛЬНЫЙ ФОРУМ</h2>
+        </nav>
+        <content>
+            <div class="container-fluid block content">
+                @Html.Partial("treeView")
+                <div class="content-body right clearfix">@RenderBody()</div>
             </div>
-        </div>
-    </nav>
-    <content>
-        <div class="container-fluid block content">
-            @RenderBody()
-        </div>
-    </content>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script src="~/scripts/bootstrap.js"></script>
-<script src="~/scripts/jquery.validate.js"></script>
-<script src="~/scripts/jquery.validate.unobtrusive.js"></script>
+        </content>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="~/scripts/bootstrap.js"></script>
+    <script src="~/scripts/jquery.validate.js"></script>
+    <script src="~/scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/scripts/treeview.js"></script>
+    <script src="~/scripts/tinymce/tinymce.min.js"></script>
+    <script src="~/scripts/forum/scripts.js"></script>
 
 </body>
 </html>

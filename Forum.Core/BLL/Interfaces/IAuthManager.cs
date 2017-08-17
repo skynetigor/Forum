@@ -1,4 +1,5 @@
 ﻿using Forum.Core.BLL.Infrastructure;
+using Forum.Core.BLL.Model;
 using Forum.Core.DAL.Entities.Identity;
 using Microsoft.AspNet.Identity;
 using System;
@@ -9,10 +10,11 @@ namespace Forum.Core.BLL.Interfaces
 {
     public interface IAuthManager : IDisposable
     {
+        AppUser FindById(int Id);
         IEnumerable<AppUser> GetUsers();
-        OperationDetails Create(AppUser userDto, string password, string url);
+        OperationDetails CreateAccount(RegistrationModel user, string confirmeUrl);
         ClaimsIdentity Authenticate(string login, string password);
-        IdentityResult ChangePassword(AppUser user, string currentPassword, string newPassword);
+        OperationDetails ChangeAccountSettings(int userId, string currentPassword, RegistrationModel model);
         ClaimsIdentity ConfirmEmail(int token, string email);
     }
 }

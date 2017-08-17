@@ -16,12 +16,12 @@ namespace Forum.WEB.Attributes
         {
             if (httpContext.User.Identity.IsAuthenticated)
             {
-                IDependencyInstaller dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
-                IBlockService service = dependencyInstaller.GetService<IBlockService>();
-                BlockResult blockresult = service.GetUserStatusByUserId(httpContext.User.Identity.GetUserId<int>());
+                var dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
+                var service = dependencyInstaller.GetService<IBlockService>();
+                var blockresult = service.GetUserStatusByUserId(httpContext.User.Identity.GetUserId<int>());
                 if (blockresult != null)
                 {
-                    if (blockresult.BlockType.Contains(BlockType.Access))
+                    if (blockresult.Contains(BlockType.Access))
                     {
                         httpContext.GetOwinContext().Authentication.SignOut();
                         return false;

@@ -106,17 +106,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Forum.Core.BLL\Forum.NewBLL.csproj">
+    <ProjectReference Include="..\Forum.BLL\Forum.BLL.csproj">
       <Project>{235b6405-b308-48d7-8c1f-82feba948d7a}</Project>
-      <Name>Forum.NewBLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Forum.Core.DAL\Forum.NewDAL.csproj">
-      <Project>{3d99fb54-7853-48ba-8c52-0e949c9e2f11}</Project>
-      <Name>Forum.NewDAL</Name>
+      <Name>Forum.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Forum.Core\Forum.Core.csproj">
       <Project>{ea11dc04-b3f5-461a-b708-2e79894f4ca2}</Project>
       <Name>Forum.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Forum.DAL\Forum.DAL.csproj">
+      <Project>{3d99fb54-7853-48ba-8c52-0e949c9e2f11}</Project>
+      <Name>Forum.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

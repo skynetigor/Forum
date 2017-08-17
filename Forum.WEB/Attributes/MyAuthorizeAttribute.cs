@@ -14,24 +14,52 @@ namespace Forum.WEB.Attributes
 {
     public class MyAuthorizeAttribute : AuthorizeAttribute
     {
+        const string ADMIN_ROLE = "admin";
+        const string REASON = "Причина: ";
+        const string BLOCK = "У вас ограниченен доступ к {0}. За информацией Обратитесь к администратору форума. ";
+        const string UNBLOCK = "Для вас разблокирован доступ к {0}. ";
+        const string COMMENT = "комментированию";
+        const string TOPIC = "созданию топиков";
+        const string RESOURCE = "ресурсу";
+
         private string message;
-        protected bool accessError;
         public BlockType Permission { get; set; }
+
+        private string GetBlockMessage(BlockType blockinfo)
+        {
+            string result = string.Empty;
+            if (blockinfo == BlockType.Access)
+            {
+                result += RESOURCE;
+            }
+            else
+            {
+                if (blockinfo == BlockType.Comment)
+                {
+                    result += COMMENT + ",";
+                }
+                if (blockinfo == BlockType.Topic)
+                {
+                    result += TOPIC;
+                }
+            }
+            return string.Format(BLOCK, result);
+        }
 
         protected bool CheckAccess(BlockType Permissions, HttpContextBase httpContext)
         {
-            IDependencyInstaller dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
-            IBlockService service = dependencyInstaller.GetService<IBlockService>();
-            BlockResult blockresult = service.GetUserStatusByUserId(httpContext.User.Identity.GetUserId<int>());
+            var dependencyInstaller = new CastleInstaller(Assembly.GetExecutingAssembly());
+            var service = dependencyInstaller.GetService<IBlockService>();
+            var blockresult = service.GetUserStatusByUserId(httpContext.User.Identity.GetUserId<int>());
             if (blockresult != null)
             {
-                if (blockresult.BlockType.Contains(BlockType.Access))
+                if (blockresult.Contains(BlockType.Access))
                 {
                     httpContext.GetOwinContext().Authentication.SignOut();
                 }
-                if (blockresult.BlockType.Contains(Permissions))
+                if (blockresult.Contains(Permissions))
                 {
-                    message = blockresult.Message;
+                    message = GetBlockMessage(Permission);
                     return false;
                 }
             }
@@ -40,7 +68,7 @@ namespace Forum.WEB.Attributes
         
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            IIdentity identity = httpContext.User.Identity;
+            var identity = httpContext.User.Identity;
             if (identity.IsAuthenticated)
             {
                return CheckAccess(Permission, httpContext);
@@ -50,7 +78,7 @@ namespace Forum.WEB.Attributes
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            ErrorController controller = new ErrorController();
+            var controller = new ErrorController();
             filterContext.Result = controller.GetError(message);
         }
     }

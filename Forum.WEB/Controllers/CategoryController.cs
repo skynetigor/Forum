@@ -2,6 +2,7 @@
 using Forum.Core.DAL.Entities.Content.Categories;
 using Forum.Core.DAL.Entities.Identity;
 using Forum.WEB.Attributes;
+using Forum.WEB.Models;
 using Forum.WEB.Models.ContentViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -11,6 +12,7 @@ namespace Forum.WEB.Controllers
 {
     public class CategoryController : Controller
     {
+        private const int PAGE_SIZE = 3;
         private IContentService<Category> categoryService;
         private IBlockService blockService;
         private IAuthManager userService
@@ -25,9 +27,12 @@ namespace Forum.WEB.Controllers
         }
 
         [MyAllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            return View(categoryService.Get());
+            var categories = categoryService.Get();
+            PagingViewModel<Category> viewModel = new PagingViewModel<Category>(page, PAGE_SIZE, categories);
+            ViewBag.Categories = categories;
+            return View(viewModel);
         }
 
         [Authorize(Roles = "admin")]

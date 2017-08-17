@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Forum.WEB.Models.ContentViewModels
 {
@@ -9,6 +10,7 @@ namespace Forum.WEB.Models.ContentViewModels
     {
         public int Id { get; set; }
         public int TopicId { get; set; }
+        [AllowHtml]
         public string Message { get; set; }
     }
 }
