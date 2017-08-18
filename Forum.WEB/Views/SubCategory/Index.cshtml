@@ -1,0 +1,52 @@
+﻿@using Forum.Core.DAL.Entities.Content
+@using Forum.WEB.Models
+@using Forum.WEB.Helpers
+@model PagingViewModel<Topic>
+@{
+    ViewBag.Title = "Go";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-default category">
+    <div class="panel-heading container-fluid">
+        <div style="margin:auto">
+            <div class="left">
+                <div><h3>@Model.Name</h3></div>
+                @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", "SubCategory", new { Id = Model.Id, page = x }))
+            </div>
+        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a class="btn btn-default right clearfix" href=@Url.Action("Update", "Topic", new { currentId = Model.Id })>Новая тема</a>
+        }
+    </div>
+    <div class="panel-body panel-forum topics">
+        @if (Model.Items.Count() > 0)
+            {
+            <table class="table table-bordered table-striped stretch table-forum">
+                <thead>
+                    <tr>
+                        <td>Пользователь</td>
+                        <td>Темы</td>
+                        <td class="reply">Ответы</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var topic in Model.Items)
+                {
+                        <tr>
+                            <td>@topic.User.UserName</td>
+                            <td class="description-colum">
+                                <a href=@Url.Action("Index", "Topic", new { id = topic.Id})><h4>@topic.Description</h4></a>
+                            </td>
+                            <td class="reply">@topic.Comments.Count</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="empty-message">Пусто.</p>
+        }
+    </div>
+</div>

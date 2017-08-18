@@ -9,25 +9,6 @@
             <div style="width:100%" class="btn-group">
                 <a style="width:100%" class="btn btn-default" href=@Url.Action("Index","Category")>Главная страница</a>
             </div>
-            @*@foreach (Category category in ViewBag.Categories)
-                    {
-                    <ul>
-                        <li>
-                            <span><i class="icon-folder-open"></i>@category.Name</span>
-                            @if (category.SubCategories.Count() > 0)
-                            {
-                                <ul>
-                                    @foreach (SubCategory sub in category.SubCategories)
-                                    {
-                                        <li>
-                                            <span><a href=@Url.Action("Index","Topic", new { subCategoryId = sub.Id })>@sub.Name</a></span>
-                                        </li>
-                                    }
-                                </ul>
-                            }
-                        </li>
-                    </ul>
-                }*@
             @foreach (Category category in ViewBag.Categories)
             {
                 <ul class="fordtreeview list-group">
@@ -40,7 +21,7 @@
                             {
                                 <li class="list-group-item">
 
-                                    <a href=@Url.Action("Index","Topic", new { subCategoryId = sub.Id }) class="hasSub"><i class="glyphicon glyphicon-file"></i>@sub.Name</a>
+                                    <a href=@Url.Action("Index","Subcategory", new { Id = sub.Id }) class="hasSub"><i class="glyphicon glyphicon-file"></i>@sub.Name</a>
 
                                 </li>
                             }

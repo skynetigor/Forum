@@ -27,22 +27,17 @@ namespace Forum.WEB.Controllers
         }
 
         [MyAllowAnonymous]
-        public ActionResult Index(int? subCategoryId, int page = 1)
+        public ActionResult Index(int? Id, int page = 1)
         {
-            if (subCategoryId != null)
+            var categories = categoryService.Get();
+            ViewBag.Categories = categories;
+            var topic = topicService.FindById((int)Id);
+            PagingViewModel<Comment> viewModel = new PagingViewModel<Comment>(page, PAGE_SIZE, topic.Comments)
             {
-                var categories = categoryService.Get();
-                ViewBag.Categories = categories;
-
-                var subCategory = subCategoryService.FindById((int)subCategoryId);
-                PagingViewModel<Topic> viewModel = new PagingViewModel<Topic>(page,PAGE_SIZE,subCategory.Topics)
-                {
-                    Id = subCategory.Id,
-                    Name = subCategory.Name
-                };
-                return View(viewModel);
-            }
-            return null;
+                Id = topic.Id,
+                Name = topic.Description
+            };
+            return View(viewModel);
         }
 
         [MyAuthorize(Permission = BlockType.Topic)]
@@ -68,7 +63,7 @@ namespace Forum.WEB.Controllers
 
         [MyAuthorize(Permission = BlockType.Topic)]
         [HttpPost]
-        public ActionResult Update(TopicViewModel topic)
+        public string Update(TopicViewModel topic)
         {
             var user = new AppUser
             {
@@ -94,7 +89,7 @@ namespace Forum.WEB.Controllers
             {
                 topicService.Update(user, t);
             }
-            return RedirectToAction("index", new { subCategoryId = topic.SubCategoryId });
+            return Url.Action("Index", new { Id = t.Id });
         }
     }
 }

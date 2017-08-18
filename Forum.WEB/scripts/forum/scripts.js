@@ -23,7 +23,7 @@ $('#topic-send-btn').click(function () {
 
         },
         success: function (data, s, m) {
-            location.href = subCategoryUrl + '?subCategoryId=' + sendedData.SubCategoryId
+            location.href = data;
     }
     })
 });

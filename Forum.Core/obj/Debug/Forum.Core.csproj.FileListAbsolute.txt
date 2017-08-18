@@ -25,3 +25,4 @@ D:\Forum\Forum.Core\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 D:\Forum\Forum.Core\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\Forum\Forum.Core\obj\Debug\Forum.Core.dll
 D:\Forum\Forum.Core\obj\Debug\Forum.Core.pdb
+D:\Forum\Forum.Core\obj\Debug\Forum.Core.csprojResolveAssemblyReference.cache

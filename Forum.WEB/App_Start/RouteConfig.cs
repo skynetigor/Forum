@@ -13,16 +13,17 @@ namespace Forum.WEB
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "",
-            //    defaults: new { controller = "Category", action = "Index"}
-            //);
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}",
-                defaults: new { controller = "Account", action = "Login" }
-            );
+                name: "paging",
+                url: "{controller}/{id}/page{page}",
+                defaults: new { controller = "{controller}", action = "index", id = UrlParameter.Optional, page = 1 }
+                );
+
+            routes.MapRoute(
+                            name: "Default",
+                            url: "{controller}/{action}",
+                            defaults: new { controller = "Account", action = "Login" }
+                        );
         }
     }
 }

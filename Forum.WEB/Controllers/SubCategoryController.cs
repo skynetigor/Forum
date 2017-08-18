@@ -1,6 +1,9 @@
 ﻿using Forum.Core.BLL.Interfaces;
+using Forum.Core.DAL.Entities.Content;
 using Forum.Core.DAL.Entities.Content.Categories;
 using Forum.Core.DAL.Entities.Identity;
+using Forum.WEB.Attributes;
+using Forum.WEB.Models;
 using Forum.WEB.Models.ContentViewModels;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
@@ -9,6 +12,8 @@ namespace Forum.WEB.Controllers
 {
     public class SubCategoryController : Controller
     {
+        const int PAGE_SIZE = 10;
+
         private IContentService<SubCategory> subCategoryService;
         private IContentService<Category> categoryService;
 
@@ -16,6 +21,29 @@ namespace Forum.WEB.Controllers
         {
             this.subCategoryService = subCategoryService;
             this.categoryService = categoryService;
+        }
+
+        [MyAllowAnonymous]
+        public ActionResult Index(int? Id, int page = 1)
+        {
+            if (Id != null)
+            {
+                var categories = categoryService.Get();
+                ViewBag.Categories = categories;
+
+                var subCategory = subCategoryService.FindById((int)Id);
+                PagingViewModel<Topic> viewModel = new PagingViewModel<Topic>(page, PAGE_SIZE, subCategory.Topics)
+                {
+                    Id = subCategory.Id,
+                    Name = subCategory.Name
+                };
+                if(page > viewModel.PageInfo.TotalPages)
+                {
+                    return RedirectToAction("index", new { id = Id, page = viewModel.PageInfo.TotalPages });
+                }
+                return View(viewModel);
+            }
+            return null;
         }
 
         [Authorize(Roles = "admin,moderator")]
