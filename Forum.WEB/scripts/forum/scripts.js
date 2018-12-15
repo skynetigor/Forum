@@ -3,11 +3,10 @@
         theme: 'modern',
         selector: '#editor',
         language: "ru"
-    })
+    });
 });
 
 $('#topic-send-btn').click(function () {
-    var subCategoryUrl = '/topic/index'
     var url = '/topic/update';
     var sendedData = { };
     sendedData.Description = $('[name = "Description"]').val();
@@ -18,23 +17,24 @@ $('#topic-send-btn').click(function () {
         type: "POST",
         url: url,
         data: sendedData,
-        error: function(data, s, m)
-        {
+        error: function (data, s, m) {
 
         },
         success: function (data, s, m) {
             location.href = data;
-    }
-    })
+        }
+    });
 });
 
 $('#comment-send-btn').click(function () {
-    var topicUrl = '/comment/index'
+    var topicUrl = '/topic/index';
     var url = '/comment/update';
     var sendedData = {};
     sendedData.Id = $('[name = "Id"]').val();
     sendedData.TopicId = $('[name = "TopicId"]').val();
     sendedData.Message = tinyMCE.activeEditor.getContent();
+    sendedData.returnPageId = $('[name = "returnPageId"]').val();
+
     $.ajax(url, {
         type: "POST",
         url: url,
@@ -43,9 +43,9 @@ $('#comment-send-btn').click(function () {
 
         },
         success: function (data, s, m) {
-            location.href = topicUrl + '?currentTopic=' + sendedData.TopicId
+            location.href = topicUrl + '?id=' + sendedData.TopicId + '&last=true';
         }
-    })
+    });
 });
 
 var isCommentCheckBox = $('[name = isComment]');

@@ -19,7 +19,7 @@ namespace Forum.WEB.Controllers
         private IContentService<Topic> topicService;
         private IContentService<Comment> commentService;
         private IContentService<Category> categoryService;
-        public CommentController(IContentService<Category> categoryService,IContentService<Topic> topicService, IContentService<Comment> commentService)
+        public CommentController(IContentService<Category> categoryService, IContentService<Topic> topicService, IContentService<Comment> commentService)
         {
             this.topicService = topicService;
             this.commentService = commentService;
@@ -32,7 +32,7 @@ namespace Forum.WEB.Controllers
             var categories = categoryService.Get();
             ViewBag.Categories = categories;
             var topic = topicService.FindById((int)currentTopic);
-            PagingViewModel<Comment> viewModel = new PagingViewModel<Comment>(page,PAGE_SIZE, topic.Comments)
+            PagingViewModel<Comment> viewModel = new PagingViewModel<Comment>(page, PAGE_SIZE, topic.Comments)
             {
                 Id = topic.Id,
                 Name = topic.Description
@@ -41,11 +41,14 @@ namespace Forum.WEB.Controllers
         }
 
         [MyAuthorize(Permission = BlockType.Comment)]
-        public ActionResult Update(int? id, int? currentId)
+        public ActionResult Update(int? id, int? currentId, int? returnPageId)
         {
             var categories = categoryService.Get();
             ViewBag.Categories = categories;
-            if (id !=null)
+
+            ViewBag.ReturnPageId = returnPageId;
+
+            if (id != null)
             {
                 var comment = commentService.FindById((int)id);
                 var model = new CommentViewModel
@@ -56,14 +59,15 @@ namespace Forum.WEB.Controllers
                 };
                 return View(model);
             }
-            return View(new CommentViewModel {
+            return View(new CommentViewModel
+            {
                 TopicId = (int)currentId
             });
         }
 
         [MyAuthorize(Permission = BlockType.Comment)]
         [HttpPost]
-        public ActionResult Update(CommentViewModel viewModel)
+        public ActionResult Update(CommentViewModel viewModel, int? returnPageId)
         {
             var user = new AppUser
             {
@@ -80,7 +84,7 @@ namespace Forum.WEB.Controllers
                 Topic = topic,
                 User = user
             };
-            if(viewModel.Id == 0)
+            if (viewModel.Id == 0)
             {
                 commentService.Create(user, comment);
             }
@@ -88,7 +92,19 @@ namespace Forum.WEB.Controllers
             {
                 commentService.Update(user, comment);
             }
-            return RedirectToAction("index", new { currentTopic = viewModel.TopicId });
+
+            object routeValues;
+
+            if (returnPageId != null)
+            {
+                routeValues = new { id = viewModel.TopicId, page = returnPageId };
+            }
+            else
+            {
+                routeValues = new { id = viewModel.TopicId };
+            }
+
+            return RedirectToAction("Index", "Topic", routeValues);
         }
     }
 }

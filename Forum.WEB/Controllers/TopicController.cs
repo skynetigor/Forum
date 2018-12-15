@@ -19,7 +19,7 @@ namespace Forum.WEB.Controllers
         private IContentService<Topic> topicService;
         private IContentService<SubCategory> subCategoryService;
         private IContentService<Category> categoryService;
-        public TopicController(IContentService<Category> categoryService,IContentService<Topic> topicService, IContentService<SubCategory> subCategoryService)
+        public TopicController(IContentService<Category> categoryService, IContentService<Topic> topicService, IContentService<SubCategory> subCategoryService)
         {
             this.topicService = topicService;
             this.subCategoryService = subCategoryService;
@@ -27,16 +27,31 @@ namespace Forum.WEB.Controllers
         }
 
         [MyAllowAnonymous]
-        public ActionResult Index(int? Id, int page = 1)
+        public ActionResult Index(int? Id, bool last = false, int page = 1)
         {
             var categories = categoryService.Get();
             ViewBag.Categories = categories;
+            ViewBag.Page = page;
             var topic = topicService.FindById((int)Id);
-            PagingViewModel<Comment> viewModel = new PagingViewModel<Comment>(page, PAGE_SIZE, topic.Comments)
+            PagingViewModel<Comment> viewModel = null;
+            if (last)
             {
-                Id = topic.Id,
-                Name = topic.Description
-            };
+                viewModel = new PagingViewModel<Comment>(PAGE_SIZE, topic.Comments)
+                {
+                    Id = topic.Id,
+                    Name = topic.Description
+                };
+            }
+            else
+            {
+                viewModel = new PagingViewModel<Comment>(page, PAGE_SIZE, topic.Comments)
+                {
+                    Id = topic.Id,
+                    Name = topic.Description
+                };
+            }
+
+
             return View(viewModel);
         }
 
@@ -48,7 +63,8 @@ namespace Forum.WEB.Controllers
             if (id != null)
             {
                 var topic = topicService.FindById((int)currentId);
-                return View(new TopicViewModel {
+                return View(new TopicViewModel
+                {
                     Description = topic.Description,
                     Id = (int)id,
                     Message = topic.Message,
@@ -56,7 +72,8 @@ namespace Forum.WEB.Controllers
                     SubCategoryName = topic.SubCategory.Name
                 });
             }
-            return View(new TopicViewModel {
+            return View(new TopicViewModel
+            {
                 SubCategoryId = (int)currentId,
             });
         }

@@ -45,7 +45,7 @@
         @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", "Topic", new { id = Model.Id, page = x }))
         @if (User.Identity.IsAuthenticated)
         {
-            <a class="btn btn-danger right" href=@Url.Action("Update", "Comment", new { currentId = Model.Id })>Добавить ответ</a>
+            <a class="btn btn-danger right" href=@Url.Action("Update", "Comment", new { currentId = Model.Id, returnPageId = ViewBag.Page })>Добавить ответ</a>
         }
     </div>
 </div>

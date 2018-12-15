@@ -31,7 +31,7 @@ namespace Forum.IoC.Service
         private Assembly assembly;
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<DbContext>().ImplementedBy<AppContext>()/*.LifestylePerWebRequest()*/);
+            container.Register(Component.For<DbContext>().ImplementedBy<AppContext>().LifestylePerWebRequest());
 
             container.Register(Component.For<IUserStore<AppUser, int>>().ImplementedBy<UserStoreIntPk>().LifestylePerWebRequest());
             container.Register(Component.For<IRoleStore<ApplicationRole, int>>().ImplementedBy<RoleStoreIntPk>().LifestylePerWebRequest());
