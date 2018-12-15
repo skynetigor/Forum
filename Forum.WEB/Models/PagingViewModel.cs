@@ -22,7 +22,7 @@ namespace Forum.WEB.Models
             
             PageInfo = new PageInfo
             {
-                PageNumber = pageNumber, PageSize = pageSize, TotalItems = totalPages
+                PageNumber = pageNumber, PageSize = pageSize, TotalItems = items.Count(), TotalPages = totalPages  
             };
         }
         public int Id { get; set; }
